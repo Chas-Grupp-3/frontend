@@ -2,7 +2,7 @@ import "./App.css";
 import { Button } from "@chas/ui";
 
 function App() {
-  return <Button label="test" />;
+  return <Button label="logistics" />;
 }
 
 export default App;
