@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./apps/logistics"
+    },
+    {
+      "path": "./packages/ui"
+    }
+  ]
+}

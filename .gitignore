@@ -17,6 +17,7 @@ dist/
 
 # TypeScript
 *.tsbuildinfo
+**/tsconfig.tsbuildinfo
 
 # Logs
 *.log
@@ -30,6 +31,8 @@ dist/
 .DS_Store
 
 # Turborepo cache
+.turbo/
+**/.turbo/
 .cache/
 turbo.json.lock
 
