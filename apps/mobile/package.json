@@ -10,7 +10,7 @@
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
     "type-check": "tsc --project tsconfig.app.json --noEmit",
-    "clean": "rm -rf dist .turbo"
+    "clean": "rm -rf dist dev-dist .turbo"
   },
   "dependencies": {
     "@chas/ui": "*",
