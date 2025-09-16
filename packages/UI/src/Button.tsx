@@ -37,12 +37,13 @@ export const Button = ({
 }: ButtonProps) => {
   const textColor: keyof typeof colors =
     buttonStyle === "primary"
-      ? colors.accent
+      ? "accent"
       : buttonStyle === "secondary"
-        ? colors.primary
+        ? "primary"
         : buttonStyle === "disabled"
-          ? colors.greyText
-          : colors.pause;
+          ? "greyText"
+          : "pause";
+
   return (
     <StyledButton type={type} onClick={onClick} $buttonStyle={buttonStyle}>
       <Text size="Button" color={textColor}>
