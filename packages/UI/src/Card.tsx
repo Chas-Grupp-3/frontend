@@ -1,3 +1,7 @@
+import styled from "styled-components";
+import { radius, colors, textMobile, textWeb } from "./styles";
+import Text from "./font";
+
 type Props = { children: React.ReactNode; title: string };
 const Card = ({ children, title }: Props) => {
   return (
