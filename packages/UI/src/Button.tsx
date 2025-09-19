@@ -57,6 +57,7 @@ const StyledButton = styled.button<styledButtonProps>`
       &:hover{
       background-color: ${colors.buttonHover};
       }
+      border-color: ${colors.primary};
     `
         : $buttonStyle === "disabled"
           ? `
