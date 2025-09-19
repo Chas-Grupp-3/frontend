@@ -51,8 +51,30 @@ const StyledButton = styled.button<styledButtonProps>`
       background-color: ${colors.buttonHover};
       }
     `
-      : `
+      : $buttonStyle === "secondary"
+        ? `
+      background-color: ${colors.background};
+      &:hover{
+      background-color: ${colors.buttonHover};
+      }
+    `
+        : $buttonStyle === "disabled"
+          ? `
+      background-color: ${colors.background};
+      &:hover{
+      background-color: ${colors.buttonHover};
+      }
+    `
+          : $buttonStyle === "destructive"
+            ? `
+      background-color: ${colors.critical};
+      &:hover{
+      background-color: ${colors.criticalHover};
+      }
+    `
+            : `
     background-color: ${colors.background};
+      }
     `}
 `;
 
