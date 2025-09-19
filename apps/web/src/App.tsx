@@ -6,7 +6,10 @@ function App() {
   return (
     <div>
       <Button label="web" />
-      <Card>Hej ehj</Card>
+      <Card title="Äppelmos">
+        <button>Jag är en knapp</button>
+        <h1>Jag är stor</h1>
+      </Card>
     </div>
   );
 }
