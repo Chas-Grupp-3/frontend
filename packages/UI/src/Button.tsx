@@ -9,6 +9,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
   buttonStyle: buttonStyle;
+  disabled?: boolean;
 }
 
 interface styledButtonProps {
@@ -20,6 +21,7 @@ export const Button = ({
   onClick,
   type = "button",
   buttonStyle = "primary",
+  disabled = false,
 }: ButtonProps) => {
   const textColor: keyof typeof colors =
     buttonStyle === "primary"
@@ -31,7 +33,12 @@ export const Button = ({
           : "pause";
 
   return (
-    <StyledButton type={type} onClick={onClick} $buttonStyle={buttonStyle}>
+    <StyledButton
+      type={type}
+      onClick={disabled ? undefined : onClick}
+      $buttonStyle={buttonStyle}
+      disabled={disabled || buttonStyle === "disabled"}
+    >
       <Text size="Button" color={textColor}>
         {label}
       </Text>
@@ -43,6 +50,7 @@ const StyledButton = styled.button<styledButtonProps>`
   border-radius: ${radius.button};
   padding: 8px 16px;
   border: 2px solid ${colors.primary};
+
   ${({ $buttonStyle }) =>
     $buttonStyle === "primary"
       ? `
@@ -55,22 +63,22 @@ const StyledButton = styled.button<styledButtonProps>`
         ? `
       background-color: ${colors.background};
       &:hover{
-      background-color: ${colors.buttonHover};
+      background-color: ${colors.pause};
       }
-      border-color: ${colors.primary};
     `
         : $buttonStyle === "disabled"
           ? `
       background-color: ${colors.background};
-      &:hover{
-      background-color: ${colors.buttonHover};
+      border: none;
       }
     `
           : $buttonStyle === "destructive"
             ? `
       background-color: ${colors.critical};
+      border: none;
       &:hover{
       background-color: ${colors.criticalHover};
+      border: none;
       }
     `
             : `
