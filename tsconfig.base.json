@@ -10,8 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@chas/ui": ["packages/ui/src/"],
-      "@chas/ui/*": ["packages/ui/src/*"]
+      "@chas/ui": ["packages/UI/src/"],
+      "@chas/ui/*": ["packages/UI/src/*"]
     }
   }
 }
