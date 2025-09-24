@@ -1,4 +1,5 @@
-import { iconMap, IconName } from "./iconMap";
+import { iconMap } from "./iconMap";
+import type { IconName } from "./iconMap";
 
 interface IconProps {
   name: IconName;
