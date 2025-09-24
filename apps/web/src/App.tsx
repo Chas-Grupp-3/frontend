@@ -6,7 +6,7 @@ function App() {
   return (
     <div>
       <Button label="web" />
-      <Card title="Äppelmos">
+      <Card onClick={}>
         <button>Jag är en knapp</button>
         <h1>Jag är stor</h1>
       </Card>

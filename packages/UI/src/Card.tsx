@@ -1,14 +1,11 @@
+import React from "react";
+
 type Props = {
   children: React.ReactNode;
-  title: string;
+  onClick: () => void;
 };
-const Card = ({ children, title }: Props) => {
-  return (
-    <div style={{ backgroundColor: "violet" }}>
-      {title}
-      {children}
-    </div>
-  );
+const Card = ({ children, onClick }: Props) => {
+  return <div onClick={onClick}>{children}</div>;
 };
 
 export default Card;
