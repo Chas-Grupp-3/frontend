@@ -40,7 +40,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@chas/ui": resolve(__dirname, "../../packages/ui/src"),
+      "@chas/ui": resolve(__dirname, "../../packages/UI/src"),
     },
   },
   build: {
