@@ -11,8 +11,8 @@ const SmallCard = ({ title, temperature, status, id }: CardProps) => {
   return (
     <div
       style={{
-        width: "200px",
-        height: "200px",
+        width: "300px",
+        height: "300px",
         backgroundColor: "violet",
         padding: "5px",
         borderRadius: "20px",

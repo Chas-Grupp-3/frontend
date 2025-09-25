@@ -12,8 +12,8 @@ const LargeCard = ({ title, temperature, status, ETA, id }: CardProps) => {
   return (
     <div
       style={{
-        width: "300px",
-        height: "200px",
+        width: "500px",
+        height: "300px",
         backgroundColor: "violet",
         padding: "5px",
         borderRadius: "20px",
