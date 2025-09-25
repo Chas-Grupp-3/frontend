@@ -6,7 +6,7 @@ import { SmallCard } from "@chas/ui";
 import { LargeCard } from "@chas/ui";
 
 function App() {
-  const [showLarge, setShowLarge] = useState(false);
+  const [showLarge, setShowLarge] = useState(true);
   return (
     <div>
       <Button label="web" />

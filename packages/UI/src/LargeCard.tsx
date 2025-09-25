@@ -10,9 +10,12 @@ const LargeCard = ({ title, temperature, id }: CardProps) => {
   return (
     <div
       style={{
-        width: "150px",
-        height: "100px",
+        width: "300px",
+        height: "200px",
         backgroundColor: "violet",
+        padding: "5px",
+        borderRadius: "20px",
+        margin: "20px",
       }}
     >
       <h1>{title}</h1>
