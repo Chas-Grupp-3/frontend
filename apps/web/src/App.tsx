@@ -12,9 +12,20 @@ function App() {
       <Button label="web" />
       <Card onClick={() => setShowLarge(!showLarge)}>
         {showLarge ? (
-          <LargeCard title="YOLO" temperature={4} id="Y67X093A3" />
+          <LargeCard
+            title="YOLO"
+            temperature={4}
+            status="Overheted"
+            ETA="Förväntad leverans 19 Dec kl. 10.15"
+            id="Y67X093A3"
+          />
         ) : (
-          <SmallCard title="YOLO" temperature={4} id="Y67X093A3" />
+          <SmallCard
+            title="YOLO"
+            temperature={4}
+            status="Good"
+            id="Y67X093A3"
+          />
         )}
         <button>Jag är en knapp</button>
         <h1>Jag är stor</h1>

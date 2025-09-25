@@ -3,10 +3,11 @@ import React from "react";
 type CardProps = {
   title: string;
   temperature: number;
+  status: string;
   id: string;
 };
 
-const SmallCard = ({ title, temperature, id }: CardProps) => {
+const SmallCard = ({ title, temperature, status, id }: CardProps) => {
   return (
     <div
       style={{
@@ -20,6 +21,7 @@ const SmallCard = ({ title, temperature, id }: CardProps) => {
     >
       <h1>{title}</h1>
       <p>{temperature}¨C</p>
+      <p>{status}</p>
       <p>ID: {id}</p>
     </div>
   );
