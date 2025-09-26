@@ -1,5 +1,5 @@
 import React from "react";
-import { colors, radius } from "./styles";
+import { colors } from "@chas/ui";
 
 type CardProps = {
   title: string;
