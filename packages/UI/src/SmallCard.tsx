@@ -8,10 +8,20 @@ type CardProps = {
 };
 
 const SmallCard = ({ title, temperature, status, id }: CardProps) => {
+  const getCardColor = (temperature: number) => {
+    if (temperature >= 20) {
+      return "red";
+    } else if (temperature >= 15) {
+      return "yellow";
+    } else {
+      return "green";
+    }
+  };
+
   return (
-    <div style={styles.card}>
+    <div style={{ ...styles.card, backgroundColor: getCardColor(temperature) }}>
       <h1>{title}</h1>
-      <p>{temperature}¨C</p>
+      <p>{temperature}°C</p>
       <p>{status}</p>
       <p>ID: {id}</p>
     </div>
@@ -22,9 +32,8 @@ export default SmallCard;
 
 const styles = {
   card: {
-    width: 500,
+    width: 300,
     height: 300,
-    backgroundColor: "violet",
     padding: 5,
     borderRadius: 20,
     margin: 20,

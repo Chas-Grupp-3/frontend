@@ -9,8 +9,17 @@ type CardProps = {
 };
 
 const LargeCard = ({ title, temperature, status, ETA, id }: CardProps) => {
+  const getCardColor = (temperature: number) => {
+    if (temperature >= 20) {
+      return "red";
+    } else if (temperature >= 15) {
+      return "yellow";
+    } else {
+      return "green";
+    }
+  };
   return (
-    <div style={styles.card}>
+    <div style={{ ...styles.card, backgroundColor: getCardColor(temperature) }}>
       <h1>{title}</h1>
       <p>{temperature}¨C</p>
       <p>{status}</p>
@@ -26,7 +35,6 @@ const styles = {
   card: {
     width: 500,
     height: 300,
-    backgroundColor: "violet",
     padding: 5,
     borderRadius: 20,
     margin: 20,
