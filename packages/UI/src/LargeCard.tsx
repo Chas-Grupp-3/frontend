@@ -10,16 +10,7 @@ type CardProps = {
 
 const LargeCard = ({ title, temperature, status, ETA, id }: CardProps) => {
   return (
-    <div
-      style={{
-        width: "500px",
-        height: "300px",
-        backgroundColor: "violet",
-        padding: "5px",
-        borderRadius: "20px",
-        margin: "20px",
-      }}
-    >
+    <div style={styles.card}>
       <h1>{title}</h1>
       <p>{temperature}¨C</p>
       <p>{status}</p>
@@ -30,3 +21,14 @@ const LargeCard = ({ title, temperature, status, ETA, id }: CardProps) => {
 };
 
 export default LargeCard;
+
+const styles = {
+  card: {
+    width: 500,
+    height: 300,
+    backgroundColor: "violet",
+    padding: 5,
+    borderRadius: 20,
+    margin: 20,
+  },
+};

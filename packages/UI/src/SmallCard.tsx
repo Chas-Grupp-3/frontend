@@ -9,16 +9,7 @@ type CardProps = {
 
 const SmallCard = ({ title, temperature, status, id }: CardProps) => {
   return (
-    <div
-      style={{
-        width: "300px",
-        height: "300px",
-        backgroundColor: "violet",
-        padding: "5px",
-        borderRadius: "20px",
-        margin: "20px",
-      }}
-    >
+    <div style={styles.card}>
       <h1>{title}</h1>
       <p>{temperature}¨C</p>
       <p>{status}</p>
@@ -28,3 +19,14 @@ const SmallCard = ({ title, temperature, status, id }: CardProps) => {
 };
 
 export default SmallCard;
+
+const styles = {
+  card: {
+    width: 500,
+    height: 300,
+    backgroundColor: "violet",
+    padding: 5,
+    borderRadius: 20,
+    margin: 20,
+  },
+};
