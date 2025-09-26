@@ -1,7 +1,7 @@
 import "./App.css";
 
 function App() {
-  return <div label="logistics" />;
+  return <div />;
 }
 
 export default App;
