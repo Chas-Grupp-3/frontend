@@ -1,4 +1,5 @@
 import React from "react";
+import { colors, radius } from "./styles";
 
 type CardProps = {
   title: string;
@@ -11,11 +12,11 @@ type CardProps = {
 const LargeCard = ({ title, temperature, status, ETA, id }: CardProps) => {
   const getCardColor = (temperature: number) => {
     if (temperature >= 20) {
-      return "red";
+      return `${colors.critical}`;
     } else if (temperature >= 15) {
-      return "yellow";
+      return `${colors.minor}`;
     } else {
-      return "green";
+      return `${colors.ok}`;
     }
   };
   return (
