@@ -44,6 +44,7 @@
     "clean": "turbo run clean",
     "type-check": "turbo run type-check",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\""
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "check": "turbo run lint && turbo run type-check && npm run format:check"
   }
 }
