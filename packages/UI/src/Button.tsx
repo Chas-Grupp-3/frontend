@@ -68,7 +68,7 @@ const StyledButton = styled.button<styledButtonProps>`
     `
         : $buttonVariant === "disabled"
           ? `
-      background-color: ${colors.background};
+      background-color: ${colors.whiteBackground};
       border: none;
       }
     `

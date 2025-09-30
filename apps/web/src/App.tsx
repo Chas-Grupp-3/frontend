@@ -4,7 +4,7 @@ import { Button } from "@chas/ui";
 function App() {
   return (
     <Button
-      buttonVariant="destructive"
+      buttonVariant="disabled"
       label="web"
       onClick={() => console.log("hej hej")}
     />
