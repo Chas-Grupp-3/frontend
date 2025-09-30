@@ -4,14 +4,26 @@ import { colors } from "./styles";
 type CardProps = {
   title: string;
   temperature: number;
-  status: string;
-  ETA: string;
+  DeliveryStatus: "delivered" | "late" | "on time";
+  ETA?: string;
   id: string;
+  threshold: number;
 };
 
-const LargeCard = ({ title, temperature, status, ETA, id }: CardProps) => {
-  const getCardColor = (temperature: number) => {
-    if (temperature >= 20) {
+const LargeCard = ({
+  title,
+  temperature,
+  DeliveryStatus,
+  ETA,
+  id,
+  threshold,
+}: CardProps) => {
+  const getCardColor = (
+    DeliveryStatus: "delivered" | "late" | "on time",
+    temperature: number,
+    threshold: number
+  ) => {
+    if (temperature >= threshold) {
       return `${colors.critical}`;
     } else if (temperature >= 15) {
       return `${colors.minor}`;
@@ -20,10 +32,10 @@ const LargeCard = ({ title, temperature, status, ETA, id }: CardProps) => {
     }
   };
   return (
-    <div style={{ ...styles.card, backgroundColor: getCardColor(temperature) }}>
+    <div style={{ ...styles.card, backgroundColor: getCardColor(temperature, DeliveryStatus) }}>
       <h1>{title}</h1>
-      <p>{temperature}¨C</p>
-      <p>{status}</p>
+      <p>{temperature}°C</p>
+      <p>{DeliveryStatus}</p>
       <p>{ETA}</p>
       <p>ID: {id}</p>
     </div>

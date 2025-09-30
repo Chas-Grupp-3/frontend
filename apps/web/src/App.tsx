@@ -15,7 +15,7 @@ function App() {
           <LargeCard
             title="YOLO"
             temperature={1}
-            status="Overheated"
+            DeliveryStatus="Overheated"
             ETA="Förväntad leverans 19 Dec kl. 10.15"
             id="Y67X093A3"
           />
@@ -23,7 +23,7 @@ function App() {
           <SmallCard
             title="YOLO"
             temperature={16}
-            status="Good"
+            DeliveryStatus="Good"
             id="Y67X093A3"
           />
         )}
