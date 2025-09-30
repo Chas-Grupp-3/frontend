@@ -22,26 +22,34 @@ const sizeStyles: Record<InputSize, ReturnType<typeof css>> = {
   `,
   md: css`
     font-size: ${textWeb.body.md};
-    paddig: 8px 12px;
+    padding: 8px 12px;
     border-radius: ${radius.input};
   `,
   lg: css`
     font-size: ${textWeb.body.lg};
-    paddig: 12px 16px;
-    border-radius: ${radius.box};
+    padding: 12px 16px;
+    border-radius: ${radius.input};
   `,
 };
 
 const variantStyles: Record<InputVariant, ReturnType<typeof css>> = {
   default: css`
     border: 1px solid ${colors.greyLines};
-    background-color: ${colors.whiteBackground};
+    background-color: #fff;
     color: ${colors.blackText};
 
     &:focus {
       outline: none;
       border-color: ${colors.primary};
-      box-shadow: 0 0 0 2px ${colors.accent};
+      background-color: #fff;
+    }
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    &:active {
+      background-color: #fff;
     }
   `,
   error: css`
@@ -53,6 +61,15 @@ const variantStyles: Record<InputVariant, ReturnType<typeof css>> = {
       outline: none;
       border-color: ${colors.criticalHover};
       box-shadow: 0 0 0 2px ${colors.criticalHover};
+      background-color: #fff;
+    }
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    &:active {
+      background-color: #fff;
     }
   `,
   success: css`
@@ -63,7 +80,15 @@ const variantStyles: Record<InputVariant, ReturnType<typeof css>> = {
     &:focus {
       outline: none;
       border-color: ${colors.okHover};
-      box-shadow: 0 0 0 2px ${colors.okHover};
+      background-color: #fff;
+    }
+
+    &:hover {
+      background-color: #fff;
+    }
+
+    &:active {
+      background-color: #fff;
     }
   `,
 };
@@ -73,6 +98,7 @@ const InputWrapper = styled.div`
   flex-direction: column;
   gap: 4px;
   width: 100%;
+  margin-bottom: 16px;
 `;
 
 const Label = styled.label`
@@ -118,7 +144,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           {...rest}
         />
 
-        {error ? <ErrorText>{error}</ErrorText> : hint && <Hint>{hint}</Hint>}
+        {error ? <ErrorText>{error}</ErrorText> : label && <Hint>{hint}</Hint>}
       </InputWrapper>
     );
   }

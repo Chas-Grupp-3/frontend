@@ -7,19 +7,9 @@ function App() {
     <div style={{ padding: "2rem" }}>
       <Button label="web" />
 
-      <TextInput
-        label="Email"
-        placeholder="you@domain.com"
-        hint="Ange din jobbmail"
-        inputSize="md"
-      />
-
-      <TextInput
-        label="Lösenord"
-        type="password"
-        error="Lösenordet måste vara minst 8 tecken"
-        inputSize="md"
-      />
+      <TextInput placeholder="Email" hint="Ange din jobbmail" inputSize="sm" />
+      <TextInput placeholder="Email" hint="Ange din jobbmail" inputSize="md" />
+      <TextInput placeholder="Email" hint="Ange din jobbmail" inputSize="lg" />
     </div>
   );
 }
