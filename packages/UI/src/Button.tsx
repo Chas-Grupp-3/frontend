@@ -2,33 +2,33 @@ import styled from "styled-components";
 import { colors, radius } from "./styles";
 import Text from "./font";
 
-type buttonStyle = "primary" | "secondary" | "disabled" | "destructive";
+type buttonVariant = "primary" | "secondary" | "disabled" | "destructive";
 
 interface ButtonProps {
   label: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
-  buttonStyle: buttonStyle;
+  buttonVariant: buttonVariant;
   disabled?: boolean;
 }
 
 interface styledButtonProps {
-  $buttonStyle: buttonStyle;
+  $buttonVariant: buttonVariant;
 }
 
 export const Button = ({
   label,
   onClick,
   type = "button",
-  buttonStyle = "primary",
+  buttonVariant = "primary",
   disabled = false,
 }: ButtonProps) => {
   const textColor: keyof typeof colors =
-    buttonStyle === "primary"
+    buttonVariant === "primary"
       ? "accent"
-      : buttonStyle === "secondary"
+      : buttonVariant === "secondary"
         ? "primary"
-        : buttonStyle === "disabled"
+        : buttonVariant === "disabled"
           ? "greyText"
           : "pause";
 
@@ -36,8 +36,8 @@ export const Button = ({
     <StyledButton
       type={type}
       onClick={disabled ? undefined : onClick}
-      $buttonStyle={buttonStyle}
-      disabled={disabled || buttonStyle === "disabled"}
+      $buttonVariant={buttonVariant}
+      disabled={disabled || buttonVariant === "disabled"}
     >
       <Text size="Button" color={textColor}>
         {label}
@@ -51,28 +51,28 @@ const StyledButton = styled.button<styledButtonProps>`
   padding: 8px 16px;
   border: 2px solid ${colors.primary};
 
-  ${({ $buttonStyle }) =>
-    $buttonStyle === "primary"
+  ${({ $buttonVariant }) =>
+    $buttonVariant === "primary"
       ? `
       background-color: ${colors.primary};
       &:hover{
       background-color: ${colors.buttonHover};
       }
     `
-      : $buttonStyle === "secondary"
+      : $buttonVariant === "secondary"
         ? `
       background-color: ${colors.background};
       &:hover{
       background-color: ${colors.pause};
       }
     `
-        : $buttonStyle === "disabled"
+        : $buttonVariant === "disabled"
           ? `
       background-color: ${colors.background};
       border: none;
       }
     `
-          : $buttonStyle === "destructive"
+          : $buttonVariant === "destructive"
             ? `
       background-color: ${colors.critical};
       border: none;
