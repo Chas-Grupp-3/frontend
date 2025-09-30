@@ -13,12 +13,12 @@ export const colors = {
   ok: "#2CEB72",
   minor: "#FFA712",
   critical: "#B62D2D",
-  paus: "#C6CCD8",
+  pause: "#C6CCD8",
 
   okHover: "#208D48",
   minorHover: "#D08403",
   criticalHover: "#882020",
-  pausHover: "#525E77",
+  pauseHover: "#525E77",
   buttonHover: "#063464",
 
   greyLines: "#0E7490",
