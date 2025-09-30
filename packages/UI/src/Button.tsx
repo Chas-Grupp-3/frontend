@@ -1,9 +1,42 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { colors, radius } from "./styles";
 import Text from "./font";
-
 type buttonVariant = "primary" | "secondary" | "disabled" | "destructive";
 
+const buttonVariantsConfig = {
+  primary: css`
+    background-color: ${colors.primary};
+    border: 2px solid ${colors.primary};
+    &:hover {
+      background-color: ${colors.buttonHover};
+      border: 2px solid ${colors.buttonHover};
+    }
+  `,
+  secondary: css`
+    background-color: ${colors.background};
+    border: 2px solid ${colors.primary};
+    &:hover {
+      background-color: ${colors.pause};
+    }
+  `,
+  disabled: css`
+    background-color: ${colors.background};
+    border: none;
+  `,
+  destructive: css`
+    background-color: ${colors.critical};
+    border: none;
+    &:hover {
+      background-color: ${colors.criticalHover};
+    }
+  `,
+};
+const textColorsConfig: Record<buttonVariant, keyof typeof colors> = {
+  primary: "accent",
+  secondary: "primary",
+  disabled: "greyText",
+  destructive: "background",
+};
 interface ButtonProps {
   label: string;
   onClick?: () => void;
@@ -11,11 +44,9 @@ interface ButtonProps {
   buttonVariant: buttonVariant;
   disabled?: boolean;
 }
-
 interface styledButtonProps {
   $buttonVariant: buttonVariant;
 }
-
 export const Button = ({
   label,
   onClick,
@@ -23,15 +54,7 @@ export const Button = ({
   buttonVariant = "primary",
   disabled = false,
 }: ButtonProps) => {
-  const textColor: keyof typeof colors =
-    buttonVariant === "primary"
-      ? "accent"
-      : buttonVariant === "secondary"
-        ? "primary"
-        : buttonVariant === "disabled"
-          ? "greyText"
-          : "pause";
-
+  const textColor = textColorsConfig[buttonVariant];
   return (
     <StyledButton
       type={type}
@@ -45,46 +68,10 @@ export const Button = ({
     </StyledButton>
   );
 };
-
 const StyledButton = styled.button<styledButtonProps>`
   border-radius: ${radius.button};
   padding: 8px 16px;
-  border: 2px solid ${colors.primary};
 
-  ${({ $buttonVariant }) =>
-    $buttonVariant === "primary"
-      ? `
-      background-color: ${colors.primary};
-      &:hover{
-      background-color: ${colors.buttonHover};
-      }
-    `
-      : $buttonVariant === "secondary"
-        ? `
-      background-color: ${colors.background};
-      &:hover{
-      background-color: ${colors.pause};
-      }
-    `
-        : $buttonVariant === "disabled"
-          ? `
-      background-color: ${colors.whiteBackground};
-      border: none;
-      }
-    `
-          : $buttonVariant === "destructive"
-            ? `
-      background-color: ${colors.critical};
-      border: none;
-      &:hover{
-      background-color: ${colors.criticalHover};
-      border: none;
-      }
-    `
-            : `
-    background-color: ${colors.background};
-      }
-    `}
+  ${({ $buttonVariant }) => buttonVariantsConfig[$buttonVariant]}
 `;
-
 export default Button;
