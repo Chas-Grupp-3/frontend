@@ -1,6 +1,5 @@
 import "./App.css";
-import { Toggle } from "@chas/ui";
-import { useState } from "react";
+import { Button } from "@chas/ui";
 
 function App() {
   return (
