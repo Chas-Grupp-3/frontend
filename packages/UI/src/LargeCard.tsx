@@ -85,7 +85,8 @@ const styles = {
   },
   cardBox: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    gap: 150,
     alignItems: "center",
     height: "100%",
     width: "100%",
@@ -94,12 +95,12 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: 8,
+    gap: 3,
   },
   rightColumn: {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-end",
-    gap: 8,
+    gap: 3,
 },
 };

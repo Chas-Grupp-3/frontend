@@ -16,7 +16,7 @@ function App() {
             title="YOLO"
             temperature={3}
             DeliveryStatus="delivered"
-            ETA="Förväntad leverans 19 Dec kl. 10.15"
+            ETA="19 Dec kl. 10.15"
             id="Y67X093A3"
             threshold={14}
           />
