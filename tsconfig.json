@@ -7,10 +7,13 @@
   "include": [],
   "references": [
     {
-      "path": "./apps/logistics"
+      "path": "./apps/web"
     },
     {
-      "path": "./packages/ui"
+      "path": "./apps/mobile"
+    },
+    {
+      "path": "./packages/UI"
     }
   ]
 }
