@@ -34,7 +34,6 @@
   },
   "scripts": {
     "dev": "turbo run dev",
-    "dev:logistics": "turbo run dev --filter=logistics",
     "dev:web": "turbo run dev --filter=web",
     "dev:mobile": "turbo run dev --filter=mobile",
     "build": "turbo run build",
