@@ -58,11 +58,17 @@ const LargeCard = ({
         backgroundColor: getCardColor(DeliveryStatus, temperature, threshold),
       }}
     >
-      <h1>{title}</h1>
-      <p>{temperature}°C</p>
-      <p>{getStatusText(DeliveryStatus, temperature, threshold)}</p>
-      <p>ETA: {ETA}</p>
-      <p>ID: {id}</p>
+      <div style={styles.cardBox}>
+        <div style={styles.leftColumn}>
+          <h1>{title}</h1>
+          <p>{temperature}°</p>
+        </div>
+        <div style={styles.rightColumn}>
+          <p>{getStatusText(DeliveryStatus, temperature, threshold)}</p>
+          <p>ETA: {ETA}</p>
+          <p>ID: {id}</p>
+        </div>
+      </div>
     </div>
   );
 };
@@ -77,4 +83,23 @@ const styles = {
     borderRadius: 20,
     margin: 20,
   },
+  cardBox: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    height: "100%",
+    width: "100%",
+  },
+  leftColumn: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: 8,
+  },
+  rightColumn: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+    gap: 8,
+},
 };
