@@ -71,8 +71,8 @@ export default SmallCard;
 
 const styles = {
   card: {
-    width: 300,
-    height: 300,
+    width: 250,
+    height: 250,
     padding: 5,
     borderRadius: 20,
     margin: 20,

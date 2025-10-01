@@ -78,7 +78,7 @@ export default LargeCard;
 const styles = {
   card: {
     width: 500,
-    height: 300,
+    height: 200,
     padding: 5,
     borderRadius: 20,
     margin: 20,
