@@ -38,21 +38,21 @@ const textColorsConfig: Record<buttonVariant, keyof typeof colors> = {
   destructive: "background",
 };
 interface ButtonProps {
-  label: string;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
-  buttonVariant: buttonVariant;
+  buttonVariant?: buttonVariant;
   disabled?: boolean;
+  children: React.ReactNode;
 }
 interface styledButtonProps {
   $buttonVariant: buttonVariant;
 }
 export const Button = ({
-  label,
   onClick,
   type = "button",
   buttonVariant = "primary",
   disabled = false,
+  children,
 }: ButtonProps) => {
   const textColor = textColorsConfig[buttonVariant];
   return (
@@ -63,7 +63,7 @@ export const Button = ({
       disabled={disabled || buttonVariant === "disabled"}
     >
       <Text size="Button" color={textColor}>
-        {label}
+        {children}
       </Text>
     </StyledButton>
   );
