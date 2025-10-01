@@ -68,6 +68,11 @@ const getTextSize = (variant: StyledTextProps["$variant"]) => {
         font-size: ${textWeb.body.md};
         font-family: "Inter Regular";
       `;
+    case "Body-sm":
+      return css`
+        font-size: ${textWeb.body.sm};
+        font-family: "Inter Regular";
+      `;
     case "Button":
       return css`
         font-size: ${textWeb.button};
