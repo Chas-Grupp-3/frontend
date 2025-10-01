@@ -1,5 +1,6 @@
 import React from "react";
 import { colors } from "./styles";
+import Text from "./font";
 
 type CardProps = {
   title: string;
@@ -24,19 +25,43 @@ const LargeCard = ({
     threshold: number
   ) => {
     if (temperature >= threshold) {
-      return `${colors.critical}`;
-    } else if (temperature >= 15) {
+      return colors.critical;
+    } else if (DeliveryStatus === "late") {
       return `${colors.minor}`;
+    } else if (DeliveryStatus === "delivered") {
+      return `${colors.paus}`;
     } else {
       return `${colors.ok}`;
     }
   };
+
+  const getStatusText = (
+    DeliveryStatus: "delivered" | "late" | "on time",
+    temperature: number,
+    threshold: number
+  ) => {
+    if (temperature >= threshold) {
+      return "Temp issues";
+    }
+    if (DeliveryStatus === "late") {
+      return "Late";
+    }
+    if (DeliveryStatus === "delivered") {
+      return "Delivered";
+    }
+    return "On time";
+  };
   return (
-    <div style={{ ...styles.card, backgroundColor: getCardColor(temperature, DeliveryStatus) }}>
+    <div
+      style={{
+        ...styles.card,
+        backgroundColor: getCardColor(DeliveryStatus, temperature, threshold),
+      }}
+    >
       <h1>{title}</h1>
       <p>{temperature}°C</p>
-      <p>{DeliveryStatus}</p>
-      <p>{ETA}</p>
+      <p>{getStatusText(DeliveryStatus, temperature, threshold)}</p>
+      <p>ETA: {ETA}</p>
       <p>ID: {id}</p>
     </div>
   );
