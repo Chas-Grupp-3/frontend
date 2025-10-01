@@ -61,7 +61,7 @@ const SmallCard = ({
       <h1>{title}</h1>
       <p>{temperature}°C</p>
       <p>{getStatusText(DeliveryStatus, temperature, threshold)}</p>
-      <p>ETA: {ETA}</p>
+      <p>{ETA}</p>
       <p>ID: {id}</p>
     </div>
   );
