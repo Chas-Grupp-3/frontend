@@ -87,11 +87,13 @@ const LargeCard = ({
                 stroke-linecap="round"
               />
             </svg>
-             {temperature}°
+            {temperature}°
           </Text>
         </div>
         <div style={styles.rightColumn}>
-          <Text size="Body-sm">{getStatusText(DeliveryStatus, temperature, threshold)}</Text>
+          <Text size="Body-sm">
+            {getStatusText(DeliveryStatus, temperature, threshold)}
+          </Text>
           <Text size="Body-sm">ETA: {ETA}</Text>
           <Text size="Body-sm">ID: {id}</Text>
         </div>

@@ -48,7 +48,7 @@ export const textWeb = {
   body: {
     lg: "25px",
     md: "18px",
-    sm: "12px"
+    sm: "12px",
   },
   button: "20px",
   nav: "30px", //25-36px???
