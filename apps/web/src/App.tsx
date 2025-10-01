@@ -26,6 +26,7 @@ function App() {
             temperature={16}
             DeliveryStatus="Good"
             id="Y67X093A3"
+            threshold={14}
           />
         )}
         <button>Jag är en knapp</button>
