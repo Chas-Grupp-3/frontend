@@ -15,7 +15,7 @@ function App() {
           <LargeCard
             title="YOLO"
             temperature={3}
-            DeliveryStatus="on time"
+            DeliveryStatus="delivered"
             ETA="Förväntad leverans 19 Dec kl. 10.15"
             id="Y67X093A3"
             threshold={14}
@@ -24,7 +24,7 @@ function App() {
           <SmallCard
             title="YOLO"
             temperature={16}
-            DeliveryStatus="Good"
+            DeliveryStatus="late"
             id="Y67X093A3"
             threshold={14}
           />

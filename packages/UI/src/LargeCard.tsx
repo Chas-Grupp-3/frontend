@@ -54,7 +54,7 @@ const LargeCard = ({
   return (
     <div
       style={{
-        ...styles.card,
+        ...styles.card, color:`${colors.cardText}`,
         backgroundColor: getCardColor(DeliveryStatus, temperature, threshold),
       }}
     >
