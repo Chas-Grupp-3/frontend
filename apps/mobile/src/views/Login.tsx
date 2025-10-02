@@ -2,7 +2,7 @@ import { Text } from "@chas/ui";
 const Login = () => {
   return (
     <div>
-      <Text size="H1">Login</Text>
+      <Text variant="h1">Login</Text>
     </div>
   );
 };

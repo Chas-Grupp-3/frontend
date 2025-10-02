@@ -2,7 +2,7 @@ import { Text } from "@chas/ui";
 const Warnings = () => {
   return (
     <div>
-      <Text size="H1">Warnings</Text>
+      <Text variant="h1">Warnings</Text>
     </div>
   );
 };
