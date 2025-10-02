@@ -2,12 +2,14 @@ import "@fontsource/poppins/500.css"; // Medium
 import "@fontsource/poppins/600.css"; // semi-bold
 import "@fontsource/poppins/700.css"; // bold
 import "@fontsource/inter/400.css"; // regular
+import "@fontsource/inter/700.css"; //bold
 
 export const fontWeight = {
   poppinsMedium: 500,
   poppinsSemiBold: 600,
   poppinsBold: 700,
   interRegular: 400,
+  interBold: 700,
 };
 export const fontFamily = {
   poppins: "'Poppins', sans-serif",
@@ -85,6 +87,11 @@ export const textMobile = {
     sm: {
       fontSize: "14px",
       fontWeight: fontWeight.interRegular,
+      fontFamily: fontFamily.inter,
+    },
+    smBold: {
+      fontSize: "14px",
+      fontWeight: fontWeight.interBold,
       fontFamily: fontFamily.inter,
     },
   },

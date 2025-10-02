@@ -1,5 +1,5 @@
 import { colors } from "./styles";
-import Text from "./font";
+import Text from "./Text/Text";
 
 type CardProps = {
   title: string;
@@ -28,7 +28,7 @@ const SmallCard = ({
     } else if (DeliveryStatus === "late") {
       return `${colors.minor}`;
     } else if (DeliveryStatus === "delivered") {
-      return `${colors.paus}`;
+      return `${colors.pause}`;
     } else {
       return `${colors.ok}`;
     }
@@ -58,8 +58,8 @@ const SmallCard = ({
         backgroundColor: getCardColor(DeliveryStatus, temperature, threshold),
       }}
     >
-      <Text size="Body-sm">{title}</Text>
-      <Text size="H1">
+      <Text variant="body-smBold">{title}</Text>
+      <Text variant="h1">
         <svg
           width="18"
           height="30"
@@ -86,11 +86,11 @@ const SmallCard = ({
         </svg>
         {temperature}°C
       </Text>
-      <Text size="Body-sm">
+      <Text variant="body-smBold">
         {getStatusText(DeliveryStatus, temperature, threshold)}
       </Text>
-      <Text size="Body-sm">{ETA}</Text>
-      <Text size="Body-sm">ID: {id}</Text>
+      <Text variant="body-sm">{ETA}</Text>
+      <Text variant="body-sm">ID: {id}</Text>
     </div>
   );
 };

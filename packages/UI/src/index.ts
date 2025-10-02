@@ -1,9 +1,6 @@
 export * from "./Button";
 export * from "./styles";
-export * from "./font";
-export { default as Card } from "./Card";
-export { default as SmallCard } from "./SmallCard";
-export { default as LargeCard } from "./LargeCard";
+export * from "./Card";
 export * from "./icon";
 export * from "./Toggle/Toggle";
 export * from "./Text/Text";

@@ -1,5 +1,5 @@
-import { SmallCard } from "@chas/ui";
-import { LargeCard } from "@chas/ui";
+import SmallCard from "./SmallCard";
+import LargeCard from "./LargeCard";
 
 type CardVariant = "small" | "large";
 
@@ -13,7 +13,7 @@ type CardProps = {
   threshold: number;
 };
 
-const Card = ({
+export const Card = ({
   variant = "large",
   title,
   temperature,
@@ -45,5 +45,3 @@ const Card = ({
     </div>
   );
 };
-
-export default Card;
