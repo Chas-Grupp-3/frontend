@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes, forwardRef } from "react";
+import { forwardRef } from "react";
+import type { InputHTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 import { colors, radius, textWeb } from "./styles";
 
