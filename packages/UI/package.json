@@ -36,6 +36,6 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf dist .turbo"
+    "clean": "rm -rf dist .turbo tsconfig.tsbuildinfo"
   }
 }
