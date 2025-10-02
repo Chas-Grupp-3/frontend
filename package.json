@@ -10,6 +10,7 @@
   "dependencies": {
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-router": "^7.9.3",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {
@@ -34,7 +35,6 @@
   },
   "scripts": {
     "dev": "turbo run dev",
-    "dev:logistics": "turbo run dev --filter=logistics",
     "dev:web": "turbo run dev --filter=web",
     "dev:mobile": "turbo run dev --filter=mobile",
     "build": "turbo run build",
@@ -44,6 +44,7 @@
     "clean": "turbo run clean",
     "type-check": "turbo run type-check",
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
-    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\""
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "check": "turbo run lint && turbo run type-check && npm run format:check"
   }
 }
