@@ -10,7 +10,7 @@ const Navigation = () => {
       <NavLink to="/" $isActive={location.pathname === "/"}>
         <NavIcon>🏠</NavIcon>
         <Text
-          size="Body-sm"
+          variant="body"
           color={location.pathname === "/" ? "secondary" : "background"}
         >
           Dashboard
@@ -20,7 +20,7 @@ const Navigation = () => {
       <NavLink to="/scan" $isActive={location.pathname === "/scan"}>
         <NavIcon>📷</NavIcon>
         <Text
-          size="Body-sm"
+          variant="body"
           color={location.pathname === "/scan" ? "secondary" : "background"}
         >
           Scan
@@ -30,7 +30,7 @@ const Navigation = () => {
       <NavLink to="/warnings" $isActive={location.pathname === "/warnings"}>
         <NavIcon>⚠️</NavIcon>
         <Text
-          size="Body-sm"
+          variant="body"
           color={location.pathname === "/warnings" ? "secondary" : "background"}
         >
           Warnings
@@ -40,7 +40,7 @@ const Navigation = () => {
       <NavLink to="/login" $isActive={location.pathname === "/login"}>
         <NavIcon>👤</NavIcon>
         <Text
-          size="Body-sm"
+          variant="body"
           color={location.pathname === "/login" ? "secondary" : "background"}
         >
           Login

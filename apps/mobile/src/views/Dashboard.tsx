@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Text size="H1">Dashboard</Text>
+      <Text variant="h1">Dashboard</Text>
       <Button onClick={handleViewPackage}>View Package Details</Button>
     </div>
   );

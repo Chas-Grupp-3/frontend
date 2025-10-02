@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Icon } from "../icon";
-import Text from "../font";
+import { Text } from "../Text/Text";
 import { colors } from "../styles";
 import type { ToggleOption } from "./types";
 
@@ -41,7 +41,7 @@ const ToggleItem = ({
         </IconWrapper>
         {option.count !== undefined && (
           <CountWrapper>
-            <Text size="Button" color="primary" as="span">
+            <Text variant="button" color="primary">
               {option.count}
             </Text>
           </CountWrapper>
