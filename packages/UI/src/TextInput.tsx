@@ -1,4 +1,5 @@
-import React, { InputHTMLAttributes, forwardRef } from "react";
+import { forwardRef } from "react";
+import type { InputHTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 import { colors, radius, textWeb } from "./styles";
 
@@ -144,7 +145,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           {...rest}
         />
 
-        {error ? <ErrorText>{error}</ErrorText> : label && <Hint>{hint}</Hint>}
+{error && <ErrorText>{error}</ErrorText>}
+{!error && hint && <Hint>{hint}</Hint>}
       </InputWrapper>
     );
   }
