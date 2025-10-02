@@ -8,7 +8,6 @@ interface TextProps {
   variant?: TextVariant;
   color?: keyof typeof colors;
   children: ReactNode;
-  className?: string;
   htmlFor?: string;
 }
 
@@ -28,6 +27,7 @@ export const Text = ({
   color = "blueText",
   children,
   htmlFor,
+  ...rest
 }: TextProps) => {
   const element = defaultElementMap[variant];
 
@@ -37,6 +37,7 @@ export const Text = ({
       $variant={variant}
       $color={color}
       htmlFor={htmlFor}
+      {...rest}
     >
       {children}
     </StyledText>
