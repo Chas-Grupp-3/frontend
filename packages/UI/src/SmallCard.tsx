@@ -99,7 +99,7 @@ const StyledText = styled.div`
 const StyledTemperature = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0.2rem;
+  gap: 0.5rem;
   align-items: center;
   margin-top: 0.5rem;
 `;
