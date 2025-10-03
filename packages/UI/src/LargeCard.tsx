@@ -6,7 +6,7 @@ import { Icon } from "./Icon";
 type CardProps = {
   title: string;
   temperature: number;
-  DeliveryStatus: "delivered" | "late" | "on time";
+  deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
   threshold: number;
@@ -15,21 +15,21 @@ type CardProps = {
 const LargeCard = ({
   title,
   temperature,
-  DeliveryStatus,
+  deliveryStatus,
   ETA,
   id,
   threshold,
 }: CardProps) => {
   const getCardColor = (
-    DeliveryStatus: "delivered" | "late" | "on time",
+    deliveryStatus: "delivered" | "late" | "on time",
     temperature: number,
     threshold: number
   ) => {
     if (temperature >= threshold) {
       return colors.critical;
-    } else if (DeliveryStatus === "late") {
+    } else if (deliveryStatus === "late") {
       return `${colors.minor}`;
-    } else if (DeliveryStatus === "delivered") {
+    } else if (deliveryStatus === "delivered") {
       return `${colors.pause}`;
     } else {
       return `${colors.ok}`;
@@ -37,17 +37,17 @@ const LargeCard = ({
   };
 
   const getStatusText = (
-    DeliveryStatus: "delivered" | "late" | "on time",
+    deliveryStatus: "delivered" | "late" | "on time",
     temperature: number,
     threshold: number
   ) => {
     if (temperature >= threshold) {
       return "Temp issues";
     }
-    if (DeliveryStatus === "late") {
+    if (deliveryStatus === "late") {
       return "Late";
     }
-    if (DeliveryStatus === "delivered") {
+    if (deliveryStatus === "delivered") {
       return "Delivered";
     }
     return "On time";
@@ -56,14 +56,14 @@ const LargeCard = ({
     <StyledCard
       style={{
         color: `${colors.cardText}`,
-        backgroundColor: getCardColor(DeliveryStatus, temperature, threshold),
+        backgroundColor: getCardColor(deliveryStatus, temperature, threshold),
       }}
     >
       <StyledInfo>
         <Text variant="body-smBold">{title}</Text>
         <StyledDeliveryStatus>
           <Text variant="body-smBold">
-            {getStatusText(DeliveryStatus, temperature, threshold)}
+            {getStatusText(deliveryStatus, temperature, threshold)}
           </Text>
         </StyledDeliveryStatus>
       </StyledInfo>
