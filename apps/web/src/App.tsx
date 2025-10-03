@@ -11,7 +11,7 @@ function App() {
         ETA="19 Dec kl. 10.15"
         id="Y67X093A3"
         threshold={14}
-        variant="large"
+        variant="small"
       />
     </div>
   );

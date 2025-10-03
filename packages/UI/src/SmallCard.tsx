@@ -6,7 +6,7 @@ import { Icon } from "./Icon";
 type CardProps = {
   title: string;
   temperature: number;
-  DeliveryStatus: "delivered" | "late" | "on time";
+  deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
   threshold: number;
@@ -15,21 +15,21 @@ type CardProps = {
 const SmallCard = ({
   title,
   temperature,
-  DeliveryStatus,
+  deliveryStatus,
   ETA,
   id,
   threshold,
 }: CardProps) => {
   const getCardColor = (
-    DeliveryStatus: "delivered" | "late" | "on time",
+    deliveryStatus: "delivered" | "late" | "on time",
     temperature: number,
     threshold: number
   ) => {
     if (temperature >= threshold) {
       return colors.critical;
-    } else if (DeliveryStatus === "late") {
+    } else if (deliveryStatus === "late") {
       return `${colors.minor}`;
-    } else if (DeliveryStatus === "delivered") {
+    } else if (deliveryStatus === "delivered") {
       return `${colors.pause}`;
     } else {
       return `${colors.ok}`;
@@ -37,17 +37,17 @@ const SmallCard = ({
   };
 
   const getStatusText = (
-    DeliveryStatus: "delivered" | "late" | "on time",
+    deliveryStatus: "delivered" | "late" | "on time",
     temperature: number,
     threshold: number
   ) => {
     if (temperature >= threshold) {
       return "Temp issues";
     }
-    if (DeliveryStatus === "late") {
+    if (deliveryStatus === "late") {
       return "Late";
     }
-    if (DeliveryStatus === "delivered") {
+    if (deliveryStatus === "delivered") {
       return "Delivered";
     }
     return "On time";
@@ -56,20 +56,18 @@ const SmallCard = ({
     <StyledCard
       style={{
         color: `${colors.cardText}`,
-        backgroundColor: getCardColor(DeliveryStatus, temperature, threshold),
+        backgroundColor: getCardColor(deliveryStatus, temperature, threshold),
       }}
     >
       <StyledText>
         <Text variant="body-smBold">{title}</Text>
         <StyledTemperature>
-          <Text variant="h1">
-            <Icon name="smallTemp" size="sm" />
-            {temperature}°C
-          </Text>
+          <Icon name="smallTemp" size="sm" />
+          <Text variant="h1">{temperature}°C</Text>
         </StyledTemperature>
         <StyledDeliverystatus>
           <Text variant="body-smBold">
-            {getStatusText(DeliveryStatus, temperature, threshold)}
+            {getStatusText(deliveryStatus, temperature, threshold)}
           </Text>
         </StyledDeliverystatus>
         <Text variant="body-sm">{ETA}</Text>
@@ -99,7 +97,7 @@ const StyledText = styled.div`
 const StyledTemperature = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 0.2rem;
   align-items: center;
   margin-top: 0.5rem;
 `;
