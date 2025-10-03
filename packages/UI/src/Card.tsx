@@ -7,7 +7,7 @@ type CardProps = {
   variant?: CardVariant;
   title: string;
   temperature: number;
-  DeliveryStatus: "delivered" | "late" | "on time";
+  deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
   threshold: number;
@@ -17,7 +17,7 @@ export const Card = ({
   variant = "large",
   title,
   temperature,
-  DeliveryStatus,
+  deliveryStatus,
   ETA,
   id,
   threshold,
@@ -28,7 +28,7 @@ export const Card = ({
         <LargeCard
           title={title}
           temperature={temperature}
-          DeliveryStatus={DeliveryStatus}
+          deliveryStatus={deliveryStatus}
           ETA={ETA}
           id={id}
           threshold={threshold}
@@ -37,7 +37,7 @@ export const Card = ({
         <SmallCard
           title={title}
           temperature={temperature}
-          DeliveryStatus={DeliveryStatus}
+          deliveryStatus={deliveryStatus}
           id={id}
           threshold={threshold}
         />

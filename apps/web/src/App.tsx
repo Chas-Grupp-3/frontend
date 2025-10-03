@@ -7,7 +7,7 @@ function App() {
       <Card
         title="Random CompanyName AB"
         temperature={3}
-        DeliveryStatus="on time"
+        deliveryStatus="on time"
         ETA="19 Dec kl. 10.15"
         id="Y67X093A3"
         threshold={14}
