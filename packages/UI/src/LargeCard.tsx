@@ -59,22 +59,24 @@ const LargeCard = ({
         backgroundColor: getCardColor(DeliveryStatus, temperature, threshold),
       }}
     >
-      <div style={styles.cardBox}>
-        <div style={styles.leftColumn}>
+      <StyledContent>
+        <StyledLeftColumn>
           <Text variant="body-smBold">{title}</Text>
-          <div style={styles.tempBox}>
+          <StyledTemperature>
             <Icon name="smallTemp" size="sm" />
             <Text variant="h1">{temperature}°</Text>
-          </div>
-        </div>
-        <div style={styles.rightColumn}>
-          <Text variant="body-smBold">
-            {getStatusText(DeliveryStatus, temperature, threshold)}
-          </Text>
+          </StyledTemperature>
+        </StyledLeftColumn>
+        <StyledRightColumn>
+          <StyledDeliveryStatus>
+            <Text variant="body-smBold">
+              {getStatusText(DeliveryStatus, temperature, threshold)}
+            </Text>
+          </StyledDeliveryStatus>
           <Text variant="body-sm">ETA: {ETA}</Text>
           <Text variant="body-sm">ID: {id}</Text>
-        </div>
-      </div>
+        </StyledRightColumn>
+      </StyledContent>
     </StyledCard>
   );
 };
@@ -82,35 +84,40 @@ const LargeCard = ({
 export default LargeCard;
 
 const StyledCard = styled.article`
-  width: "348px";
-  height: "78x";
-  padding: "1rem";
+  width: 348px;
+  height: 78px;
+  padding: 1rem;
   border-radius: ${radius.box};
 `;
-const styles = {
-  cardBox: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    height: "100%",
-    width: "100%",
-  },
-  tempBox: {
-    display: "flex",
-    flexDirection: "row",
-    gap: "0.2rem",
-    alignItems: "center",
-  },
-  leftColumn: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    gap: 3,
-  },
-  rightColumn: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    gap: 3,
-  },
-};
+const StyledContent = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`;
+const StyledLeftColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3;
+`;
+const StyledTemperature = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 0.2rem;
+  align-items: center;
+`;
+const StyledRightColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3;
+`;
+const StyledDeliveryStatus = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+`;
