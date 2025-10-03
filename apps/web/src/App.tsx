@@ -7,7 +7,7 @@ function App() {
       <Card
         title="YOLO"
         temperature={3}
-        DeliveryStatus="delivered"
+        DeliveryStatus="on time"
         ETA="19 Dec kl. 10.15"
         id="Y67X093A3"
         threshold={14}

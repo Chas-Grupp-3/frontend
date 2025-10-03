@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Icon } from "../icon";
+import { Icon } from "../Icon";
 import { Text } from "../Text/Text";
 import { colors } from "../styles";
 import type { ToggleOption } from "./types";
