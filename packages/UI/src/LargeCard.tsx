@@ -59,20 +59,20 @@ const LargeCard = ({
         backgroundColor: getCardColor(DeliveryStatus, temperature, threshold),
       }}
     >
+      <StyledInfo>
+        <Text variant="body-smBold">{title}</Text>
+        <StyledDeliveryStatus>
+          <Text variant="body-smBold">
+            {getStatusText(DeliveryStatus, temperature, threshold)}
+          </Text>
+        </StyledDeliveryStatus>
+      </StyledInfo>
       <StyledContent>
         <StyledLeftColumn>
-          <Text variant="body-smBold">{title}</Text>
-          <StyledTemperature>
-            <Icon name="smallTemp" size="sm" />
-            <Text variant="h1">{temperature}°</Text>
-          </StyledTemperature>
+          <Icon name="smallTemp" size="sm" />
+          <Text variant="h1">{temperature}°</Text>
         </StyledLeftColumn>
         <StyledRightColumn>
-          <StyledDeliveryStatus>
-            <Text variant="body-smBold">
-              {getStatusText(DeliveryStatus, temperature, threshold)}
-            </Text>
-          </StyledDeliveryStatus>
           <Text variant="body-sm">ETA: {ETA}</Text>
           <Text variant="body-sm">ID: {id}</Text>
         </StyledRightColumn>
@@ -96,13 +96,24 @@ const StyledContent = styled.div`
   height: 100%;
   width: 100%;
 `;
+const StyledInfo = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+const StyledDeliveryStatus = styled.div`
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 72px;
+  padding: 2px 6px;
+`;
 const StyledLeftColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 3;
-`;
-const StyledTemperature = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.2rem;
@@ -113,11 +124,4 @@ const StyledRightColumn = styled.div`
   flex-direction: column;
   align-items: flex-end;
   gap: 3;
-`;
-const StyledDeliveryStatus = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 0.5rem;
 `;
