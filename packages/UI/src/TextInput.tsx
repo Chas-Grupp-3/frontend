@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import type { InputHTMLAttributes } from "react";
 import styled, { css } from "styled-components";
 import { colors, radius, textWeb } from "./styles";
+import { Text } from "./Text/Text";
 
 type InputVariant = "default" | "error" | "success";
 type InputSize = "sm" | "md" | "lg";
@@ -14,6 +15,46 @@ interface TextInputProps
   variant?: InputVariant;
   inputSize?: InputSize;
 }
+
+export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
+  (
+    { label, hint, error, variant = "default", inputSize = "md", id, ...rest },
+    ref
+  ) => {
+    const inputId = id || `input-${Math.random().toString(36).slice(2, 9)}`;
+
+    return (
+      <InputWrapper>
+        {label && (
+          <TextWrapper>
+            <Text variant="label" htmlFor={inputId}>
+              {label}
+            </Text>
+          </TextWrapper>
+        )}
+
+        <StyledInput
+          id={inputId}
+          ref={ref}
+          $variant={error ? "error" : variant}
+          $size={inputSize}
+          aria-invalid={!!error}
+          {...rest}
+        />
+        <TextWrapper>
+          {error && <Text color="critical">{error}</Text>}
+          {!error && hint && (
+            <Text color="greyText" variant="body">
+              {hint}
+            </Text>
+          )}
+        </TextWrapper>
+      </InputWrapper>
+    );
+  }
+);
+
+export default TextInput;
 
 const sizeStyles: Record<InputSize, ReturnType<typeof css>> = {
   sm: css`
@@ -42,15 +83,6 @@ const variantStyles: Record<InputVariant, ReturnType<typeof css>> = {
     &:focus {
       outline: none;
       border-color: ${colors.primary};
-      background-color: #fff;
-    }
-
-    &:hover {
-      background-color: #fff;
-    }
-
-    &:active {
-      background-color: #fff;
     }
   `,
   error: css`
@@ -62,15 +94,6 @@ const variantStyles: Record<InputVariant, ReturnType<typeof css>> = {
       outline: none;
       border-color: ${colors.criticalHover};
       box-shadow: 0 0 0 2px ${colors.criticalHover};
-      background-color: #fff;
-    }
-
-    &:hover {
-      background-color: #fff;
-    }
-
-    &:active {
-      background-color: #fff;
     }
   `,
   success: css`
@@ -81,15 +104,6 @@ const variantStyles: Record<InputVariant, ReturnType<typeof css>> = {
     &:focus {
       outline: none;
       border-color: ${colors.okHover};
-      background-color: #fff;
-    }
-
-    &:hover {
-      background-color: #fff;
-    }
-
-    &:active {
-      background-color: #fff;
     }
   `,
 };
@@ -99,59 +113,14 @@ const InputWrapper = styled.div`
   flex-direction: column;
   gap: 4px;
   width: 100%;
-  margin-bottom: 16px;
 `;
-
-const Label = styled.label`
-  font-size: ${textWeb.body.md};
-  font-family: "Inter Regular";
-  color: ${colors.blueText};
+const TextWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding-left: 0.2rem;
 `;
 
 const StyledInput = styled.input<{ $variant: InputVariant; $size: InputSize }>`
   ${({ $size }) => sizeStyles[$size]};
   ${({ $variant }) => variantStyles[$variant]};
 `;
-
-const Hint = styled.span`
-  font-size: ${textWeb.body.md};
-  font-family: "Inter Regular";
-  color: ${colors.greyText};
-`;
-
-const ErrorText = styled.span`
-  font-size: ${textWeb.body.md};
-  font-family: "Inter Regular";
-  color: ${colors.critical};
-`;
-
-const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  (
-    { label, hint, error, variant = "default", inputSize = "md", id, ...rest },
-    ref
-  ) => {
-    const inputId = id || `input-${Math.random().toString(36).slice(2, 9)}`;
-
-    return (
-      <InputWrapper>
-        {label && <Label htmlFor={inputId}>{label}</Label>}
-
-        <StyledInput
-          id={inputId}
-          ref={ref}
-          $variant={error ? "error" : variant}
-          $size={inputSize}
-          aria-invalid={!!error}
-          {...rest}
-        />
-
-        {error && <ErrorText>{error}</ErrorText>}
-        {!error && hint && <Hint>{hint}</Hint>}
-      </InputWrapper>
-    );
-  }
-);
-
-TextInput.displayName = "TextInput";
-
-export default TextInput;
