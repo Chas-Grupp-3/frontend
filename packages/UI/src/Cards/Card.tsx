@@ -1,6 +1,6 @@
 import SmallCard from "./SmallCard";
 import LargeCard from "./LargeCard";
-import { colors } from "./styles";
+import { colors } from "../styles";
 
 type CardVariant = "small" | "large";
 

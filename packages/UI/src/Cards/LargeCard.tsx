@@ -1,7 +1,7 @@
-import { colors, radius } from "./styles";
-import Text from "./Text/Text";
+import { colors, radius } from "../styles";
+import Text from "../Text/Text";
 import styled from "styled-components";
-import { Icon } from "./Icon";
+import { Icon } from "../Icon";
 
 type CardProps = {
   title: string;
