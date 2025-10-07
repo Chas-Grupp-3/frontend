@@ -1,4 +1,3 @@
-import { TextInput } from "@chas/ui";
 import "./App.css";
 import { Card } from "@chas/ui";
 
