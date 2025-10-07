@@ -26,13 +26,16 @@ const SmallCard = ({
     threshold: number
   ) => {
     if (temperature >= threshold) {
-      return colors.critical;
+      return {
+        backgroundColor: colors.critical,
+        textColor: "accent",
+      };
     } else if (deliveryStatus === "late") {
-      return `${colors.minor}`;
+      return { backgroundColor: colors.minor, textColor: "cardText" };
     } else if (deliveryStatus === "delivered") {
-      return `${colors.pause}`;
+      return { backgroundColor: colors.pause, textColor: "cardText" };
     } else {
-      return `${colors.ok}`;
+      return { backgroundColor: colors.ok, textColor: "cardText" };
     }
   };
 
@@ -52,15 +55,22 @@ const SmallCard = ({
     }
     return "On time";
   };
+
+  const { backgroundColor, textColor } = getCardColor(
+    deliveryStatus,
+    temperature,
+    threshold
+  );
   return (
     <StyledCard
       style={{
-        color: `${colors.cardText}`,
-        backgroundColor: getCardColor(deliveryStatus, temperature, threshold),
+        backgroundColor: backgroundColor,
       }}
     >
       <StyledText>
-        <Text variant="body-smBold">{title}</Text>
+        <Text variant="body-smBold" color={textColor}>
+          {title}
+        </Text>
         <StyledTemperature>
           <Icon name="smallTemp" size="sm" />
           <Text variant="h1">{temperature}°C</Text>
