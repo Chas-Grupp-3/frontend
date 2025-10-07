@@ -1,15 +1,17 @@
-import { TextInput } from "@chas/ui";
 import "./App.css";
+import { Card } from "@chas/ui";
 
 function App() {
   return (
-    <div style={{ backgroundColor: "lightgray", padding: "20px" }}>
-      <TextInput
-        placeholder="Enter text"
-        inputSize="md"
-        variant="default"
-        label="Text Input"
-        hint="This is a hint"
+    <div>
+      <Card
+        title="Random CompanyName AB"
+        temperature={68}
+        deliveryStatus="delivered"
+        ETA="19 Dec kl. 10.15"
+        id="Y67X093A3"
+        threshold={14}
+        variant="small"
       />
     </div>
   );

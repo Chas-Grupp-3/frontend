@@ -9,7 +9,7 @@ interface IconProps {
 
 export const Icon = ({ name, size, alt }: IconProps) => {
   const sizeMap = {
-    sm: "22px",
+    sm: "24px",
     md: "40px",
     lg: "64px",
   };
