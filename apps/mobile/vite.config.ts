@@ -43,7 +43,16 @@ export default defineConfig({
       "@chas/ui": resolve(__dirname, "../../packages/UI/src"),
     },
   },
+  server: {
+    port: 5174,
+    host: true, // Needed for Docker to expose the port
+    strictPort: true, // Exit if port is already in use
+  },
   build: {
     outDir: "dist",
+  },
+  // Help Vite resolve modules from workspace root
+  optimizeDeps: {
+    include: ["vite-plugin-pwa"],
   },
 });
