@@ -1,11 +1,17 @@
+import { TextInput } from "@chas/ui";
 import "./App.css";
-import { Button } from "@chas/ui";
 
 function App() {
   return (
-    <Button buttonVariant="destructive" onClick={() => console.log("hej hej")}>
-      test
-    </Button>
+    <div style={{ backgroundColor: "lightgray", padding: "20px" }}>
+      <TextInput
+        placeholder="Enter text"
+        inputSize="md"
+        variant="default"
+        label="Text Input"
+        hint="This is a hint"
+      />
+    </div>
   );
 }
 
