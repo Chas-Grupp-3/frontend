@@ -4,4 +4,4 @@ export * from "./font";
 export * from "./TextInput";
 export * from "./icon";
 export * from "./Toggle/Toggle";
-export * from "./font";
+export * from "./Text/Text";

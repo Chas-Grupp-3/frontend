@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { colors, radius } from "./styles";
-import Text from "./font";
+import Text from "./Text/Text";
 type buttonVariant = "primary" | "secondary" | "disabled" | "destructive";
 
 const buttonVariantsConfig = {
@@ -62,7 +62,7 @@ export const Button = ({
       $buttonVariant={buttonVariant}
       disabled={disabled || buttonVariant === "disabled"}
     >
-      <Text size="Button" color={textColor}>
+      <Text variant="button" color={textColor}>
         {children}
       </Text>
     </StyledButton>
