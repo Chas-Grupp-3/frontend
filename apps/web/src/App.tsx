@@ -1,6 +1,5 @@
 import "./App.css";
 import { Button } from "@chas/ui";
-import TextInput from "@chas/ui/TextInput";
 
 function App() {
   return (

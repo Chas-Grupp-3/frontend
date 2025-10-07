@@ -145,8 +145,8 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           {...rest}
         />
 
-{error && <ErrorText>{error}</ErrorText>}
-{!error && hint && <Hint>{hint}</Hint>}
+        {error && <ErrorText>{error}</ErrorText>}
+        {!error && hint && <Hint>{hint}</Hint>}
       </InputWrapper>
     );
   }
