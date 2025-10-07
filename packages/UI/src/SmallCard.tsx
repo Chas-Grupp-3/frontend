@@ -6,61 +6,22 @@ import { Icon } from "./Icon";
 type CardProps = {
   title: string;
   temperature: number;
-  deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
-  threshold: number;
+  backgroundColor: string;
+  textColor: keyof typeof colors;
+  statusText: string;
 };
 
 const SmallCard = ({
   title,
   temperature,
-  deliveryStatus,
   ETA,
   id,
-  threshold,
+  backgroundColor,
+  textColor,
+  statusText,
 }: CardProps) => {
-  const getCardColor = (
-    deliveryStatus: "delivered" | "late" | "on time",
-    temperature: number,
-    threshold: number
-  ) => {
-    if (temperature >= threshold) {
-      return {
-        backgroundColor: colors.critical,
-        textColor: "accent",
-      };
-    } else if (deliveryStatus === "late") {
-      return { backgroundColor: colors.minor, textColor: "cardText" };
-    } else if (deliveryStatus === "delivered") {
-      return { backgroundColor: colors.pause, textColor: "cardText" };
-    } else {
-      return { backgroundColor: colors.ok, textColor: "cardText" };
-    }
-  };
-
-  const getStatusText = (
-    deliveryStatus: "delivered" | "late" | "on time",
-    temperature: number,
-    threshold: number
-  ) => {
-    if (temperature >= threshold) {
-      return "Temp issues";
-    }
-    if (deliveryStatus === "late") {
-      return "Late";
-    }
-    if (deliveryStatus === "delivered") {
-      return "Delivered";
-    }
-    return "On time";
-  };
-
-  const { backgroundColor, textColor } = getCardColor(
-    deliveryStatus,
-    temperature,
-    threshold
-  );
   return (
     <StyledCard
       style={{
@@ -73,15 +34,21 @@ const SmallCard = ({
         </Text>
         <StyledTemperature>
           <Icon name="smallTemp" size="sm" />
-          <Text variant="h1">{temperature}°C</Text>
+          <Text variant="h1" color={textColor}>
+            {temperature}°C
+          </Text>
         </StyledTemperature>
         <StyledDeliverystatus>
-          <Text variant="body-smBold">
-            {getStatusText(deliveryStatus, temperature, threshold)}
+          <Text variant="body-smBold" color={textColor}>
+            {statusText}
           </Text>
         </StyledDeliverystatus>
-        <Text variant="body-sm">{ETA}</Text>
-        <Text variant="body-sm">ID: {id}</Text>
+        <Text variant="body-sm" color={textColor}>
+          {ETA}
+        </Text>
+        <Text variant="body-sm" color={textColor}>
+          ID: {id}
+        </Text>
       </StyledText>
     </StyledCard>
   );

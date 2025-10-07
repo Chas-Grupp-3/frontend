@@ -6,12 +6,12 @@ function App() {
     <div>
       <Card
         title="Random CompanyName AB"
-        temperature={3}
-        deliveryStatus="on time"
+        temperature={68}
+        deliveryStatus="delivered"
         ETA="19 Dec kl. 10.15"
         id="Y67X093A3"
         threshold={14}
-        variant="small"
+        variant="large"
       />
     </div>
   );

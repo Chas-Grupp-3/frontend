@@ -6,75 +6,52 @@ import { Icon } from "./Icon";
 type CardProps = {
   title: string;
   temperature: number;
-  deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
-  threshold: number;
+  backgroundColor: string;
+  textColor: keyof typeof colors;
+  statusText: string;
 };
 
 const LargeCard = ({
   title,
   temperature,
-  deliveryStatus,
   ETA,
   id,
-  threshold,
+  backgroundColor,
+  textColor,
+  statusText,
 }: CardProps) => {
-  const getCardColor = (
-    deliveryStatus: "delivered" | "late" | "on time",
-    temperature: number,
-    threshold: number
-  ) => {
-    if (temperature >= threshold) {
-      return colors.critical;
-    } else if (deliveryStatus === "late") {
-      return `${colors.minor}`;
-    } else if (deliveryStatus === "delivered") {
-      return `${colors.pause}`;
-    } else {
-      return `${colors.ok}`;
-    }
-  };
-
-  const getStatusText = (
-    deliveryStatus: "delivered" | "late" | "on time",
-    temperature: number,
-    threshold: number
-  ) => {
-    if (temperature >= threshold) {
-      return "Temp issues";
-    }
-    if (deliveryStatus === "late") {
-      return "Late";
-    }
-    if (deliveryStatus === "delivered") {
-      return "Delivered";
-    }
-    return "On time";
-  };
   return (
     <StyledCard
       style={{
-        color: `${colors.cardText}`,
-        backgroundColor: getCardColor(deliveryStatus, temperature, threshold),
+        backgroundColor: backgroundColor,
       }}
     >
       <StyledInfo>
-        <Text variant="body-smBold">{title}</Text>
+        <Text variant="body-smBold" color={textColor}>
+          {title}
+        </Text>
         <StyledDeliveryStatus>
-          <Text variant="body-smBold">
-            {getStatusText(deliveryStatus, temperature, threshold)}
+          <Text variant="body-smBold" color={textColor}>
+            {statusText}
           </Text>
         </StyledDeliveryStatus>
       </StyledInfo>
       <StyledContent>
         <StyledLeftColumn>
           <Icon name="smallTemp" size="sm" />
-          <Text variant="h1">{temperature}°</Text>
+          <Text variant="h1" color={textColor}>
+            {temperature}°
+          </Text>
         </StyledLeftColumn>
         <StyledRightColumn>
-          <Text variant="body-sm">ETA: {ETA}</Text>
-          <Text variant="body-sm">ID: {id}</Text>
+          <Text variant="body-sm" color={textColor}>
+            ETA: {ETA}
+          </Text>
+          <Text variant="body-sm" color={textColor}>
+            ID: {id}
+          </Text>
         </StyledRightColumn>
       </StyledContent>
     </StyledCard>
@@ -108,6 +85,7 @@ const StyledDeliveryStatus = styled.div`
   align-items: center;
   width: 72px;
   padding: 2px 6px;
+  white-space: nowrap;
 `;
 const StyledLeftColumn = styled.div`
   display: flex;
