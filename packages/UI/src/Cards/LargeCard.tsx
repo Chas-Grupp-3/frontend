@@ -3,7 +3,7 @@ import Text from "../Text/Text";
 import styled from "styled-components";
 import { Icon } from "../Icon";
 
-type CardProps = {
+interface CardProps {
   title: string;
   temperature: number;
   ETA?: string;
@@ -11,7 +11,7 @@ type CardProps = {
   backgroundColor: string;
   textColor: keyof typeof colors;
   statusText: string;
-};
+}
 
 const LargeCard = ({
   title,
@@ -88,10 +88,6 @@ const StyledDeliveryStatus = styled.div`
   white-space: nowrap;
 `;
 const StyledLeftColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3;
   display: flex;
   flex-direction: row;
   gap: 0.2rem;

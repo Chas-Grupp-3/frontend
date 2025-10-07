@@ -4,7 +4,7 @@ import { colors } from "../styles";
 
 type CardVariant = "small" | "large";
 
-type CardProps = {
+interface CardProps {
   variant?: CardVariant;
   title: string;
   temperature: number;
@@ -12,7 +12,7 @@ type CardProps = {
   ETA?: string;
   id: string;
   threshold: number;
-};
+}
 
 export const Card = ({
   variant = "large",
@@ -50,6 +50,7 @@ export const Card = ({
       };
     }
   };
+
   const getStatusText = (
     deliveryStatus: "delivered" | "late" | "on time",
     temperature: number,
@@ -66,12 +67,15 @@ export const Card = ({
     }
     return "On time";
   };
+
   const { backgroundColor, textColor } = getCardColor(
     deliveryStatus,
     temperature,
     threshold
   );
+
   const statusText = getStatusText(deliveryStatus, temperature, threshold);
+
   return (
     <div>
       {variant === "large" ? (

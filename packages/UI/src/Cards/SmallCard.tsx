@@ -3,7 +3,7 @@ import Text from "../Text/Text";
 import styled from "styled-components";
 import { Icon } from "../Icon";
 
-type CardProps = {
+interface CardProps {
   title: string;
   temperature: number;
   ETA?: string;
@@ -11,7 +11,7 @@ type CardProps = {
   backgroundColor: string;
   textColor: keyof typeof colors;
   statusText: string;
-};
+}
 
 const SmallCard = ({
   title,
@@ -28,28 +28,26 @@ const SmallCard = ({
         backgroundColor: backgroundColor,
       }}
     >
-      <StyledText>
+      <Text variant="body-smBold" color={textColor}>
+        {title}
+      </Text>
+      <StyledTemperature>
+        <Icon name="smallTemp" size="sm" />
+        <Text variant="h1" color={textColor}>
+          {temperature}°C
+        </Text>
+      </StyledTemperature>
+      <StyledDeliverystatus>
         <Text variant="body-smBold" color={textColor}>
-          {title}
+          {statusText}
         </Text>
-        <StyledTemperature>
-          <Icon name="smallTemp" size="sm" />
-          <Text variant="h1" color={textColor}>
-            {temperature}°C
-          </Text>
-        </StyledTemperature>
-        <StyledDeliverystatus>
-          <Text variant="body-smBold" color={textColor}>
-            {statusText}
-          </Text>
-        </StyledDeliverystatus>
-        <Text variant="body-sm" color={textColor}>
-          {ETA}
-        </Text>
-        <Text variant="body-sm" color={textColor}>
-          ID: {id}
-        </Text>
-      </StyledText>
+      </StyledDeliverystatus>
+      <Text variant="body-sm" color={textColor}>
+        {ETA}
+      </Text>
+      <Text variant="body-sm" color={textColor}>
+        ID: {id}
+      </Text>
     </StyledCard>
   );
 };
@@ -61,14 +59,10 @@ const StyledCard = styled.article`
   height: 150px;
   padding: 1rem;
   border-radius: ${radius.box};
-`;
-const StyledText = styled.div`
-  margin-top: 1.5rem;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  flex-direction: column;
 `;
 
 const StyledTemperature = styled.div`
