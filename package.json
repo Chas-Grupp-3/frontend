@@ -48,12 +48,19 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
     "check": "turbo run lint && turbo run type-check && npm run format:check",
     "docker:build": "docker-compose build",
-    "docker:up": "docker-compose up",
-    "docker:up:detached": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:restart": "docker-compose restart",
     "docker:logs": "docker-compose logs -f",
     "docker:clean": "docker-compose down --volumes --remove-orphans",
-    "docker:rebuild": "docker-compose down && docker-compose build --no-cache && docker-compose up"
+    "docker:rebuild": "docker-compose down && docker-compose build --no-cache && docker-compose up frontend",
+    "docker:web": "docker-compose up web",
+    "docker:web:detached": "docker-compose up -d web",
+    "docker:mobile": "docker-compose up mobile",
+    "docker:mobile:detached": "docker-compose up -d mobile",
+    "docker:frontend": "docker-compose up frontend",
+    "docker:frontend:detached": "docker-compose up -d frontend",
+    "docker:logs:web": "docker-compose logs -f web",
+    "docker:logs:mobile": "docker-compose logs -f mobile",
+    "docker:logs:frontend": "docker-compose logs -f frontend"
   }
 }
