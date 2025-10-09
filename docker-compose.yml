@@ -23,7 +23,7 @@ services:
     platform: linux/amd64
     ports:
       - "5174:5174"
-    command: npm run dev:mobile
+    command: npm run dev:mobile "-- --host"
     volumes:
       - .:/app
       - /app/node_modules
