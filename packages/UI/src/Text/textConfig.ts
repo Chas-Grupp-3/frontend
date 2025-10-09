@@ -13,6 +13,8 @@ export type TextVariant =
   | "h3"
   | "body-lg"
   | "body"
+  | "body-sm"
+  | "body-smBold"
   | "label"
   | "button"
   | "nav";
@@ -68,6 +70,16 @@ export const textVariantsConfig: Record<TextVariant, ReturnType<typeof css>> = {
       font-weight: ${textWeb.body.lg.fontWeight};
     }
   `,
+  "body-sm": css`
+    font-size: ${textMobile.body.sm.fontSize};
+    font-family: ${textMobile.body.sm.fontFamily};
+    font-weight: ${textMobile.body.sm.fontWeight};
+  `,
+  "body-smBold": css`
+    font-size: ${textMobile.body.smBold.fontSize};
+    font-family: ${textMobile.body.smBold.fontFamily};
+    font-weight: ${textMobile.body.smBold.fontWeight};
+  `,
 
   label: css`
     font-size: ${textMobile.body.md.fontSize};
@@ -105,6 +117,8 @@ export const defaultElementMap: Record<TextVariant, TextElement> = {
   h3: "h3",
   "body-lg": "p",
   body: "p",
+  "body-sm": "p",
+  "body-smBold": "p",
   label: "label",
   button: "span",
   nav: "nav",

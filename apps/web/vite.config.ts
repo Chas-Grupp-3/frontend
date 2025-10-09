@@ -10,6 +10,11 @@ export default defineConfig({
       "@chas/ui": resolve(__dirname, "../../packages/UI/src"),
     },
   },
+  server: {
+    port: 5173,
+    host: true, // Needed for Docker to expose the port
+    strictPort: true, // Exit if port is already in use
+  },
   build: {
     outDir: "dist",
   },
