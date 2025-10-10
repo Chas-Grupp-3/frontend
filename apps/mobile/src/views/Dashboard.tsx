@@ -93,7 +93,6 @@ const Dashboard = () => {
     <div>
       <Text variant="h1">Dashboard</Text>
       <div>
-        <Button onClick={handleViewPackage}>View Package Details</Button>
         <Button onClick={sortByTitle}>Sort by Title</Button>
         <Button onClick={sortByTemperature}>Sort by Temperature</Button>
       </div>
