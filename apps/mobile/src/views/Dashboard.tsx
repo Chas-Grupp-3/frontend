@@ -1,6 +1,7 @@
 import { Text, Button } from "@chas/ui";
 import { useNavigate } from "react-router";
 import { Card } from "@chas/ui";
+import { useState } from "react";
 
 type CardInfo = {
   id: number;
@@ -69,17 +70,47 @@ const cardInfo: CardInfo[] = [
   },
 ];
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const [cards, setCards] = useState<CardInfo[]>(cardInfo);
+
   const handleViewPackage = () => {
     console.log("Clicked!");
   };
 
-  const listItems = cardInfo.map((item) => <li key={item.id}>{item.title}</li>);
+  const sortByTitle = () => {
+    const sorted = [...cards].sort((a, b) => a.title.localeCompare(b.title));
+    setCards(sorted);
+  };
+
+  const sortByTemperature = () => {
+    const sorted = [...cards].sort((a, b) => b.temperature - a.temperature);
+    setCards(sorted);
+  };
 
   return (
     <div>
       <Text variant="h1">Dashboard</Text>
-      <Button onClick={handleViewPackage}>View Package Details</Button>
-      <ul>{listItems}</ul>
+      <div>
+        <Button onClick={handleViewPackage}>View Package Details</Button>
+        <Button onClick={sortByTitle}>Sort by Title</Button>
+        <Button onClick={sortByTemperature}>Sort by Temperature</Button>
+      </div>
+      <ul>
+        {cards.map((item) => (
+          <li key={item.id}>
+            <Card
+              key={item.id}
+              variant="large"
+              title={item.title}
+              temperature={item.temperature}
+              deliveryStatus={item.deliveryStatus}
+              ETA={item.ETA}
+              id={item.packageId}
+              threshold={item.threshold}
+            />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
