@@ -1,7 +1,10 @@
 import { Text, Button } from "@chas/ui";
+import { colors, radius } from "@chas/ui";
 import { useNavigate } from "react-router";
 import { Card } from "@chas/ui";
 import { useState } from "react";
+import styled from "styled-components";
+
 
 type CardInfo = {
   id: number;
@@ -95,24 +98,34 @@ const Dashboard = () => {
         <Button onClick={sortByTitle}>Sort by Title</Button>
         <Button onClick={sortByTemperature}>Sort by Temperature</Button>
       </div>
-      <ul>
-        {cards.map((item) => (
-          <li key={item.id}>
-            <Card
-              key={item.id}
-              variant="large"
-              title={item.title}
-              temperature={item.temperature}
-              deliveryStatus={item.deliveryStatus}
-              ETA={item.ETA}
-              id={item.packageId}
-              threshold={item.threshold}
-            />
-          </li>
-        ))}
-      </ul>
+      <StyledBox>
+        <ul>
+          {cards.map((item) => (
+            <li key={item.id}>
+              <Card
+                key={item.id}
+                variant="small"
+                title={item.title}
+                temperature={item.temperature}
+                deliveryStatus={item.deliveryStatus}
+                ETA={item.ETA}
+                id={item.packageId}
+                threshold={item.threshold}
+              />
+            </li>
+          ))}
+        </ul>
+      </StyledBox>
     </div>
   );
 };
 
 export default Dashboard;
+
+const StyledBox = styled.section`
+  width: 360px;
+  height: 360px;
+  padding: 1rem;
+  border-radius: ${radius.box};
+  background-color: ${colors.primary}
+`;
