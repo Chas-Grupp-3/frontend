@@ -128,18 +128,17 @@ const StyledBox = styled.section`
   border-radius: ${radius.box};
   overflow-y: auto;
   overflow-x: hidden;
-  scrollbar-color: ${colors.primary} transparent;
   box-shadow: inset 0 4px 10px ${colors.greyText};
 
   ul {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
     gap: 1rem;
     list-style: none;
     padding: 0;
     margin: 0;
   }
   li {
-    flex: 0 0 auto;
+    flex: 0 0 calc(50% - 0.5rem);
   }
 `;
