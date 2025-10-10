@@ -19,7 +19,16 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   const handleClick = useCallback(
     (e: MouseEvent) => {
       const dialog = dialogRef.current;
-      if (e.target === dialog) {
+      if (!dialog) return;
+
+      const dialogBounds = dialog.getBoundingClientRect();
+      const isInDialog =
+        e.clientX >= dialogBounds.left &&
+        e.clientX <= dialogBounds.right &&
+        e.clientY >= dialogBounds.top &&
+        e.clientY <= dialogBounds.bottom;
+
+      if (!isInDialog) {
         onClose();
       }
     },
