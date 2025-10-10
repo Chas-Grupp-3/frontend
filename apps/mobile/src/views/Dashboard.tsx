@@ -5,7 +5,6 @@ import { Card } from "@chas/ui";
 import { useState } from "react";
 import styled from "styled-components";
 
-
 type CardInfo = {
   id: number;
   title: string;
@@ -127,5 +126,20 @@ const StyledBox = styled.section`
   height: 360px;
   padding: 1rem;
   border-radius: ${radius.box};
-  background-color: ${colors.primary}
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-color: ${colors.primary} transparent;
+  box-shadow: inset 0 4px 10px ${colors.greyText};
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    flex: 0 0 auto;
+  }
 `;
