@@ -1,7 +1,6 @@
-import { Text, Button } from "@chas/ui";
-import { colors, radius } from "@chas/ui";
+import { colors, radius, Text, Button } from "@chas/ui";
 import { useNavigate } from "react-router";
-import { Card } from "@chas/ui";
+import Card from "../components/Cards/Card";
 import { useState } from "react";
 import styled from "styled-components";
 
@@ -31,7 +30,7 @@ const cardInfo: CardInfo[] = [
     temperature: 8,
     deliveryStatus: "on time",
     ETA: "19 Dec kl. 10.45",
-    packageId: "Y67X093A3",
+    packageId: "Y67X093A4",
     threshold: 14,
   },
   {
@@ -40,7 +39,7 @@ const cardInfo: CardInfo[] = [
     temperature: 18,
     deliveryStatus: "delivered",
     ETA: "19 Dec kl. 11.10",
-    packageId: "Y67X093A3",
+    packageId: "Y67X093A5",
     threshold: 14,
   },
   {
@@ -49,7 +48,7 @@ const cardInfo: CardInfo[] = [
     temperature: 8,
     deliveryStatus: "late",
     ETA: "19 Dec kl. 11.30",
-    packageId: "Y67X093A3",
+    packageId: "Y67X093A6",
     threshold: 14,
   },
   {
@@ -74,10 +73,6 @@ const cardInfo: CardInfo[] = [
 const Dashboard = () => {
   const navigate = useNavigate();
   const [cards, setCards] = useState<CardInfo[]>(cardInfo);
-
-  const handleViewPackage = () => {
-    console.log("Clicked!");
-  };
 
   const sortByTitle = () => {
     const sorted = [...cards].sort((a, b) => a.title.localeCompare(b.title));
@@ -109,6 +104,7 @@ const Dashboard = () => {
                 ETA={item.ETA}
                 id={item.packageId}
                 threshold={item.threshold}
+                onClick={() => navigate(`/package/${item.packageId}`)}
               />
             </li>
           ))}
@@ -125,17 +121,17 @@ const StyledBox = styled.section`
   height: 360px;
   padding: 1rem;
   border-radius: ${radius.box};
-  overflow-y: auto;
-  overflow-x: hidden;
   box-shadow: inset 0 4px 10px ${colors.greyText};
+  overflow: auto;
+  margin-top: 4rem;
 
   ul {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 1rem;
+    gap: 0.3rem;
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 0px;
+    margin: 0px;
   }
   li {
     flex: 0 0 calc(50% - 0.5rem);

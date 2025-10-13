@@ -1,6 +1,6 @@
 import SmallCard from "./SmallCard";
 import LargeCard from "./LargeCard";
-import { colors } from "../styles";
+import { colors } from "@chas/ui";
 
 type CardVariant = "small" | "large";
 
@@ -12,9 +12,10 @@ interface CardProps {
   ETA?: string;
   id: string;
   threshold: number;
+  onClick: () => void;
 }
 
-export const Card = ({
+const Card = ({
   variant = "large",
   title,
   temperature,
@@ -22,6 +23,7 @@ export const Card = ({
   ETA,
   id,
   threshold,
+  onClick,
 }: CardProps) => {
   const getCardColor = (
     deliveryStatus: "delivered" | "late" | "on time",
@@ -76,28 +78,30 @@ export const Card = ({
 
   const statusText = getStatusText(deliveryStatus, temperature, threshold);
 
-  return (
-    <div>
-      {variant === "large" ? (
-        <LargeCard
-          title={title}
-          temperature={temperature}
-          id={id}
-          ETA={ETA}
-          backgroundColor={backgroundColor}
-          textColor={textColor}
-          statusText={statusText}
-        />
-      ) : (
-        <SmallCard
-          title={title}
-          temperature={temperature}
-          id={id}
-          backgroundColor={backgroundColor}
-          textColor={textColor}
-          statusText={statusText}
-        />
-      )}
-    </div>
-  );
+  return [
+    variant === "large" ? (
+      <LargeCard
+        title={title}
+        temperature={temperature}
+        id={id}
+        ETA={ETA}
+        backgroundColor={backgroundColor}
+        textColor={textColor}
+        statusText={statusText}
+        onClick={onClick}
+      />
+    ) : (
+      <SmallCard
+        title={title}
+        temperature={temperature}
+        id={id}
+        backgroundColor={backgroundColor}
+        textColor={textColor}
+        statusText={statusText}
+        onClick={onClick}
+      />
+    ),
+  ];
 };
+
+export default Card;
