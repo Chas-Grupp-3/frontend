@@ -70,9 +70,15 @@ const StyledDialog = styled.dialog`
   border-radius: ${radius.box};
   max-height: 90vh;
   max-width: 90vw;
-  width: 60%;
+  min-width: 60%;
   padding: 24px;
   overflow: hidden;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
 
   &::backdrop {
     background-color: rgba(0, 0, 0, 0.5);
