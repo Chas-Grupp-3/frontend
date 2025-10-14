@@ -47,6 +47,11 @@ export default defineConfig({
     port: 5174,
     host: true, // Needed for Docker to expose the port
     strictPort: true, // Exit if port is already in use
+        watch: {
+      // 👇 gör att Vite snappar upp ändringar via Docker-volym
+      usePolling: true,
+      interval: 100,
+    },
   },
   build: {
     outDir: "dist",
