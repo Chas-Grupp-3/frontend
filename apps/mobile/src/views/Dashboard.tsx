@@ -1,7 +1,10 @@
-import { Text, Button } from "@chas/ui";
+import { Button, colors } from "@chas/ui";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import CardList, { type CardInfo } from "../components/Cards/CardList";
+import DashboardHeader from "../components/DashboardHeader";
+import { Icon } from "@chas/ui";
+import styled from "styled-components";
 
 const initialCards: CardInfo[] = [
   {
@@ -66,15 +69,19 @@ const Dashboard = () => {
 
   const sortByTitle = () =>
     setCards([...cards].sort((a, b) => a.title.localeCompare(b.title)));
-  const sortByTemperature = () =>
-    setCards([...cards].sort((a, b) => b.temperature - a.temperature));
 
   return (
     <div>
-      <Text variant="h1">Dashboard</Text>
+      <DashboardHeader />
       <div>
-        <Button onClick={sortByTitle}>Sort by Title</Button>
-        <Button onClick={sortByTemperature}>Sort by Temperature</Button>
+        <FilterContainer>
+          <FilterIcon>
+            <Button onClick={sortByTitle}>
+              <Icon name="hamburger" size="sm" />
+              Filter
+            </Button>
+          </FilterIcon>
+        </FilterContainer>
       </div>
 
       <CardList
@@ -87,3 +94,18 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+const FilterContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 300px;
+`;
+
+const FilterIcon = styled.div`
+  position: absolute;
+  right: 12px;
+  pointer-events: none;
+  color: ${colors.greyText};
+`;
