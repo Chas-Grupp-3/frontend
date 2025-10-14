@@ -47,6 +47,7 @@ export default defineConfig({
     port: 5174,
     host: true, // Needed for Docker to expose the port
     strictPort: true, // Exit if port is already in use
+    allowedHosts: ["localhost", ".ngrok.io", ".ngrok-free.dev", ".ngrok.app"], // Allow ngrok hosts
         watch: {
       // 👇 gör att Vite snappar upp ändringar via Docker-volym
       usePolling: true,
@@ -59,5 +60,6 @@ export default defineConfig({
   // Help Vite resolve modules from workspace root
   optimizeDeps: {
     include: ["vite-plugin-pwa"],
+    exclude: ["fsevents"], // Exclude fsevents from optimization
   },
 });

@@ -55,11 +55,9 @@ const NavContainer = styled.nav`
   justify-content: space-around;
   align-items: center;
   background-color: ${colors.primary};
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  flex-shrink: 0;
   height: 80px;
+  /* Removed position: fixed since we're using grid */
 `;
 
 const NavLink = styled(Link)<{ $isActive: boolean }>`
