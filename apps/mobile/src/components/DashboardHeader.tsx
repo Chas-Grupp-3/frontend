@@ -7,14 +7,16 @@ const DashboardHeader = () => {
   return (
     <StyledBox>
       <StyledLogo>
-        <StyledIcon>
-          <Icon name="smallTemp" size="sm" />
-        </StyledIcon>
         <StyledName>
-          <StyledText variant="h3">ThermoTrack</StyledText>
-          <StyledText variant="body-sm">
-            Climate-Controlled Transport
-          </StyledText>
+          <StyledIcon>
+            <Icon name="smallTemp" size="sm" />
+          </StyledIcon>
+          <StyledTextContainer>
+            <StyledText variant="h3">ThermoTrack</StyledText>
+            <StyledText variant="body-sm">
+              Climate-Controlled Transport
+            </StyledText>
+          </StyledTextContainer>
         </StyledName>
       </StyledLogo>
       <StyledInfo>
@@ -51,6 +53,12 @@ const StyledIcon = styled.div`
   color: ${colors.whiteBackground};
 `;
 const StyledName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+`;
+const StyledTextContainer = styled.div`
   margin-bottom: 2rem;
 `;
 const StyledInfo = styled.div`
@@ -65,7 +73,6 @@ const SearchContainer = styled.div`
   align-items: center;
   width: 100%;
   max-width: 300px;
-  
 `;
 
 const SearchIcon = styled.div`
