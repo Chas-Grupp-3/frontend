@@ -121,6 +121,7 @@ const StyledBox = styled.section`
   height: 360px;
   padding: 1rem;
   border-radius: ${radius.box};
+  border: solid 0.5px ${colors.greyText};
   box-shadow: inset 0 4px 10px ${colors.greyText};
   overflow: auto;
   margin-top: 4rem;
