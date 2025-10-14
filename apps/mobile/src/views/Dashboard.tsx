@@ -1,20 +1,10 @@
-import { colors, radius, Text, Button } from "@chas/ui";
+// pages/Dashboard.tsx
+import { Text, Button } from "@chas/ui";
 import { useNavigate } from "react-router";
-import Card from "../components/Cards/Card";
 import { useState } from "react";
-import styled from "styled-components";
+import CardList, { type CardInfo } from "../components/Cards/CardList";
 
-type CardInfo = {
-  id: number;
-  title: string;
-  temperature: number;
-  deliveryStatus: "delivered" | "on time" | "late";
-  ETA: string;
-  packageId: string;
-  threshold: number;
-};
-
-const cardInfo: CardInfo[] = [
+const initialCards: CardInfo[] = [
   {
     id: 0,
     title: "Game of Cones",
@@ -70,19 +60,15 @@ const cardInfo: CardInfo[] = [
     threshold: 14,
   },
 ];
+
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [cards, setCards] = useState<CardInfo[]>(cardInfo);
+  const [cards, setCards] = useState<CardInfo[]>(initialCards);
 
-  const sortByTitle = () => {
-    const sorted = [...cards].sort((a, b) => a.title.localeCompare(b.title));
-    setCards(sorted);
-  };
-
-  const sortByTemperature = () => {
-    const sorted = [...cards].sort((a, b) => b.temperature - a.temperature);
-    setCards(sorted);
-  };
+  const sortByTitle = () =>
+    setCards([...cards].sort((a, b) => a.title.localeCompare(b.title)));
+  const sortByTemperature = () =>
+    setCards([...cards].sort((a, b) => b.temperature - a.temperature));
 
   return (
     <div>
@@ -91,50 +77,14 @@ const Dashboard = () => {
         <Button onClick={sortByTitle}>Sort by Title</Button>
         <Button onClick={sortByTemperature}>Sort by Temperature</Button>
       </div>
-      <StyledBox>
-        <ul>
-          {cards.map((item) => (
-            <li key={item.id}>
-              <Card
-                key={item.id}
-                variant="small"
-                title={item.title}
-                temperature={item.temperature}
-                deliveryStatus={item.deliveryStatus}
-                ETA={item.ETA}
-                id={item.packageId}
-                threshold={item.threshold}
-                onClick={() => navigate(`/package/${item.packageId}`)}
-              />
-            </li>
-          ))}
-        </ul>
-      </StyledBox>
+
+      <CardList
+        cards={cards}
+        onCardClick={(packageId) => navigate(`/package/${packageId}`)}
+        variant="small"
+      />
     </div>
   );
 };
 
 export default Dashboard;
-
-const StyledBox = styled.section`
-  width: 360px;
-  height: 360px;
-  padding: 1rem;
-  border-radius: ${radius.box};
-  border: solid 0.5px ${colors.greyText};
-  box-shadow: inset 0 4px 10px ${colors.greyText};
-  overflow: auto;
-  margin-top: 4rem;
-
-  ul {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 0.3rem;
-    list-style: none;
-    padding: 0px;
-    margin: 0px;
-  }
-  li {
-    flex: 0 0 calc(50% - 0.5rem);
-  }
-`;
