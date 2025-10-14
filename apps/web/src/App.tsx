@@ -1,19 +1,18 @@
-import "./App.css";
-import { Card } from "@chas/ui";
+import { useState } from "react";
+import { Modal, Text, Button } from "@chas/ui";
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <div>
-      <Card
-        title="Random CompanyName AB"
-        temperature={68}
-        deliveryStatus="delivered"
-        ETA="19 Dec kl. 10.15"
-        id="Y67X093A3"
-        threshold={14}
-        variant="small"
-      />
-    </div>
+    <>
+      <Button onClick={() => setIsModalOpen(true)}>Open Modal</Button>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <Text variant="h2">Modal </Text>
+        <Text>Modal content goes here</Text>
+      </Modal>
+    </>
   );
 }
 

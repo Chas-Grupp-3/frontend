@@ -4,3 +4,4 @@ export * from "./TextInput";
 export * from "./Icon";
 export * from "./Toggle/Toggle";
 export * from "./Text/Text";
+export * from "./Modal";
