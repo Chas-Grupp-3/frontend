@@ -21,7 +21,7 @@ const Login = () => {
             <TextInput label="Password" type="password" />
             <Text variant="body-smBold">Forgot password?</Text>
             <div>
-              <Button buttonVariant="primary">Log in</Button> 
+              <Button buttonVariant="primary">Log in</Button>
             </div>
           </form>
           <div style={styles.footer}>
