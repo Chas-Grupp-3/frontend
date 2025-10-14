@@ -9,7 +9,7 @@ const DashboardHeader = () => {
       <StyledLogo>
         <StyledName>
           <StyledIcon>
-            <Icon name="smallTemp" size="sm" />
+            <Icon name="bigTemp" size="md" />
           </StyledIcon>
           <StyledTextContainer>
             <StyledText variant="h3">ThermoTrack</StyledText>
@@ -56,7 +56,6 @@ const StyledName = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  
 `;
 const StyledTextContainer = styled.div`
   margin-bottom: 2rem;
