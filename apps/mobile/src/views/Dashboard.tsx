@@ -1,4 +1,3 @@
-// pages/Dashboard.tsx
 import { Text, Button } from "@chas/ui";
 import { useNavigate } from "react-router";
 import { useState } from "react";

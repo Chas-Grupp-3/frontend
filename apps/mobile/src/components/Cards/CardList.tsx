@@ -1,4 +1,3 @@
-// components/CardList.tsx
 import styled from "styled-components";
 import Card from "./Card";
 import { radius, colors } from "@chas/ui";
