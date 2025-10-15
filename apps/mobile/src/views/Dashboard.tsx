@@ -96,16 +96,17 @@ const Dashboard = () => {
 export default Dashboard;
 
 const FilterContainer = styled.div`
-  position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 300px;
+  margin: 0 auto;
 `;
 
 const FilterIcon = styled.div`
-  position: absolute;
-  right: 12px;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: ${colors.greyText};
 `;
