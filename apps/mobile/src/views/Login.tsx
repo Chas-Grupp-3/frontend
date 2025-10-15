@@ -43,9 +43,7 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-const Card = styled.div`
-
-`;
+const Card = styled.div``;
 
 const Logo = styled.div`
   display: flex;
