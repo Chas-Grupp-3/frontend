@@ -71,7 +71,7 @@ const Dashboard = () => {
     setCards([...cards].sort((a, b) => a.title.localeCompare(b.title)));
 
   return (
-    <div>
+    <div className="page">
       <DashboardHeader />
       <div>
         <FilterContainer>

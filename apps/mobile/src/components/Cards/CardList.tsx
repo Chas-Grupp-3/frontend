@@ -44,8 +44,8 @@ const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
 export default CardList;
 
 const StyledBox = styled.section`
-  width: 360px;
-  height: 360px;
+  width: 340px;
+  height: 340px;
   padding: 1rem;
   border-radius: ${radius.box};
   border: solid 0.5px ${colors.greyText};
@@ -55,7 +55,7 @@ const StyledBox = styled.section`
 
   ul {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 0.3rem;
     list-style: none;
     padding: 0;
