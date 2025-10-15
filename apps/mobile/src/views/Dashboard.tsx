@@ -77,7 +77,7 @@ const Dashboard = () => {
         <FilterContainer>
           <FilterIcon>
             <Button onClick={sortByTitle}>
-              <Icon name="hamburger" size="sm" />
+              <Icon name="whiteHamburger" size="sm" />
               Filter
             </Button>
           </FilterIcon>
