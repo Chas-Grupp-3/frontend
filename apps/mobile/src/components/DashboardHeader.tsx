@@ -6,19 +6,18 @@ import { TextInput } from "@chas/ui";
 const DashboardHeader = () => {
   return (
     <StyledBox>
-      <StyledLogo>
-        <StyledName>
-          <StyledIcon>
-            <Icon name="bigTemp" size="md" />
-          </StyledIcon>
-          <StyledTextContainer>
-            <StyledText variant="h3">ThermoTrack</StyledText>
-            <StyledText variant="body-sm">
-              Climate-Controlled Transport
-            </StyledText>
-          </StyledTextContainer>
-        </StyledName>
-      </StyledLogo>
+      <StyledName>
+        <StyledIcon>
+          <Icon name="bigTemp" size="md" />
+        </StyledIcon>
+        <StyledTextContainer>
+          <StyledText variant="h3">ThermoTrack</StyledText>
+          <StyledText variant="body-sm">
+            Climate-Controlled Transport
+          </StyledText>
+        </StyledTextContainer>
+      </StyledName>
+
       <StyledInfo>
         <StyledText variant="h3">My shipments</StyledText>
       </StyledInfo>
@@ -46,9 +45,7 @@ const StyledBox = styled.section`
   background-color: ${colors.primary};
   margin-bottom: 4rem;
 `;
-const StyledLogo = styled.div`
-  color: ${colors.whiteBackground};
-`;
+
 const StyledIcon = styled.div`
   color: ${colors.whiteBackground};
 `;
@@ -56,6 +53,7 @@ const StyledName = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+  color: ${colors.whiteBackground};
 `;
 const StyledTextContainer = styled.div`
   margin-bottom: 2rem;
