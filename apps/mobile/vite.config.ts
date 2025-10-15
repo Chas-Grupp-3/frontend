@@ -49,9 +49,8 @@ export default defineConfig({
     strictPort: true, // Exit if port is already in use
     allowedHosts: ["localhost", ".ngrok.io", ".ngrok-free.dev", ".ngrok.app"], // Allow ngrok hosts
         watch: {
-      // 👇 gör att Vite snappar upp ändringar via Docker-volym
-      usePolling: true,
-      interval: 100,
+          usePolling: true,
+          interval: 100,
     },
   },
   build: {

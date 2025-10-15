@@ -1,88 +1,111 @@
 import { Text, TextInput, Button, colors, Icon } from "@chas/ui";
-import GlobalStyles from "../styles/GlobalStyles";
+import styled from "styled-components";
 
 const Login = () => {
   return (
-    <>
-      <GlobalStyles />
-      <main style={styles.main}>
-        <section style={styles.card}>
-          <header style={styles.logo}>
-            <Icon name="smallTempHot" size={64} alt="ThermoTrack Logo" />
-            <div style={styles.logoText}>
-              <Text variant="h2">ThermoTrack</Text>
-              <Text variant="body-sm">Climate-Controlled Transport</Text>
-            </div>
-          </header>
+    <Container className="page">
+      <Card>
+        <Logo>
+          <Icon name="smallTempHot" size={64} alt="ThermoTrack Logo" />
+          <LogoText>
+            <Text variant="h2">ThermoTrack</Text>
+            <Text variant="body-sm">Climate-Controlled Transport</Text>
+          </LogoText>
+        </Logo>
+        <Title>
           <Text variant="h1">Log in</Text>
-          <div style={styles.divider} />
-          <form style={styles.form}>
-            <TextInput label="E-mail" />
-            <TextInput label="Password" type="password" />
-            <Text variant="body-smBold">Forgot password?</Text>
-            <div>
-              <Button buttonVariant="primary">Log in</Button> 
-            </div>
-          </form>
-          <div style={styles.footer}>
-            <Text variant="body-sm">New user?</Text>
-            <Text variant="body-smBold">Create account</Text>
-          </div>
-          <footer>
-            <Icon name="truckPin" size={300} alt="TruckPin Logo" />
-          </footer>
-        </section>
-      </main>
-    </>
+        </Title>
+        <Divider />
+        <Form>
+          <TextInput label="E-mail" />
+          <TextInput label="Password" type="password" />
+          <Text variant="body-smBold">Forgot password?</Text>
+          <ButtonContainer>
+            <Button buttonVariant="primary">Log in</Button>
+          </ButtonContainer>
+        </Form>
+        <CreateUser>
+          <Text variant="body-sm">New user?</Text>
+          <Text variant="body-smBold">Create account</Text>
+        </CreateUser>
+        <Footer>
+          <Icon name="truckPin" alt="TruckPin Logo" size={300} />
+        </Footer>
+      </Card>
+    </Container>
   );
 };
 export default Login;
 
-const styles = {
-  main: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    backgroundColor: colors.background,
-  },
-  card: {
-    padding: "4rem",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column" as const,
-    alignItems: "center",
-    gap: "1rem",
-  },
-  logo: {
-    display: "flex",
-    flexDirection: "row" as const,
-    alignItems: "center",
-    gap: "1rem",
-    marginBottom: "1rem",
-  },
-  logoText: {
-    display: "flex",
-    flexDirection: "column" as const,
-    alignItems: "flex-start",
-    text: colors.primary,
-  },
-  divider: {
-    width: "100%",
-    height: "2px",
-    backgroundColor: colors.secondary,
-    margin: "1rem 0",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column" as const,
-    alignItems: "center",
-    gap: "1rem",
-    width: "100%",
-  },
-  footer: {
-    display: "flex",
-    gap: "1rem",
-    marginTop: "1rem",
-  },
-};
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Card = styled.div`
+
+`;
+
+const Logo = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const LogoText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  align-items: flex-start;
+  color: ${colors.primary};
+`;
+
+const Title = styled.h1`
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  height: 2px;
+  background-color: ${colors.secondary};
+  margin: 1rem 0;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const CreateUser = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-direction: row;
+`;
+
+const Footer = styled.footer`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+`;

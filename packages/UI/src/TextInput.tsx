@@ -22,8 +22,23 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     ref
   ) => {
     const [focused, setFocused] = useState(false);
+    const [inputValue, setInputValue] = useState(
+      rest.defaultValue || rest.value || ""
+    );
     const inputId = id || `input-${Math.random().toString(36).slice(2, 9)}`;
-    const hasValue = Boolean(rest.value && String(rest.value).length > 0);
+
+    const hasValue = Boolean(
+      rest.value !== undefined
+        ? String(rest.value).length > 0
+        : String(inputValue).length > 0
+    );
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (rest.value === undefined) {
+        setInputValue(e.target.value);
+      }
+      rest.onChange?.(e);
+    };
 
     return (
       <InputWrapper>
@@ -35,6 +50,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             $size={inputSize}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
+            onChange={handleChange}
             aria-invalid={!!error}
             {...rest}
           />
