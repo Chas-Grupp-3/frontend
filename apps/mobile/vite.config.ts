@@ -47,6 +47,7 @@ export default defineConfig({
     port: 5174,
     host: true, // Needed for Docker to expose the port
     strictPort: true, // Exit if port is already in use
+    allowedHosts: ["localhost", ".ngrok.io", ".ngrok-free.dev", ".ngrok.app"], // Allow ngrok hosts
   },
   build: {
     outDir: "dist",
