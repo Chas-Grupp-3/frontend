@@ -1,26 +1,21 @@
-import { colors, Text } from "@chas/ui";
+import { colors, Text, Icon, TextInput } from "@chas/ui";
 import styled from "styled-components";
-import { Icon } from "@chas/ui";
-import { TextInput } from "@chas/ui";
 
 const DashboardHeader = () => {
   return (
     <StyledBox>
       <StyledName>
-        <StyledIcon>
-          <Icon name="bigTemp" size="md" />
-        </StyledIcon>
-        <StyledTextContainer>
+        <Icon name="bigTemp" size="md" />
+        <div>
           <StyledText variant="h3">ThermoTrack</StyledText>
           <StyledText variant="body-sm">
             Climate-Controlled Transport
           </StyledText>
-        </StyledTextContainer>
+        </div>
       </StyledName>
 
-      <StyledInfo>
-        <StyledText variant="h3">My shipments</StyledText>
-      </StyledInfo>
+      <StyledText variant="h3">My shipments</StyledText>
+
       <SearchContainer>
         <TextInput placeholder="Search by ID / name / QR" />
         <SearchIcon>
@@ -38,32 +33,29 @@ const StyledBox = styled.section`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 15rem;
+  width: 100vw;
+  min-height: 15rem;
   padding: 1rem;
   background-color: ${colors.primary};
   margin-bottom: 4rem;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  margin-top: -100vh;
+  padding-top: 100vh;
+  gap: 2rem;
 `;
 
-const StyledIcon = styled.div`
-  color: ${colors.whiteBackground};
-`;
 const StyledName = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
   color: ${colors.whiteBackground};
 `;
-const StyledTextContainer = styled.div`
-  margin-bottom: 2rem;
-`;
-const StyledInfo = styled.div`
-  margin-bottom: 2rem;
-`;
+
 const StyledText = styled(Text)`
   color: ${colors.whiteBackground};
 `;
+
 const SearchContainer = styled.div`
   position: relative;
   display: flex;
