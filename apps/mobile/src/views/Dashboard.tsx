@@ -1,10 +1,11 @@
-import { Button, colors } from "@chas/ui";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import CardList, { type CardInfo } from "../components/Cards/CardList";
 import DashboardHeader from "../components/DashboardHeader";
-import { Icon } from "@chas/ui";
+
 import styled from "styled-components";
+import { Toggle } from "@chas/ui";
+import type { ToggleOption } from "@chas/ui/Toggle";
 
 const initialCards: CardInfo[] = [
   {
@@ -65,27 +66,43 @@ const initialCards: CardInfo[] = [
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [cards, setCards] = useState<CardInfo[]>(initialCards);
+  const [cards] = useState<CardInfo[]>(initialCards);
+  const [selectedFilter, setSelectedFilter] = useState("all");
 
-  const sortByTitle = () =>
-    setCards([...cards].sort((a, b) => a.title.localeCompare(b.title)));
+  const toggleOptions: ToggleOption[] = [
+    { value: "all", label: "All" },
+    { value: "late", label: "Late" },
+    { value: "Temp issues", label: "Temp Issues" },
+  ];
+
+  const getFilteredCards = () => {
+    if (selectedFilter === "all") return cards;
+
+    if (selectedFilter === "Temp issues") {
+      return cards.filter((card) => card.temperature > card.threshold);
+    }
+
+    return cards.filter((card) => card.deliveryStatus === selectedFilter);
+  };
+
+  const handleToggleChange = (value: string) => {
+    setSelectedFilter(value);
+  };
 
   return (
     <div className="page">
       <DashboardHeader />
-      <div>
-        <FilterContainer>
-          <FilterIcon>
-            <Button onClick={sortByTitle}>
-              <Icon name="whiteHamburger" size="sm" />
-              Filter
-            </Button>
-          </FilterIcon>
-        </FilterContainer>
-      </div>
+      <FilterContainer>
+        <Toggle
+          name="statusFilter"
+          options={toggleOptions}
+          value={selectedFilter}
+          onChange={handleToggleChange}
+        />
+      </FilterContainer>
 
       <CardList
-        cards={cards}
+        cards={getFilteredCards()}
         onCardClick={(packageId) => navigate(`/package/${packageId}`)}
         variant="small"
       />
@@ -100,13 +117,5 @@ const FilterContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
-`;
-
-const FilterIcon = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${colors.greyText};
+  margin: 2rem auto;
 `;
