@@ -38,8 +38,7 @@ const StyledBox = styled.section`
   padding: 1rem;
   background-color: ${colors.primary};
   margin-bottom: 4rem;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
+  
   margin-top: -100vh;
   padding-top: 100vh;
   gap: 2rem;
