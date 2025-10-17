@@ -96,6 +96,7 @@ const Dashboard = () => {
           options={toggleOptions}
           value={selectedFilter}
           onChange={handleToggleChange}
+          iconSize="sm"
         />
       </FilterContainer>
 

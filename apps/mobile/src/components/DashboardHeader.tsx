@@ -5,7 +5,7 @@ const DashboardHeader = () => {
   return (
     <StyledBox>
       <Logo>
-        <Icon name="whiteTemp" size="lg" alt="ThermoTrack Logo " />
+        <Icon name="whiteTemp" size="lg" alt="ThermoTrack Logo" />
         <LogoText>
           <StyledText variant="h3">ThermoTrack</StyledText>
           <StyledText variant="body-sm">
