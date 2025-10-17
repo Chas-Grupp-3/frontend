@@ -2,10 +2,9 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import CardList, { type CardInfo } from "../components/Cards/CardList";
 import DashboardHeader from "../components/DashboardHeader";
-
 import styled from "styled-components";
 import { Toggle } from "@chas/ui";
-import type { ToggleOption } from "@chas/ui/Toggle";
+import type { ToggleOption } from "../types";
 
 const initialCards: CardInfo[] = [
   {
@@ -70,9 +69,9 @@ const Dashboard = () => {
   const [selectedFilter, setSelectedFilter] = useState("all");
 
   const toggleOptions: ToggleOption[] = [
-    { value: "all", label: "All" },
-    { value: "late", label: "Late" },
-    { value: "Temp issues", label: "Temp Issues" },
+    { value: "all", label: "All", icon: "package" },
+    { value: "late", label: "Late", icon: "clock" },
+    { value: "Temp issues", label: "Temp Issues", icon: "tempWarning" },
   ];
 
   const getFilteredCards = () => {
