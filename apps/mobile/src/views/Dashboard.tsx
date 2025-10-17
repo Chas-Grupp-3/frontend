@@ -4,7 +4,7 @@ import CardList, { type CardInfo } from "../components/Cards/CardList";
 import DashboardHeader from "../components/DashboardHeader";
 import styled from "styled-components";
 import { Toggle } from "@chas/ui";
-import type { ToggleOption } from "../types";
+
 
 const initialCards: CardInfo[] = [
   {
