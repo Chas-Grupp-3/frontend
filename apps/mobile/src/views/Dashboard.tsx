@@ -5,7 +5,6 @@ import DashboardHeader from "../components/DashboardHeader";
 import styled from "styled-components";
 import { Toggle } from "@chas/ui";
 
-
 const initialCards: CardInfo[] = [
   {
     id: 0,
