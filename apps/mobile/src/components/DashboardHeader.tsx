@@ -36,7 +36,7 @@ const StyledBox = styled.section`
   width: 100%;
   padding: 1rem;
   background-color: ${colors.primary};
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   gap: 2rem;
 `;
 
