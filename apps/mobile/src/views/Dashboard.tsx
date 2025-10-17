@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import styled from "styled-components";
 import CardList, { type CardInfo } from "../components/Cards/CardList";
 import DashboardHeader from "../components/DashboardHeader";
-import styled from "styled-components";
-import { Toggle } from "@chas/ui";
+import { Icon, colors } from "@chas/ui";
 
 const initialCards: CardInfo[] = [
   {
@@ -62,42 +62,51 @@ const initialCards: CardInfo[] = [
   },
 ];
 
-const Dashboard = () => {
+type FilterOption = {
+  value: "all" | "late" | "Temp issues";
+  icon: "package" | "clock" | "tempWarning";
+};
+
+const filterOptions: FilterOption[] = [
+  { value: "all", icon: "package" },
+  { value: "late", icon: "clock" },
+  { value: "Temp issues", icon: "tempWarning" },
+];
+
+const Dashboard: React.FC = () => {
   const navigate = useNavigate();
   const [cards] = useState<CardInfo[]>(initialCards);
-  const [selectedFilter, setSelectedFilter] = useState("all");
+  const [selectedFilter, setSelectedFilter] =
+    useState<FilterOption["value"]>("all");
 
-  const toggleOptions: ToggleOption[] = [
-    { value: "all", label: "All", icon: "package" },
-    { value: "late", label: "Late", icon: "clock" },
-    { value: "Temp issues", label: "Temp Issues", icon: "tempWarning" },
-  ];
-
-  const getFilteredCards = () => {
-    if (selectedFilter === "all") return cards;
-
-    if (selectedFilter === "Temp issues") {
-      return cards.filter((card) => card.temperature > card.threshold);
-    }
-
-    return cards.filter((card) => card.deliveryStatus === selectedFilter);
+  const getCountFor = (filter: FilterOption["value"]): number => {
+    if (filter === "all") return cards.length;
+    if (filter === "Temp issues")
+      return cards.filter((card) => card.temperature > card.threshold).length;
+    return cards.filter((card) => card.deliveryStatus === filter).length;
   };
 
-  const handleToggleChange = (value: string) => {
-    setSelectedFilter(value);
+  const getFilteredCards = (): CardInfo[] => {
+    if (selectedFilter === "all") return cards;
+    if (selectedFilter === "Temp issues")
+      return cards.filter((card) => card.temperature > card.threshold);
+    return cards.filter((card) => card.deliveryStatus === selectedFilter);
   };
 
   return (
     <div className="page">
       <DashboardHeader />
       <FilterContainer>
-        <Toggle
-          name="statusFilter"
-          options={toggleOptions}
-          value={selectedFilter}
-          onChange={handleToggleChange}
-          iconSize="sm"
-        />
+        {filterOptions.map((option) => (
+          <FilterButton
+            key={option.value}
+            active={selectedFilter === option.value}
+            onClick={() => setSelectedFilter(option.value)}
+          >
+            <Icon name={option.icon} size="sm" />
+            <Count>{getCountFor(option.value)}</Count>
+          </FilterButton>
+        ))}
       </FilterContainer>
 
       <CardList
@@ -111,9 +120,26 @@ const Dashboard = () => {
 
 export default Dashboard;
 
+// Styled Components
 const FilterContainer = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 100%;
+  gap: 1rem;
+  margin: 2rem 0;
+`;
+
+const FilterButton = styled.button<{ active: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  background-color: "#FFFFF0 ";
+`;
+
+const Count = styled.span`
+  font-size: 0.9rem;
+  color: ${colors.blueText};
 `;
