@@ -33,13 +33,10 @@ const StyledBox = styled.section`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100vw;
-  min-height: 15rem;
+  width: 100%;
   padding: 1rem;
   background-color: ${colors.primary};
   margin-bottom: 4rem;
-  margin-top: -100vh;
-  padding-top: 100vh;
   gap: 2rem;
 `;
 
