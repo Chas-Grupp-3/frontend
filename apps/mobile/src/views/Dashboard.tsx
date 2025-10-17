@@ -120,7 +120,6 @@ const Dashboard: React.FC = () => {
 
 export default Dashboard;
 
-// Styled Components
 const FilterContainer = styled.div`
   display: flex;
   justify-content: center;
