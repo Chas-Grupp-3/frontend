@@ -4,17 +4,17 @@ import styled from "styled-components";
 const DashboardHeader = () => {
   return (
     <StyledBox>
-      <StyledName>
-        <Icon name="bigTemp" size="md" />
-        <div>
+      <Logo>
+        <Icon name="whiteTemp" size="lg" alt="ThermoTrack Logo " />
+        <LogoText>
           <StyledText variant="h3">ThermoTrack</StyledText>
           <StyledText variant="body-sm">
             Climate-Controlled Transport
           </StyledText>
-        </div>
-      </StyledName>
+        </LogoText>
+      </Logo>
 
-      <StyledText variant="h3">My shipments</StyledText>
+      <StyledText variant="nav">My shipments</StyledText>
 
       <SearchContainer>
         <TextInput placeholder="Search by ID / name / QR" />
@@ -43,11 +43,22 @@ const StyledBox = styled.section`
   gap: 2rem;
 `;
 
-const StyledName = styled.div`
+const Logo = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  margin-bottom: 0.1rem;
   color: ${colors.whiteBackground};
+  margin-top: 1rem;
+`;
+const LogoText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  align-items: flex-start;
+  color: ${colors.primary};
 `;
 
 const StyledText = styled(Text)`
@@ -60,6 +71,7 @@ const SearchContainer = styled.div`
   align-items: center;
   width: 100%;
   max-width: 300px;
+  margin-bottom: 1rem;
 `;
 
 const SearchIcon = styled.div`

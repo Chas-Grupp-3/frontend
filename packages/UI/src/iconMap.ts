@@ -6,6 +6,7 @@ import bigTemp from "../assets/icons/bigTemp.svg";
 import whiteHamburger from "../assets/icons/whiteHamburger.svg";
 import clock from "../assets/icons/clock.svg";
 import tempWarning from "../assets/icons/tempWarning.svg";
+import whiteTemp from "../assets/icons/whiteTemp.svg";
 
 export const iconMap = {
   package: packageIcon,
@@ -16,7 +17,7 @@ export const iconMap = {
   whiteHamburger: whiteHamburger,
   clock: clock,
   tempWarning: tempWarning,
-
+  whiteTemp: whiteTemp,
 } as const;
 
 export type IconName = keyof typeof iconMap;
