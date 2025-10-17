@@ -55,6 +55,7 @@ const StyledBox = styled.section`
   box-shadow: inset 0 4px 10px ${colors.greyText};
   overflow: auto;
   margin: 2rem auto;
+  margin-top: 0.3rem;
 
   ul {
     display: flex;

@@ -125,6 +125,7 @@ const FilterContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   margin: 2rem 0;
+  margin-top: 0.3rem;
 `;
 
 const FilterButton = styled.button<{ active: boolean }>`
