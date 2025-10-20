@@ -7,6 +7,8 @@ import whiteHamburger from "../assets/icons/whiteHamburger.svg";
 import clock from "../assets/icons/clock.svg";
 import tempWarning from "../assets/icons/tempWarning.svg";
 import whiteTemp from "../assets/icons/whiteTemp.svg";
+import smallTempHot from "../assets/icons/smallTempHot.svg";
+import truckPin from "../assets/icons/truckPin.svg";
 
 export const iconMap = {
   package: packageIcon,
@@ -18,6 +20,8 @@ export const iconMap = {
   clock: clock,
   tempWarning: tempWarning,
   whiteTemp: whiteTemp,
+  smallTempHot: smallTempHot,
+  truckPin: truckPin,
 } as const;
 
 export type IconName = keyof typeof iconMap;
