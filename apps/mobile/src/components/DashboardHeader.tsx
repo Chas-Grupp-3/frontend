@@ -1,7 +1,15 @@
 import { colors, Text, Icon, TextInput } from "@chas/ui";
 import styled from "styled-components";
 
-const DashboardHeader = () => {
+interface DashboardHeaderProps {
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+}
+
+const DashboardHeader: React.FC<DashboardHeaderProps> = ({
+  searchTerm,
+  setSearchTerm,
+}) => {
   return (
     <StyledBox>
       <Logo>
@@ -17,7 +25,11 @@ const DashboardHeader = () => {
       <StyledText variant="nav">My shipments</StyledText>
 
       <SearchContainer>
-        <TextInput placeholder="Search by ID / name / QR" />
+        <TextInput
+          placeholder="Search by ID / name / QR"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
         <SearchIcon>
           <Icon name="qrScan" size="sm" />
         </SearchIcon>

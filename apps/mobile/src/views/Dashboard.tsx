@@ -78,7 +78,7 @@ const Dashboard: React.FC = () => {
   const [cards] = useState<CardInfo[]>(initialCards);
   const [selectedFilter, setSelectedFilter] =
     useState<FilterOption["value"]>("all");
-
+  const [searchTerm, setSearchTerm] = useState("");
   const getCountFor = (filter: FilterOption["value"]): number => {
     if (filter === "all") return cards.length;
     if (filter === "Temp issues")
@@ -87,15 +87,27 @@ const Dashboard: React.FC = () => {
   };
 
   const getFilteredCards = (): CardInfo[] => {
-    if (selectedFilter === "all") return cards;
-    if (selectedFilter === "Temp issues")
-      return cards.filter((card) => card.temperature > card.threshold);
-    return cards.filter((card) => card.deliveryStatus === selectedFilter);
+    let filtered =
+      selectedFilter === "all"
+        ? cards
+        : selectedFilter === "Temp issues"
+          ? cards.filter((card) => card.temperature > card.threshold)
+          : cards.filter((card) => card.deliveryStatus === selectedFilter);
+
+    if (searchTerm.trim() !== "") {
+      filtered = filtered.filter(
+        (card) =>
+          card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          card.packageId.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    return filtered;
   };
 
   return (
     <div className="page">
-      <DashboardHeader />
+      <DashboardHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <FilterContainer>
         {filterOptions.map((option) => (
           <FilterButton
