@@ -55,6 +55,6 @@ export default defineConfig({
   // Help Vite resolve modules from workspace root
   optimizeDeps: {
     include: ["vite-plugin-pwa"],
-    exclude: ["fsevents"]
+    exclude: ["fsevents"],
   },
 });
