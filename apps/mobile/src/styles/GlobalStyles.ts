@@ -40,7 +40,7 @@ const GlobalStyles = createGlobalStyle`
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 1rem;
+    
     width: 100%;
     max-width: 100%;
   }
@@ -51,7 +51,6 @@ const GlobalStyles = createGlobalStyle`
     align-items: center;
     justify-content: center;
     flex: 1;
-    padding: 1rem;
     width: 100%;
     max-width: 100%;
   }

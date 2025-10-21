@@ -1,7 +1,5 @@
-import { colors, radius } from "../styles";
-import Text from "../Text/Text";
 import styled from "styled-components";
-import { Icon } from "../Icon";
+import { Icon, Text, colors, radius } from "@chas/ui";
 
 interface CardProps {
   title: string;
@@ -11,6 +9,7 @@ interface CardProps {
   backgroundColor: string;
   textColor: keyof typeof colors;
   statusText: string;
+  onClick: () => void;
 }
 
 const LargeCard = ({
@@ -21,12 +20,16 @@ const LargeCard = ({
   backgroundColor,
   textColor,
   statusText,
+  onClick,
+  ...rest
 }: CardProps) => {
   return (
     <StyledCard
       style={{
         backgroundColor: backgroundColor,
       }}
+      onClick={onClick}
+      {...rest}
     >
       <StyledInfo>
         <Text variant="body-smBold" color={textColor}>

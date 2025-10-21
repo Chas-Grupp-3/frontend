@@ -114,6 +114,11 @@ export const textWeb = {
     fontWeight: fontWeight.poppinsSemiBold,
     fontFamily: fontFamily.poppins,
   },
+  h4: {
+    fontSize: "22px",
+    fontWeight: fontWeight.poppinsMedium,
+    fontFamily: fontFamily.poppins,
+  },
   body: {
     lg: {
       fontSize: "25px",
