@@ -26,7 +26,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
       <SearchContainer>
         <TextInput
-          placeholder="Search by ID / name / QR"
+          label="Search by ID / name / QR"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
