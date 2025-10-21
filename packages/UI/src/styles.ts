@@ -34,6 +34,7 @@ export const colors = {
   greyText: "#6F6F6F",
   whiteBackground: "#E7E7E7",
   cardText: "#153B63",
+  disabled: "#E7E7E7",
 
   ok: "#2CEB72",
   minor: "#FFA712",
@@ -111,6 +112,11 @@ export const textWeb = {
   h3: {
     fontSize: "28px",
     fontWeight: fontWeight.poppinsSemiBold,
+    fontFamily: fontFamily.poppins,
+  },
+  h4: {
+    fontSize: "22px",
+    fontWeight: fontWeight.poppinsMedium,
     fontFamily: fontFamily.poppins,
   },
   body: {
