@@ -20,7 +20,8 @@ const buttonVariantsConfig = {
     }
   `,
   disabled: css`
-    background-color: ${colors.background};
+    background-color: ${colors.disabled};
+    cursor: not-allowed;
     border: none;
   `,
   destructive: css`
@@ -54,12 +55,12 @@ export const Button = ({
   disabled = false,
   children,
 }: ButtonProps) => {
-  const textColor = textColorsConfig[buttonVariant];
+  const textColor = textColorsConfig[disabled ? "disabled" : buttonVariant];
   return (
     <StyledButton
       type={type}
       onClick={disabled ? undefined : onClick}
-      $buttonVariant={buttonVariant}
+      $buttonVariant={disabled ? "disabled" : buttonVariant}
       disabled={disabled || buttonVariant === "disabled"}
     >
       <Text variant="button" color={textColor}>
