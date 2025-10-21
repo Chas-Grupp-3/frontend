@@ -1,19 +1,14 @@
-import { useState } from "react";
-import { Modal, Text, Button } from "@chas/ui";
+import { Routes, Route } from "react-router";
+import WebShipment from "./views/WebShipment";
 
-function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+const App = () => {
   return (
-    <>
-      <Button onClick={() => setIsModalOpen(true)}>Open Modal</Button>
-
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Text variant="h2">Modal </Text>
-        <Text>Modal content goes here</Text>
-      </Modal>
-    </>
+    <main className="main-content">
+      <Routes>
+        <Route path="/WebShipment" element={<WebShipment />} />
+      </Routes>
+    </main>
   );
-}
+};
 
 export default App;
