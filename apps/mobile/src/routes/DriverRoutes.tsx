@@ -1,11 +1,11 @@
-import DriverLayout from "../layouts/DriverLayout";
-import Dashboard from "../views/Dashboard";
-import Scan from "../views/Scan";
-import PackageDetails from "../views/PackageDetails";
-import Warnings from "../views/Warnings";
 import type { RouteObject } from "react-router";
+import DriverLayout from "../layouts/DriverLayout";
+import Dashboard from "../views/driver/DriverDashboard";
+import Scan from "../views/Scan";
+import PackageDetails from "../views/driver/DriverPackageDetails";
+import Warnings from "../views/driver/DriverWarnings";
 import RequireAuth from "../components/RequireAuth";
-import Profile from "../views/Profile";
+import Profile from "../views/driver/DriverProfile";
 
 const DriverRoutes: RouteObject[] = [
   {

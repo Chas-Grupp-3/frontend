@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import styled from "styled-components";
-import CardList, { type CardInfo } from "../components/Cards/CardList";
-import DashboardHeader from "../components/DashboardHeader";
+import CardList, { type CardInfo } from "../../components/Cards/CardList";
+import DashboardHeader from "../../components/DashboardHeader";
 import { Icon, colors } from "@chas/ui";
 
 const initialCards: CardInfo[] = [

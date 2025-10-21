@@ -1,11 +1,11 @@
-import UserLayout from "../layouts/UserLayput";
-import Dashboard from "../views/Dashboard";
-import Scan from "../views/Scan";
-import PackageDetails from "../views/PackageDetails";
-import Warnings from "../views/Warnings";
 import type { RouteObject } from "react-router";
+import UserLayout from "../layouts/UserLayput";
+import Dashboard from "../views/user/UserDashboard";
+import Scan from "../views/Scan";
+import PackageDetails from "../views/user/UserPackageDetails";
+import Warnings from "../views/user/UserWarnings";
 import RequireAuth from "../components/RequireAuth";
-import Profile from "../views/Profile";
+import Profile from "../views/user/UserProfile";
 
 const UserRoutes: RouteObject[] = [
   {
