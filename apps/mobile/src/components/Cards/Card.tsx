@@ -78,30 +78,28 @@ const Card = ({
 
   const statusText = getStatusText(deliveryStatus, temperature, threshold);
 
-  return [
-    variant === "large" ? (
-      <LargeCard
-        title={title}
-        temperature={temperature}
-        id={id}
-        ETA={ETA}
-        backgroundColor={backgroundColor}
-        textColor={textColor}
-        statusText={statusText}
-        onClick={onClick}
-      />
-    ) : (
-      <SmallCard
-        title={title}
-        temperature={temperature}
-        id={id}
-        backgroundColor={backgroundColor}
-        textColor={textColor}
-        statusText={statusText}
-        onClick={onClick}
-      />
-    ),
-  ];
+  return variant === "large" ? (
+    <LargeCard
+      title={title}
+      temperature={temperature}
+      id={id}
+      ETA={ETA}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
+      statusText={statusText}
+      onClick={onClick}
+    />
+  ) : (
+    <SmallCard
+      title={title}
+      temperature={temperature}
+      id={id}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
+      statusText={statusText}
+      onClick={onClick}
+    />
+  );
 };
 
 export default Card;
