@@ -1,13 +1,16 @@
 import { Link, useLocation } from "react-router";
 import styled from "styled-components";
 import { colors, Text } from "@chas/ui";
+import { useAuthContext } from "../context/auth/useAuthContext";
 
 const Navigation = () => {
   const location = useLocation();
+  const { role } = useAuthContext();
+  const base = role ? `/${role}` : "";
 
   return (
     <NavContainer>
-      <NavLink to="/" $isActive={location.pathname === "/"}>
+      <NavLink to={`${base}`} $isActive={location.pathname === "/"}>
         <NavIcon>🏠</NavIcon>
         <Text
           variant="body"
@@ -17,33 +20,47 @@ const Navigation = () => {
         </Text>
       </NavLink>
 
-      <NavLink to="/scan" $isActive={location.pathname === "/scan"}>
+      <NavLink to={`${base}/scan`} $isActive={location.pathname === "/scan"}>
         <NavIcon>📷</NavIcon>
         <Text
           variant="body"
-          color={location.pathname === "/scan" ? "secondary" : "background"}
+          color={
+            location.pathname === `${base}/scan` ? "secondary" : "background"
+          }
         >
           Scan
         </Text>
       </NavLink>
 
-      <NavLink to="/warnings" $isActive={location.pathname === "/warnings"}>
+      <NavLink
+        to={`${base}/warnings`}
+        $isActive={location.pathname === "/warnings"}
+      >
         <NavIcon>⚠️</NavIcon>
         <Text
           variant="body"
-          color={location.pathname === "/warnings" ? "secondary" : "background"}
+          color={
+            location.pathname === `${base}/warnings`
+              ? "secondary"
+              : "background"
+          }
         >
           Warnings
         </Text>
       </NavLink>
 
-      <NavLink to="/login" $isActive={location.pathname === "/login"}>
+      <NavLink
+        to={`${base}/profile`}
+        $isActive={location.pathname === "/profile"}
+      >
         <NavIcon>👤</NavIcon>
         <Text
           variant="body"
-          color={location.pathname === "/login" ? "secondary" : "background"}
+          color={
+            location.pathname === `${base}/profile` ? "secondary" : "background"
+          }
         >
-          Login
+          Profile
         </Text>
       </NavLink>
     </NavContainer>
@@ -57,7 +74,6 @@ const NavContainer = styled.nav`
   background-color: ${colors.primary};
   flex-shrink: 0;
   height: 80px;
-  /* Removed position: fixed since we're using grid */
 `;
 
 const NavLink = styled(Link)<{ $isActive: boolean }>`
