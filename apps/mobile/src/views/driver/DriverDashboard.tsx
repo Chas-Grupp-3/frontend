@@ -73,7 +73,7 @@ const filterOptions: FilterOption[] = [
   { value: "Temp issues", icon: "tempWarning" },
 ];
 
-const Dashboard: React.FC = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const [cards] = useState<CardInfo[]>(initialCards);
   const [selectedFilter, setSelectedFilter] =
@@ -106,7 +106,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="page">
+    <DashboardContainer className="page">
       <DashboardHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <FilterContainer>
         {filterOptions.map((option) => (
@@ -121,16 +121,24 @@ const Dashboard: React.FC = () => {
         ))}
       </FilterContainer>
 
-      <CardList
-        cards={getFilteredCards()}
-        onCardClick={(packageId) => navigate(`/package/${packageId}`)}
-        variant="small"
-      />
-    </div>
+      <CardListContainer>
+        <CardList
+          cards={getFilteredCards()}
+          onCardClick={(packageId) => navigate(`/package/${packageId}`)}
+          variant="large"
+        />
+      </CardListContainer>
+    </DashboardContainer>
   );
 };
 
 export default Dashboard;
+
+const DashboardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+`;
 
 const FilterContainer = styled.div`
   display: flex;
@@ -154,4 +162,11 @@ const FilterButton = styled.button<{ active: boolean }>`
 const Count = styled.span`
   font-size: 0.9rem;
   color: ${colors.blueText};
+`;
+
+const CardListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  padding: 1rem;
 `;
