@@ -11,6 +11,9 @@ interface CardProps {
   statusText: string;
   onClick: () => void;
 }
+interface PillProps {
+  $backgroundColor: string;
+}
 
 const LargeCard = ({
   title,
@@ -24,39 +27,25 @@ const LargeCard = ({
   ...rest
 }: CardProps) => {
   return (
-    <StyledCard
-      style={{
-        backgroundColor: backgroundColor,
-      }}
-      onClick={onClick}
-      {...rest}
-    >
-      <StyledInfo>
-        <Text variant="body-smBold" color={textColor}>
-          {title}
-        </Text>
-        <StyledDeliveryStatus>
+    <StyledCard onClick={onClick} {...rest}>
+      <FlexRow>
+        <Text variant="body-smBold">{title}</Text>
+        <Pill $backgroundColor={backgroundColor}>
           <Text variant="body-smBold" color={textColor}>
             {statusText}
           </Text>
-        </StyledDeliveryStatus>
-      </StyledInfo>
-      <StyledContent>
-        <StyledLeftColumn>
-          <Icon name="smallTemp" size="sm" />
-          <Text variant="h1" color={textColor}>
-            {temperature}°
-          </Text>
-        </StyledLeftColumn>
-        <StyledRightColumn>
-          <Text variant="body-sm" color={textColor}>
-            ETA: {ETA}
-          </Text>
-          <Text variant="body-sm" color={textColor}>
-            ID: {id}
-          </Text>
-        </StyledRightColumn>
-      </StyledContent>
+        </Pill>
+      </FlexRow>
+      <FlexRow>
+        <Temperature>
+          <Icon name="smallTemp" size="md" />
+          <Text variant="h2">{temperature}°</Text>
+        </Temperature>
+        <PackageInfo>
+          <Text variant="body-sm">ETA: {ETA}</Text>
+          <Text variant="body-sm">ID: {id}</Text>
+        </PackageInfo>
+      </FlexRow>
     </StyledCard>
   );
 };
@@ -64,41 +53,36 @@ const LargeCard = ({
 export default LargeCard;
 
 const StyledCard = styled.article`
-  width: 348px;
-  height: 78px;
-  padding: 1rem;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
   border-radius: ${radius.box};
+  background-color: ${colors.pause};
+  padding: 0.6rem;
+  min-width: 250px;
 `;
-const StyledContent = styled.div`
+
+const FlexRow = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  width: 100%;
 `;
-const StyledInfo = styled.div`
+const Pill = styled.div<PillProps>`
+  background-color: ${(props) => props.$backgroundColor};
+  border-radius: ${radius.box};
   display: flex;
-  align-items: center;
-  width: 100%;
+  padding: 0.2rem 0.9rem;
 `;
-const StyledDeliveryStatus = styled.div`
-  margin-left: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 72px;
-  padding: 2px 6px;
-  white-space: nowrap;
-`;
-const StyledLeftColumn = styled.div`
+
+const Temperature = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0.2rem;
   align-items: center;
 `;
-const StyledRightColumn = styled.div`
+const PackageInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 3;
+  gap: 0.2rem;
+  padding-right: 0.5em;
 `;
