@@ -17,14 +17,14 @@ const Dashboard = () => {
   const [cards] = useState<CardInfo[]>(mockCards);
   const [selectedFilter, setSelectedFilter] =
     useState<FilterOption["value"]>("all");
+  const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
   const counts = useMemo(() => getFilterCounts(cards), [cards]);
 
-  const filteredCards = useMemo(
-    () => getFilteredCards(cards, selectedFilter, ""), // Tom sträng för searchTerm
-    [cards, selectedFilter]
-  );
+  const filteredCards = useMemo(() => {
+    return getFilteredCards(cards, selectedFilter, searchTerm);
+  }, [cards, selectedFilter, searchTerm]);
 
   const toggleOptions = filterOptions.map((o) => ({
     value: o.value,
@@ -35,7 +35,7 @@ const Dashboard = () => {
 
   return (
     <DashboardContainer className="page">
-      <DashboardHeader />
+      <DashboardHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Centered>
         <Toggle
           name="filters"
