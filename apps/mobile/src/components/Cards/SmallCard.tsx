@@ -58,7 +58,7 @@ const SmallCard = ({
 export default SmallCard;
 
 const StyledCard = styled.article`
-  width: 146px;
+  min-width: 146px;
   height: 150px;
   padding: 1rem;
   border-radius: ${radius.box};
@@ -66,6 +66,7 @@ const StyledCard = styled.article`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100%;
 `;
 
 const StyledTemperature = styled.div`
