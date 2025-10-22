@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Card from "./Card";
 import { radius, colors } from "@chas/ui";
 
@@ -18,12 +18,27 @@ type CardListProps = {
   variant?: "small" | "large";
 };
 
+interface ListVariantStyles {
+  $variant: "small" | "large";
+}
+
+const listVariantsConfig = {
+  large: css`
+    flex: 1 1 100%;
+    max-width: 100%;
+  `,
+
+  small: css`
+    flex: 0 0 calc(50% - 0.5rem);
+  `,
+};
+
 const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
   return (
-    <StyledBox>
-      <ul>
+    <StyledCardListContainer>
+      <StyledCardList>
         {cards.map((item) => (
-          <li key={item.id}>
+          <StyledLi key={item.id} $variant={variant}>
             <Card
               variant={variant}
               title={item.title}
@@ -34,43 +49,41 @@ const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
               threshold={item.threshold}
               onClick={() => onCardClick?.(item.packageId)}
             />
-          </li>
+          </StyledLi>
         ))}
-      </ul>
-    </StyledBox>
+      </StyledCardList>
+    </StyledCardListContainer>
   );
 };
 
 export default CardList;
 
-const StyledBox = styled.section`
+const StyledCardListContainer = styled.section`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  width: 340px;
-  height: 340px;
   padding: 1rem;
   border-radius: ${radius.box};
   border: solid 0.5px ${colors.greyText};
   box-shadow: inset 0 4px 10px ${colors.greyText};
-  overflow: auto;
-  margin: 2rem auto;
-  margin-top: 0.3rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+`;
 
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 0.3rem;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-  }
+const StyledCardList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+`;
 
-  li {
-    flex: 0 0 calc(50% - 0.5rem);
-    display: flex;
-    justify-content: center;
-  }
+const StyledLi = styled.li<ListVariantStyles>`
+  display: flex;
+  justify-content: center;
+  ${({ $variant }) => listVariantsConfig[$variant || "small"]}
 `;
