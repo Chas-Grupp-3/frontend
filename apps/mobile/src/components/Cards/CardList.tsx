@@ -1,16 +1,7 @@
 import styled, { css } from "styled-components";
 import Card from "./Card";
 import { radius, colors } from "@chas/ui";
-
-export type CardInfo = {
-  id: number;
-  title: string;
-  temperature: number;
-  deliveryStatus: "delivered" | "on time" | "late";
-  ETA?: string;
-  packageId: string;
-  threshold: number;
-};
+import { type CardInfo } from "../../types/cardTypes";
 
 type CardListProps = {
   cards: CardInfo[];
