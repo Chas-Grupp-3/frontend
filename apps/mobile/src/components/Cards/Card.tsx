@@ -1,6 +1,6 @@
 import SmallCard from "./SmallCard";
 import LargeCard from "./LargeCard";
-import { getCardColor, getStatusText } from "../../utils/card";
+import { getCardColor, getStatusText } from "../../utils/cardUtils";
 
 type CardVariant = "small" | "large";
 
