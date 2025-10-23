@@ -20,12 +20,11 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
 
-  const filteredCards = useMemo(
-    () => getFilteredCards(cards, selectedFilter, searchTerm),
-    [cards, selectedFilter, searchTerm]
-  );
-
   const counts = useMemo(() => getFilterCounts(cards), [cards]);
+
+  const filteredCards = useMemo(() => {
+    return getFilteredCards(cards, selectedFilter, searchTerm);
+  }, [cards, selectedFilter, searchTerm]);
 
   const toggleOptions = filterOptions.map((o) => ({
     value: o.value,
@@ -65,6 +64,7 @@ const DashboardContainer = styled.div`
   gap: 1rem;
   height: calc(100vh - 80px);
 `;
+
 const Centered = styled.div`
   display: flex;
   justify-content: center;
