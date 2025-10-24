@@ -1,4 +1,4 @@
-import type { CardInfo } from "../types/cardTypes";
+import type { CardInfo } from "../types/packageTypes";
 
 export type FilterOption = {
   value: "all" | "late" | "Temp issues";
