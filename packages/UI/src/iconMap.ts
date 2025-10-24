@@ -28,7 +28,7 @@ import cross from "../assets/icons/cross.svg";
 import crossHover from "../assets/icons/crossHover.svg";
 import map from "../assets/icons/map.svg";
 import mapHover from "../assets/icons/mapHover.svg";
-import wahiteWarning from "../assets/icons/whiteWarning.svg";
+import whiteWarning from "../assets/icons/whiteWarning.svg";
 import whiteWarningHover from "../assets/icons/whiteWarningHover.svg";
 import whiteHamburgerHover from "../assets/icons/whiteHamburgerHover.svg";
 import whitePackage from "../assets/icons/whitePackage.svg";
@@ -86,7 +86,7 @@ export const iconMap = {
   crossHover: crossHover,
   map: map,
   mapHover: mapHover,
-  wahiteWarning: wahiteWarning,
+  whiteWarning: whiteWarning,
   whiteWarningHover: whiteWarningHover,
   whiteHamburgerHover: whiteHamburgerHover,
   whitePackage: whitePackage,
