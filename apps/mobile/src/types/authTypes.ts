@@ -5,22 +5,22 @@ export type UserCredentials = {
 
 export type AuthContextType = {
   isAuthenticated: boolean;
-  token?: string;
-  userId?: string;
-  role?: string;
+  token?: string | null;
+  userId?: string | null;
+  role?: string | null;
   loading: boolean;
-  error?: string;
+  error?: string | null;
   login: (credentials: UserCredentials) => Promise<boolean>;
   logout: () => void;
 };
 
 export type AuthState = {
   isAuthenticated: boolean;
-  token?: string;
-  userId?: string;
-  role?: string;
+  token?: string | null;
+  userId?: string | null;
+  role?: string | null;
   loading: boolean;
-  error?: string;
+  error?: string | null;
 };
 
 export type LoginResponse = {

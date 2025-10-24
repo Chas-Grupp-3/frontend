@@ -2,30 +2,49 @@ import { useNavigate } from "react-router";
 import { useState, useMemo } from "react";
 import styled from "styled-components";
 import CardList from "../../components/Cards/CardList";
-import type { CardInfo } from "../../types/cardTypes";
+import type { BackendPackage, CardInfo } from "../../types/packageTypes";
 import DashboardHeader from "../../components/DashboardHeader";
-import { Toggle } from "@chas/ui";
+import { Button, Toggle, colors } from "@chas/ui";
 import {
   filterOptions,
   getFilterCounts,
   getFilteredCards,
-  mockCards,
   type FilterOption,
 } from "../../utils/dashboardUtils";
+import { usePackages } from "../../hooks/usePackages";
+import { ClipLoader } from "react-spinners";
 
 const Dashboard = () => {
-  const [cards] = useState<CardInfo[]>(mockCards);
+  const {
+    data: packagesData,
+    mappedData: mappedPackagesData,
+    loading,
+    refresh,
+  } = usePackages({ pollIntervalMs: null, defaultThreshold: 10 });
   const [selectedFilter, setSelectedFilter] =
     useState<FilterOption["value"]>("all");
   const [searchTerm, setSearchTerm] = useState("");
+
   const navigate = useNavigate();
 
-  const filteredCards = useMemo(
-    () => getFilteredCards(cards, selectedFilter, searchTerm),
-    [cards, selectedFilter, searchTerm]
+  const mappedPackages: CardInfo[] = useMemo(
+    () => mappedPackagesData ?? [],
+    [mappedPackagesData]
+  );
+  const packages: BackendPackage[] = useMemo(
+    () => packagesData ?? [],
+    [packagesData]
   );
 
-  const counts = useMemo(() => getFilterCounts(cards), [cards]);
+  const filteredPackages = useMemo(
+    () => getFilteredCards(mappedPackages, selectedFilter, searchTerm),
+    [mappedPackages, selectedFilter, searchTerm]
+  );
+
+  const counts = useMemo(
+    () => getFilterCounts(mappedPackages),
+    [mappedPackages]
+  );
 
   const toggleOptions = filterOptions.map((o) => ({
     value: o.value,
@@ -47,12 +66,31 @@ const Dashboard = () => {
         />
       </Centered>
       <CardListContainer>
-        <CardList
-          cards={filteredCards}
-          onCardClick={(packageId) => navigate(`/package/${packageId}`)}
-          variant="large"
-        />
+        {loading ? (
+          <Centered>
+            <ClipLoader size={64} color={colors.primary} />
+          </Centered>
+        ) : (
+          <CardList
+            cards={filteredPackages}
+            onCardClick={(packageId) =>
+              navigate(`package/${packageId}`, {
+                state: {
+                  packageData: packages.find(
+                    (pkg) => pkg.id === Number(packageId)
+                  ),
+                },
+              })
+            }
+            variant="large"
+          />
+        )}
       </CardListContainer>
+      <Centered>
+        <Button onClick={refresh} disabled={loading}>
+          {loading ? "Refreshing…" : "Refresh"}
+        </Button>
+      </Centered>
     </DashboardContainer>
   );
 };
