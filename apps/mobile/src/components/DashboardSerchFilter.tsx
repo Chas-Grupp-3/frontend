@@ -60,5 +60,5 @@ const SearchContainer = styled.div`
 const QrButtonContainer = styled.div`
   position: absolute;
   right: 12px;
-  color: ${colors.greyText};
+ 
 `;
