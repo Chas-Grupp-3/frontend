@@ -10,7 +10,8 @@ type UsePackagesOptions = {
 };
 
 type UsePackagesResult = {
-  data: CardInfo[] | null;
+  mappedData: CardInfo[] | null;
+  data: BackendPackage[] | null;
   loading: boolean;
   error: Error | null;
   refresh: () => void;
@@ -21,7 +22,8 @@ export function usePackages(
 ): UsePackagesResult {
   const { pollIntervalMs = null, defaultThreshold = 5 } = options;
 
-  const [data, setData] = useState<CardInfo[] | null>(null);
+  const [mappedData, setMappedData] = useState<CardInfo[] | null>(null);
+  const [data, setData] = useState<BackendPackage[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
@@ -50,7 +52,8 @@ export function usePackages(
       );
 
       if (!mountedRef.current) return;
-      setData(mapped);
+      setMappedData(mapped);
+      setData(result);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -60,6 +63,7 @@ export function usePackages(
         return;
 
       setError(err instanceof Error ? err : new Error(String(err)));
+      setMappedData(null);
       setData(null);
     } finally {
       if (mountedRef.current) setLoading(false);
@@ -89,5 +93,5 @@ export function usePackages(
     };
   }, [fetchAndMap, pollIntervalMs]);
 
-  return { data, loading, error, refresh };
+  return { mappedData, data, loading, error, refresh };
 }

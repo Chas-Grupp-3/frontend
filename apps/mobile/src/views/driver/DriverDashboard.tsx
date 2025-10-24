@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import { useState, useMemo } from "react";
 import styled from "styled-components";
 import CardList from "../../components/Cards/CardList";
-import type { CardInfo } from "../../types/packageTypes";
+import type { BackendPackage, CardInfo } from "../../types/packageTypes";
 import DashboardHeader from "../../components/DashboardHeader";
 import { Button, Toggle, colors } from "@chas/ui";
 import {
@@ -17,6 +17,7 @@ import { ClipLoader } from "react-spinners";
 const Dashboard = () => {
   const {
     data: packagesData,
+    mappedData: mappedPackagesData,
     loading,
     refresh,
   } = usePackages({ pollIntervalMs: null, defaultThreshold: 10 });
@@ -26,17 +27,24 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
-  const packages: CardInfo[] = useMemo(
+  const mappedPackages: CardInfo[] = useMemo(
+    () => mappedPackagesData ?? [],
+    [mappedPackagesData]
+  );
+  const packages: BackendPackage[] = useMemo(
     () => packagesData ?? [],
     [packagesData]
   );
 
   const filteredPackages = useMemo(
-    () => getFilteredCards(packages, selectedFilter, searchTerm),
-    [packages, selectedFilter, searchTerm]
+    () => getFilteredCards(mappedPackages, selectedFilter, searchTerm),
+    [mappedPackages, selectedFilter, searchTerm]
   );
 
-  const counts = useMemo(() => getFilterCounts(packages), [packages]);
+  const counts = useMemo(
+    () => getFilterCounts(mappedPackages),
+    [mappedPackages]
+  );
 
   const toggleOptions = filterOptions.map((o) => ({
     value: o.value,
@@ -65,7 +73,15 @@ const Dashboard = () => {
         ) : (
           <CardList
             cards={filteredPackages}
-            onCardClick={(packageId) => navigate(`package/${packageId}`)}
+            onCardClick={(packageId) =>
+              navigate(`package/${packageId}`, {
+                state: {
+                  packageData: packages.find(
+                    (pkg) => pkg.id === Number(packageId)
+                  ),
+                },
+              })
+            }
             variant="large"
           />
         )}
