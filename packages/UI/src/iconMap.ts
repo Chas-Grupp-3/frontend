@@ -9,11 +9,13 @@ import tempWarning from "../assets/icons/tempWarning.svg";
 import whiteTemp from "../assets/icons/whiteTemp.svg";
 import smallTempHot from "../assets/icons/smallTempHot.svg";
 import truckPin from "../assets/icons/truckPin.svg";
+import qrScanHover from "../assets/icons/qrScanHover.svg";
 
 export const iconMap = {
   package: packageIcon,
   smallTemp: smallTemp,
   qrScan: qrScan,
+  qrScanHover: qrScanHover,
   bigTemp: bigTemp,
   hamburger: hamburger,
   whiteHamburger: whiteHamburger,
