@@ -43,7 +43,9 @@ const LargeCard = ({
         </Temperature>
         <PackageInfo>
           <Text variant="body-sm">ETA: {ETA}</Text>
-          <Text variant="body-sm">ID: {id}</Text>
+          <Text variant="body-sm">
+            ID: <Ellipsis>{id}</Ellipsis>
+          </Text>
         </PackageInfo>
       </FlexRow>
     </StyledCard>
@@ -85,4 +87,13 @@ const PackageInfo = styled.div`
   align-items: flex-end;
   gap: 0.2rem;
   padding-right: 0.5em;
+`;
+
+const Ellipsis = styled.span`
+  display: inline-block;
+  max-width: 8.3rem; /* tweak this value to fit your layout (px, rem, % are fine) */
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
