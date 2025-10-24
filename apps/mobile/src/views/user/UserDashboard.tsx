@@ -45,6 +45,13 @@ const Dashboard = () => {
           iconSize="sm"
         />
       </Centered>
+      <QrButton
+        onClick={() => console.log("QR Button clicked")}
+        border={""}
+        color={""}
+        radius={""}
+        width={""}
+      ></QrButton>
       <CardListContainer>
         <CardList
           cards={filteredCards}
