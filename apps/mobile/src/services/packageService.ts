@@ -53,4 +53,43 @@ export const packageService = {
       return error;
     }
   },
+  async fetchPackageById(
+    packageId: string,
+    signal?: AbortSignal
+  ): Promise<ApiResult<BackendPackage>> {
+    try {
+      const response = await fetch(`${API_URL}/packages/${packageId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${JWT}`,
+        },
+        signal,
+      });
+      if (!response.ok) {
+        const message = `Request failed with status ${response.status}`;
+        const error: ApiError = { success: false, message };
+        return error;
+      }
+
+      const data = await response.json();
+      return data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (
+        err?.name === "AbortError" ||
+        err?.message?.includes("aborted") ||
+        err?.message?.includes("The operation was aborted")
+      ) {
+        return {} as BackendPackage;
+      }
+
+      const error: ApiError = {
+        success: false,
+        message: err?.message || "Something went wrong while fetching package",
+        error: err?.stack,
+      };
+      return error;
+    }
+  },
 };
