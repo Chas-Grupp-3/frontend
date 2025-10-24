@@ -87,6 +87,7 @@ const DashboardContainer = styled.div`
   gap: 1rem;
   height: calc(100vh - 80px);
 `;
+
 const Centered = styled.div`
   display: flex;
   justify-content: center;
