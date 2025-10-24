@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import Card from "./Card";
 import { radius, colors } from "@chas/ui";
-import { type CardInfo } from "../../types/cardTypes";
+import { type CardInfo } from "../../types/packageTypes";
 
 type CardListProps = {
   cards: CardInfo[];
