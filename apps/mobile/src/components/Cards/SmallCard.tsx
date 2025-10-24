@@ -48,8 +48,10 @@ const SmallCard = ({
       <Text variant="body-sm" color={textColor}>
         {ETA}
       </Text>
+
       <Text variant="body-sm" color={textColor}>
-        ID: {id}
+        ID:&nbsp;
+        <Ellipsis>{id}</Ellipsis>
       </Text>
     </StyledCard>
   );
@@ -78,4 +80,14 @@ const StyledTemperature = styled.div`
 `;
 const StyledDeliverystatus = styled.div`
   margin-top: 0.5rem;
+`;
+
+/* New: inline element that truncates long text with an ellipsis */
+const Ellipsis = styled.span`
+  display: inline-block;
+  max-width: 4rem; /* tweak this value to fit your layout (px, rem, % are fine) */
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

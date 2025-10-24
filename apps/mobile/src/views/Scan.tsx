@@ -6,6 +6,8 @@ import { Button, colors, Text } from "@chas/ui";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
 import ScanModal from "../components/modals/ScanModal";
+import { useAuthContext } from "../context/auth/useAuthContext";
+import { packageService } from "../services/packageService";
 
 const Scan = () => {
   const navigate = useNavigate();
@@ -22,6 +24,8 @@ const Scan = () => {
   } = useQRScanner(videoRef);
 
   const [showModal, setShowModal] = useState(false);
+  const { role } = useAuthContext();
+  const base = role ? `/${role}` : "";
 
   const handleGoBack = useCallback(() => {
     stopQRScanning();
@@ -37,11 +41,12 @@ const Scan = () => {
     }
   }, [resetQRScannerState, cameraStarted, beginQRScanning]);
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback(async () => {
     stopQRScanning();
     stopCamera();
-    navigate(`/packages/${qrCodeResult}`);
-  }, [stopQRScanning, stopCamera, navigate, qrCodeResult]);
+    const foundPackage = await packageService.fetchPackageById(qrCodeResult);
+    navigate(`${base}/packages/${qrCodeResult}`, { state: foundPackage });
+  }, [stopQRScanning, stopCamera, qrCodeResult, navigate, base]);
 
   const closeModal = useCallback(() => {
     setShowModal(false);

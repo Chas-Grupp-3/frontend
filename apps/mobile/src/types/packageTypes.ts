@@ -9,7 +9,7 @@ export type CardInfo = {
 };
 
 export type BackendPackage = {
-  id: number;
+  package_id: number;
   driver_id?: string;
   sender_id?: string;
   arrival_date?: string;

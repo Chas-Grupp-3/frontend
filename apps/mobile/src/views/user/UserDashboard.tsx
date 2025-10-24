@@ -73,16 +73,16 @@ const Dashboard = () => {
         ) : (
           <CardList
             cards={filteredPackages}
-            onCardClick={(packageId) =>
+            variant="small"
+            onCardClick={(packageId) => {
               navigate(`package/${packageId}`, {
                 state: {
                   packageData: packages.find(
-                    (pkg) => pkg.id === Number(packageId)
+                    (pkg) => String(pkg.package_id) === String(packageId)
                   ),
                 },
-              })
-            }
-            variant="large"
+              });
+            }}
           />
         )}
       </CardListContainer>

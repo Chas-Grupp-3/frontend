@@ -28,17 +28,19 @@ const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
   return (
     <StyledCardListContainer>
       <StyledCardList>
-        {cards.map((item) => (
-          <StyledLi key={item.id} $variant={variant}>
+        {cards.map((card) => (
+          <StyledLi key={card.id} $variant={variant}>
             <Card
               variant={variant}
-              title={item.title}
-              temperature={item.temperature}
-              deliveryStatus={item.deliveryStatus}
-              ETA={item.ETA}
-              id={item.packageId}
-              threshold={item.threshold}
-              onClick={() => onCardClick?.(item.packageId)}
+              title={card.title}
+              temperature={card.temperature}
+              deliveryStatus={card.deliveryStatus}
+              ETA={card.ETA}
+              id={card.packageId}
+              threshold={card.threshold}
+              onClick={() => {
+                onCardClick?.(card.packageId);
+              }}
             />
           </StyledLi>
         ))}
