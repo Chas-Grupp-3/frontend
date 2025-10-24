@@ -1,5 +1,5 @@
 import React from "react";
-import { colors, TextInput } from "@chas/ui";
+import { TextInput } from "@chas/ui";
 import styled from "styled-components";
 import QrButton from "./QrButton";
 
@@ -60,5 +60,4 @@ const SearchContainer = styled.div`
 const QrButtonContainer = styled.div`
   position: absolute;
   right: 12px;
- 
 `;
