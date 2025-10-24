@@ -1,6 +1,7 @@
 import React from "react";
-import { colors, Icon, TextInput } from "@chas/ui";
+import { colors, TextInput } from "@chas/ui";
 import styled from "styled-components";
+import QrButton from "./QrButton";
 
 interface DashboardSearchFilterProps {
   searchTerm: string;
@@ -29,9 +30,9 @@ const DashboardSearchFilter = ({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <SearchIcon>
-          <Icon name="qrScan" size="sm" />
-        </SearchIcon>
+        <QrButtonContainer>
+          <QrButton />
+        </QrButtonContainer>
       </SearchContainer>
       {children}
     </SearchFilterContainer>
@@ -56,9 +57,8 @@ const SearchContainer = styled.div`
   margin: 0 auto;
 `;
 
-const SearchIcon = styled.div`
+const QrButtonContainer = styled.div`
   position: absolute;
   right: 12px;
-  pointer-events: none;
   color: ${colors.greyText};
 `;
