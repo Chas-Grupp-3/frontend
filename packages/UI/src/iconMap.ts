@@ -54,7 +54,6 @@ import webYellowPin from "../assets/icons/webYellowPin.svg";
 import webTruck from "../assets/icons/webTruck.svg";
 import bluePin from "../assets/icons/bluePin.svg";
 import blueClock from "../assets/icons/blueClock.svg";
-import { bl } from "node_modules/react-router/dist/development/routeModules-BmVo7q9e";
 
 export const iconMap = {
   package: packageIcon,
