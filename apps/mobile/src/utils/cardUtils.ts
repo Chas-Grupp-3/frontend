@@ -66,7 +66,7 @@ export const mapBackendPackageToCardInfo = (
 ): CardInfo => {
   const { defaultThreshold = 5, titleFrom = "location" } = options;
 
-  const id = pkg.id;
+  const id = pkg.package_id;
   const packageId = String(id);
 
   const temperature = parseNumber(pkg.temperature) ?? NaN;
