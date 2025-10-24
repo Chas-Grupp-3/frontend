@@ -7,7 +7,7 @@ interface QrButtonProps {
   size?: "sm" | "md" | "lg";
 }
 
-export const QrButton = ({ size = "sm" }: QrButtonProps) => {
+export const QrButton = ({ size = "sm" | "md" | "lg" }: QrButtonProps) => {
   const navigate = useNavigate();
   const { role } = useAuthContext();
   const base = role ? `/${role}` : "";

@@ -31,7 +31,7 @@ const DashboardSearchFilter = ({
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <QrButtonContainer>
-          <QrButton />
+          <QrButton size="sm" />
         </QrButtonContainer>
       </SearchContainer>
       {children}
