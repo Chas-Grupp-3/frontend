@@ -19,3 +19,9 @@ export type BackendPackage = {
   temperature?: string;
   location?: string;
 };
+
+export type BackendUsers = {
+  name: string;
+  email: string;
+  role: "driver" | "sender" | "admin";
+};

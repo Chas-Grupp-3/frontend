@@ -12,7 +12,7 @@ import truckPin from "../assets/icons/truckPin.svg";
 import qrScanHover from "../assets/icons/qrScanHover.svg";
 import greenCheck from "../assets/icons/greenCheck.svg";
 import yellowWarning from "../assets/icons/yellowWarning.svg";
-import truck from "../assets/icons/truck.svg";
+import truckLeft from "../assets/icons/truckLeft.svg";
 import yellowPin from "../assets/icons/yellowPin.svg";
 import yellowPinHover from "../assets/icons/yellowPinHover.svg";
 import redPin from "../assets/icons/redPin.svg";
@@ -56,6 +56,7 @@ import bluePin from "../assets/icons/bluePin.svg";
 import blueClock from "../assets/icons/blueClock.svg";
 import home from "../assets/icons/home.svg";
 import whiteQr from "../assets/icons/whiteQr.svg";
+import truckRight from "../assets/icons/truckRight.svg";
 
 export const iconMap = {
   package: packageIcon,
@@ -72,7 +73,8 @@ export const iconMap = {
   truckPin: truckPin,
   greenCheck: greenCheck,
   yellowWarning: yellowWarning,
-  truck: truck,
+  truckLeft: truckLeft,
+  truckRight: truckRight,
   yellowPin: yellowPin,
   yellowPinHover: yellowPinHover,
   redPin: redPin,
