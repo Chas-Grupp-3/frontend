@@ -19,7 +19,7 @@ const Navigation = () => {
       </NavLink>
       {role === "driver" && (
         <NavLink to={`${base}/map`} $isActive={location.pathname === "/map"}>
-          <Icon name="map" size="sm" alt="Map Icon" />
+          <Icon name="whiteMap" size="sm" alt="Map Icon" />
         </NavLink>
       )}
       <NavLink
