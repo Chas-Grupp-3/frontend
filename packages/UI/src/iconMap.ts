@@ -28,7 +28,7 @@ import cross from "../assets/icons/cross.svg";
 import crossHover from "../assets/icons/crossHover.svg";
 import map from "../assets/icons/map.svg";
 import mapHover from "../assets/icons/mapHover.svg";
-import wahiteWarning from "../assets/icons/whiteWarning.svg";
+import whiteWarning from "../assets/icons/whiteWarning.svg";
 import whiteWarningHover from "../assets/icons/whiteWarningHover.svg";
 import whiteHamburgerHover from "../assets/icons/whiteHamburgerHover.svg";
 import whitePackage from "../assets/icons/whitePackage.svg";
@@ -54,6 +54,8 @@ import webYellowPin from "../assets/icons/webYellowPin.svg";
 import webTruck from "../assets/icons/webTruck.svg";
 import bluePin from "../assets/icons/bluePin.svg";
 import blueClock from "../assets/icons/blueClock.svg";
+import home from "../assets/icons/home.svg";
+import whiteQr from "../assets/icons/whiteQr.svg";
 
 export const iconMap = {
   package: packageIcon,
@@ -86,7 +88,7 @@ export const iconMap = {
   crossHover: crossHover,
   map: map,
   mapHover: mapHover,
-  wahiteWarning: wahiteWarning,
+  whiteWarning: whiteWarning,
   whiteWarningHover: whiteWarningHover,
   whiteHamburgerHover: whiteHamburgerHover,
   whitePackage: whitePackage,
@@ -112,6 +114,8 @@ export const iconMap = {
   webTruck: webTruck,
   bluePin: bluePin,
   blueClock: blueClock,
+  home: home,
+  whiteQr: whiteQr,
 } as const;
 
 export type IconName = keyof typeof iconMap;
