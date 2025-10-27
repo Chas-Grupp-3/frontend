@@ -23,8 +23,9 @@ const DriverMap = () => {
   }
 
   const iconHtml = ReactDOMServer.renderToStaticMarkup(
-    <Icon name="package" size="md" />
+    <Icon name="truck" size="md" />
   );
+
   const markerIcon = L.divIcon({
     html: iconHtml,
     className: "my-leaflet-div-icon", // override default .leaflet-div-icon styling as needed
