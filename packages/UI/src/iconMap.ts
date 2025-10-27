@@ -54,6 +54,8 @@ import webYellowPin from "../assets/icons/webYellowPin.svg";
 import webTruck from "../assets/icons/webTruck.svg";
 import bluePin from "../assets/icons/bluePin.svg";
 import blueClock from "../assets/icons/blueClock.svg";
+import home from "../assets/icons/home.svg";
+import whiteQr from "../assets/icons/whiteQr.svg";
 
 export const iconMap = {
   package: packageIcon,
@@ -112,6 +114,8 @@ export const iconMap = {
   webTruck: webTruck,
   bluePin: bluePin,
   blueClock: blueClock,
+  home: home,
+  whiteQr: whiteQr,
 } as const;
 
 export type IconName = keyof typeof iconMap;

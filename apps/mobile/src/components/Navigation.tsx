@@ -11,25 +11,25 @@ const Navigation = () => {
   return (
     <NavContainer>
       <NavLink to={`${base}`} $isActive={location.pathname === "/"}>
-        <Icon name="whitePackage" size="sm" alt="Dashboard Icon" />
+        <Icon name="home" size="sm" alt="Dashboard Icon" />
       </NavLink>
 
       <NavLink to={`${base}/scan`} $isActive={location.pathname === "/scan"}>
-        <Icon name="whiteWarning" size="sm" alt="Scan Icon" />
+        <Icon name="whiteQr" size="sm" alt="Scan Icon" />
       </NavLink>
 
       <NavLink
         to={`${base}/warnings`}
         $isActive={location.pathname === "/warnings"}
       >
-        <Icon name="whiteUser" size="sm" alt="User Icon" />
+        <Icon name="whiteWarning" size="sm" alt="User Icon" />
       </NavLink>
 
       <NavLink
         to={`${base}/profile`}
         $isActive={location.pathname === "/profile"}
       >
-        <Icon name="question" size="sm" alt="Scan Icon" />
+        <Icon name="whiteUser" size="sm" alt="User Icon" />
       </NavLink>
     </NavContainer>
   );
