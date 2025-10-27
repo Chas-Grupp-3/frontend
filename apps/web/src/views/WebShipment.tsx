@@ -31,10 +31,11 @@ const WebShipment = () => {
       </Header>
       <MittleContainor>
         <ShipmentCard>
-          <Text variant="h2">Create Shipment</Text>
+          <Text variant="h3">Create Shipment</Text>
+          <Divider />
           <Form>
             <Sender>
-              <Text>Sender</Text>
+              <Text variant="button">Sender</Text>
               <SenderForm>
                 <TextInput label="Full name" />
                 <TextInput label="Company (not required)" />
@@ -47,7 +48,7 @@ const WebShipment = () => {
               </SenderForm>
             </Sender>
             <Recipient>
-              <Text>Recipient</Text>
+              <Text variant="button">Recipient</Text>
               <RecipientForm>
                 <TextInput label="Full name" />
                 <TextInput label="Company (not required)" />
@@ -57,9 +58,11 @@ const WebShipment = () => {
           </Form>
         </ShipmentCard>
         <QrCard>
-          <Text>QR Code Generator</Text>
+          <Text variant="h3">QR Code Generator</Text>
+          <Divider />
         </QrCard>
       </MittleContainor>
+      <Footer></Footer>
     </Container>
   );
 };
@@ -82,7 +85,8 @@ const Header = styled.div`
   gap: 1rem;
   margin-bottom: 1rem;
   background-color: #fff;
-  width: 100%;
+  width: 100vw;
+  height: 10vh;
 `;
 
 const Logo = styled.div`
@@ -103,6 +107,24 @@ const LogoText = styled.div`
   color: ${colors.primary};
 `;
 
+const MittleContainor = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100vw;
+  height: 70vh;
+`;
+
+const Divider = styled.div`
+  width: 80%;
+  height: 4px;
+  background-color: ${colors.secondary};
+  margin: 1rem 0;
+  border-radius: 2px;
+`;
+
 const List = styled.div`
   ul {
     list-style-type: none;
@@ -112,19 +134,14 @@ const List = styled.div`
   }
 `;
 
-const MittleContainor = styled.div`
+const ShipmentCard = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
-  width: 100%;
-  height: 100%;
-`;
-
-const ShipmentCard = styled.div`
-  width: 60%;
-  height: 100%;
+  gap: 1rem;
+  width: 60vw;
+  height: 70vh;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -135,27 +152,38 @@ const Form = styled.form`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  width: 100%;
+  width: 90%;
+  height: 80%;
+  justify-content: space-around;
 `;
 
 const Sender = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 50vw;
 `;
 
 const SenderForm = styled.div``;
 
 const Recipient = styled.div`
-  width: 100%;
+  width: 50vw;
 `;
 
 const RecipientForm = styled.div``;
 
 const QrCard = styled.div`
   width: 40%;
-  height: 100%;
+  height: 60vh;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const Footer = styled.footer`
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  height: 20vh;
+  width: 100vw;
+  background-color: ${colors.primary};
 `;
