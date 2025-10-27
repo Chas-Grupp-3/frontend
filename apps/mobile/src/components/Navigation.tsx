@@ -31,24 +31,19 @@ const Navigation = () => {
           Scan
         </Text>
       </NavLink>
-
-      <NavLink
-        to={`${base}/warnings`}
-        $isActive={location.pathname === "/warnings"}
-      >
-        <NavIcon>⚠️</NavIcon>
-        <Text
-          variant="body"
-          color={
-            location.pathname === `${base}/warnings`
-              ? "secondary"
-              : "background"
-          }
-        >
-          Warnings
-        </Text>
-      </NavLink>
-
+      {role === "driver" && (
+        <NavLink to={`${base}/map`} $isActive={location.pathname === "/map"}>
+          <NavIcon>🗺️</NavIcon>
+          <Text
+            variant="body"
+            color={
+              location.pathname === `${base}/map` ? "secondary" : "background"
+            }
+          >
+            Map
+          </Text>
+        </NavLink>
+      )}
       <NavLink
         to={`${base}/profile`}
         $isActive={location.pathname === "/profile"}
