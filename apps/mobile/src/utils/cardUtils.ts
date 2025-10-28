@@ -55,6 +55,16 @@ const parseNumber = (
   return Number.isFinite(number) ? number : undefined;
 };
 
+export const formatDate = (dateString: string | undefined): string => {
+  if (!dateString) return "Currently unavailable";
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "Currently unavailable";
+  return date.toLocaleString("sv-SE", {
+    dateStyle: "short",
+    timeStyle: "short",
+  });
+};
+
 export const mapBackendPackageToCardInfo = (pkg: BackendPackage): CardInfo => {
   console.log("Mapping package:", pkg);
   const id = pkg.package_id;
@@ -65,12 +75,7 @@ export const mapBackendPackageToCardInfo = (pkg: BackendPackage): CardInfo => {
 
   const title = pkg.sender;
 
-  const ETA = pkg.arrival_date
-    ? new Date(pkg.arrival_date).toLocaleString("sv-SE", {
-        dateStyle: "short",
-        timeStyle: "short",
-      })
-    : "Currently unavailable";
+  const ETA = formatDate(pkg.arrival_date);
 
   let deliveryStatus: CardInfo["deliveryStatus"] = "on time";
   if (pkg.delivered === true) {
