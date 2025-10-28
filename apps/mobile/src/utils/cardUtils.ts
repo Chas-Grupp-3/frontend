@@ -46,11 +46,6 @@ export const getStatusText = (
   return "On time";
 };
 
-type MapOptions = {
-  defaultThreshold?: number;
-  titleFrom?: "location" | "sender_id" | "id";
-};
-
 const parseNumber = (
   value: string | number | undefined
 ): number | undefined => {
@@ -60,21 +55,15 @@ const parseNumber = (
   return Number.isFinite(number) ? number : undefined;
 };
 
-export const mapBackendPackageToCardInfo = (
-  pkg: BackendPackage,
-  options: MapOptions = {}
-): CardInfo => {
-  const { defaultThreshold = 5, titleFrom = "location" } = options;
-
+export const mapBackendPackageToCardInfo = (pkg: BackendPackage): CardInfo => {
+  console.log("Mapping package:", pkg);
   const id = pkg.package_id;
   const packageId = String(id);
 
   const temperature = parseNumber(pkg.temperature) ?? NaN;
+  const humidity = parseNumber(pkg.humidity) ?? NaN;
 
-  let title = `Package ${packageId}`;
-  if (titleFrom === "location" && pkg.location) title = pkg.location;
-  else if (titleFrom === "sender_id" && pkg.sender_id) title = pkg.sender_id;
-  else if (titleFrom === "id") title = `Package ${packageId}`;
+  const title = pkg.sender;
 
   const ETA = pkg.arrival_date
     ? new Date(pkg.arrival_date).toLocaleString("sv-SE", {
@@ -94,12 +83,13 @@ export const mapBackendPackageToCardInfo = (
     }
   }
 
-  const threshold = options.defaultThreshold ?? defaultThreshold;
+  const threshold = 5;
 
   const cardInfo: CardInfo = {
     id,
     title,
     temperature,
+    humidity,
     deliveryStatus,
     ETA,
     packageId,
