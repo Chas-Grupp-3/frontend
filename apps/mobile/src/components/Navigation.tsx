@@ -17,14 +17,11 @@ const Navigation = () => {
       <NavLink to={`${base}/scan`} $isActive={location.pathname === "/scan"}>
         <Icon name="whiteQr" size="sm" alt="Scan Icon" />
       </NavLink>
-
-      <NavLink
-        to={`${base}/warnings`}
-        $isActive={location.pathname === "/warnings"}
-      >
-        <Icon name="whiteWarning" size="sm" alt="User Icon" />
-      </NavLink>
-
+      {role === "driver" && (
+        <NavLink to={`${base}/map`} $isActive={location.pathname === "/map"}>
+          <Icon name="whiteMap" size="sm" alt="Map Icon" />
+        </NavLink>
+      )}
       <NavLink
         to={`${base}/profile`}
         $isActive={location.pathname === "/profile"}
