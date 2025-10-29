@@ -23,7 +23,7 @@ const UserPackageDetails = () => {
   const {
     temperature,
     humidity,
-    package_id: packageId,
+    //package_id: packageId,
     sender,
     destination,
     arrival_date: arrivalDate,
