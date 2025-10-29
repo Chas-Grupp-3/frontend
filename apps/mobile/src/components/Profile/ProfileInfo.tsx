@@ -3,7 +3,7 @@ import { userService } from "../../services/userService";
 import { useAuthContext } from "../../context/auth/useAuthContext";
 import { isApiError } from "../../types/apiTypes";
 import type { BackendUsers } from "../../types/packageTypes";
-import { colors, radius, textMobile, textWeb } from "@chas/ui";
+import { colors, radius, textMobile } from "@chas/ui";
 import styled from "styled-components";
 
 const ProfileInfo = () => {
