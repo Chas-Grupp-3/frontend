@@ -34,6 +34,7 @@ const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
               variant={variant}
               title={card.title}
               temperature={card.temperature}
+              humidity={card.humidity}
               deliveryStatus={card.deliveryStatus}
               ETA={card.ETA}
               id={card.packageId}

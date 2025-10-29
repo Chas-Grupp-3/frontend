@@ -20,7 +20,7 @@ type UsePackagesResult = {
 export function usePackages(
   options: UsePackagesOptions = {}
 ): UsePackagesResult {
-  const { pollIntervalMs = null, defaultThreshold = 5 } = options;
+  const { pollIntervalMs = null } = options;
 
   const [mappedData, setMappedData] = useState<CardInfo[] | null>(null);
   const [data, setData] = useState<BackendPackage[] | null>(null);
@@ -48,7 +48,7 @@ export function usePackages(
       }
 
       const mapped = result.map((pkg: BackendPackage) =>
-        mapBackendPackageToCardInfo(pkg, { defaultThreshold })
+        mapBackendPackageToCardInfo(pkg)
       );
 
       if (!mountedRef.current) return;
@@ -68,7 +68,7 @@ export function usePackages(
     } finally {
       if (mountedRef.current) setLoading(false);
     }
-  }, [defaultThreshold]);
+  }, []);
 
   const refresh = useCallback(() => {
     void fetchAndMap();
