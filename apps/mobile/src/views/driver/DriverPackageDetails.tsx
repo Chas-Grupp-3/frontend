@@ -6,6 +6,7 @@ import StatusCard from "../../components/StatusCard";
 import { useState } from "react";
 import QRModal from "../../components/modals/QRModal";
 import { formatDate } from "../../utils/cardUtils";
+import type { BackendPackage } from "../../types/packageTypes";
 
 const DriverPackageDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -22,14 +23,14 @@ const DriverPackageDetails = () => {
   }
   const {
     temperature,
+    delivered,
     humidity,
-    package_id: id,
+    package_id: packageId,
     sender,
     destination,
     arrival_date: arrivalDate,
-    delivered,
     thresholds,
-  } = packageData;
+  } = packageData as BackendPackage;
 
   const formattedTemperature = Number.isFinite(Number(temperature))
     ? `${Number(temperature).toFixed(1)}°C`
@@ -79,7 +80,7 @@ const DriverPackageDetails = () => {
           {sender || "Unknown Sender"}
         </Text>
         <Text color="accent" variant="body-sm">
-          Package ID: {id}
+          Package ID: {packageId}
         </Text>
       </Header>
       <StatusSection>
@@ -113,16 +114,14 @@ const DriverPackageDetails = () => {
       </StatusSection>
       <DetailsSection>
         <Details>
-          <Text>Address: {destination || "Unknown destination"}</Text>
+          <Text>Address: {destination.address || "Unknown destination"}</Text>
           <Text> Thresholds:</Text>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
-            <li>
-              <Text variant="body-sm">Temperature: {thresholds[0]}°C</Text>
-            </li>
-            <li>
-              <Text variant="body-sm">Humidity: {thresholds[1]}%</Text>
-            </li>
-          </ul>
+          <Text variant="body-sm">
+            Temperature: {thresholds.minTemp}°C - {thresholds.maxTemp}°C
+          </Text>
+          <Text variant="body-sm">
+            Humidity: {thresholds.minHumidity}% - {thresholds.maxHumidity}%
+          </Text>
         </Details>
         <Text> Deliver by: {formattedArrivalDate || "Unknown date"}</Text>
         <Button
@@ -134,7 +133,11 @@ const DriverPackageDetails = () => {
           {delivered ? "Package Delivered" : "Show QR Code"}
         </Button>
       </DetailsSection>
-      <QRModal showModal={showModal} closeModal={closeModal} qrCodeData={id} />
+      <QRModal
+        showModal={showModal}
+        closeModal={closeModal}
+        qrCodeData={packageId}
+      />
     </Container>
   );
 };
