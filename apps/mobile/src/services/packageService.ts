@@ -58,7 +58,7 @@ export const packageService = {
     signal?: AbortSignal
   ): Promise<ApiResult<BackendPackage>> {
     try {
-      const response = await fetch(`${API_URL}/packages/${packageId}`, {
+      const response = await fetch(`${API_URL}/packages/package/${packageId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
