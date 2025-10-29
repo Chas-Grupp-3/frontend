@@ -37,7 +37,6 @@ const DriverMap = () => {
   const updateLocation = () => {
     if (coords) {
       locationService.putCurrentLocation(
-        "2e983926-843c-4b03-984d-5549ae1b3806",
         coords.latitude.toString(),
         coords.longitude.toString()
       );

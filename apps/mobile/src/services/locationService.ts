@@ -1,18 +1,25 @@
+import { getItem } from "../utils/localStorageUtils";
+import { AUTH_KEY } from "./authStorage";
+
 const API_URL = import.meta.env.VITE_API_URL;
+const authItem = getItem(AUTH_KEY) as {
+  token?: string;
+  userId?: string;
+} | null;
+
+const JWT = authItem?.token;
+const driverId = "2e983926-843c-4b03-984d-5549ae1b3806"; // test driver
 
 export const locationService = {
-  putCurrentLocation: async (
-    driverId: string,
-    latitude: string,
-    longitude: string
-  ) => {
+  putCurrentLocation: async (latitude: string, longitude: string) => {
     try {
-      const response = await fetch(`${API_URL}/location/${driverId}`, {
+      const response = await fetch(`${API_URL}/user/location/${driverId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${JWT}`,
         },
-        body: JSON.stringify({ location: { latitude, longitude } }),
+        body: JSON.stringify({ latitude: latitude, longitude: longitude }),
       });
 
       if (!response.ok) {
