@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { userService } from "../services/userService";
-import { useAuthContext } from "../context/auth/useAuthContext";
-import { isApiError } from "../types/apiTypes";
-import type { BackendUsers } from "../types/packageTypes";
+import { userService } from "../../services/userService";
+import { useAuthContext } from "../../context/auth/useAuthContext";
+import { isApiError } from "../../types/apiTypes";
+import type { BackendUsers } from "../../types/packageTypes";
 
 const ProfileInfo = () => {
   const { userId } = useAuthContext();
