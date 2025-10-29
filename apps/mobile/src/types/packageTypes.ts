@@ -10,14 +10,28 @@ export type CardInfo = {
 };
 
 export type BackendPackage = {
+  arrival_date: string;
+  date: string;
+  delivered: boolean;
+  destination: {
+    address: string;
+    latitude: number;
+    longitude: number;
+  };
+  driver_id: string;
+  humidity: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
   package_id: number;
-  driver_id?: string;
+  receiver_id: string;
   sender: string;
-  arrival_date?: string;
-  date?: string;
-  delivered?: boolean;
-  humidity?: string;
-  temperature?: string;
-  location?: string;
-  thresholds?: [];
+  temperature: string;
+  thresholds: {
+    maxHumidity: number;
+    maxTemp: number;
+    minHumidity: number;
+    minTemp: number;
+  };
 };
