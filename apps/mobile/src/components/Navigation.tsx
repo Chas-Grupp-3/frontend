@@ -11,11 +11,7 @@ const Navigation = () => {
   return (
     <NavContainer>
       <NavLink to={`${base}`} $isActive={location.pathname === "/"}>
-        <Icon name="home" size="sm" alt="Dashboard Icon" />
-      </NavLink>
-
-      <NavLink to={`${base}/scan`} $isActive={location.pathname === "/scan"}>
-        <Icon name="whiteQr" size="sm" alt="Scan Icon" />
+        <Icon name="whitePackage" size="sm" alt="Dashboard Icon" />
       </NavLink>
       {role === "driver" && (
         <NavLink to={`${base}/map`} $isActive={location.pathname === "/map"}>

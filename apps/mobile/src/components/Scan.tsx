@@ -6,10 +6,12 @@ import { Button, colors, Text } from "@chas/ui";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router";
 import ScanModal from "../components/modals/ScanModal";
-import { useAuthContext } from "../context/auth/useAuthContext";
-import { packageService } from "../services/packageService";
+import { useScanSearch } from "../hooks/useScanSearch";
+interface ScanProps {
+  mode: "search" | "add" | "deliver";
+}
 
-const Scan = () => {
+const Scan = ({ mode = "search" }: ScanProps) => {
   const navigate = useNavigate();
   const { videoRef, cameraStarted, isLoading, error, startCamera, stopCamera } =
     useCamera();
@@ -22,10 +24,9 @@ const Scan = () => {
     stopQRScanning,
     resetQRScannerState,
   } = useQRScanner(videoRef);
+  const { handleSearchScan } = useScanSearch();
 
   const [showModal, setShowModal] = useState(false);
-  const { role } = useAuthContext();
-  const base = role ? `/${role}` : "";
 
   const handleGoBack = useCallback(() => {
     stopQRScanning();
@@ -44,9 +45,10 @@ const Scan = () => {
   const handleNext = useCallback(async () => {
     stopQRScanning();
     stopCamera();
-    const foundPackage = await packageService.fetchPackageById(qrCodeResult);
-    navigate(`${base}/packages/${qrCodeResult}`, { state: foundPackage });
-  }, [stopQRScanning, stopCamera, qrCodeResult, navigate, base]);
+    if (qrCodeResult) {
+      await handleSearchScan(qrCodeResult);
+    }
+  }, [stopQRScanning, stopCamera, qrCodeResult, handleSearchScan]);
 
   const closeModal = useCallback(() => {
     setShowModal(false);
@@ -114,15 +116,16 @@ const Scan = () => {
       <ButtonContainer>
         <Button onClick={handleGoBack}>Close</Button>
       </ButtonContainer>
-
-      <ScanModal
-        showModal={showModal}
-        closeModal={closeModal}
-        qrCodeResult={qrCodeResult}
-        handleRetry={handleRetry}
-        handleGoBack={handleGoBack}
-        handleNext={handleNext}
-      />
+      {mode === "search" && (
+        <ScanModal
+          showModal={showModal}
+          closeModal={closeModal}
+          qrCodeResult={qrCodeResult}
+          handleRetry={handleRetry}
+          handleGoBack={handleGoBack}
+          handleNext={handleNext}
+        />
+      )}
     </Container>
   );
 };

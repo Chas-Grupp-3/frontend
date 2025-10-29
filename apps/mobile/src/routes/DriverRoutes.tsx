@@ -1,7 +1,7 @@
 import type { RouteObject } from "react-router";
 import DriverLayout from "../layouts/DriverLayout";
 import Dashboard from "../views/driver/DriverDashboard";
-import Scan from "../views/Scan";
+import ScanWrapper from "../views/ScanWrapper";
 import PackageDetails from "../views/driver/DriverPackageDetails";
 import RequireAuth from "../components/RequireAuth";
 import Profile from "../views/driver/DriverProfile";
@@ -17,7 +17,7 @@ const DriverRoutes: RouteObject[] = [
     ),
     children: [
       { index: true, element: <Dashboard /> },
-      { path: "scan", element: <Scan /> },
+      { path: "scan/:mode", element: <ScanWrapper /> },
       { path: "package/:id", element: <PackageDetails /> },
       { path: "map", element: <DriverMap /> },
       { path: "profile", element: <Profile /> },

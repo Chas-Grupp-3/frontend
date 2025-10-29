@@ -12,7 +12,7 @@ export const QrButton = ({ size = "sm" }: QrButtonProps) => {
   const { role } = useAuthContext();
   const base = role ? `/${role}` : "";
   const handleClick = () => {
-    navigate(`${base}/scan`);
+    navigate(`${base}/scan/search`);
   };
 
   return (
