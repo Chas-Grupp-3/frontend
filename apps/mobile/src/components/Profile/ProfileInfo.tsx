@@ -3,6 +3,8 @@ import { userService } from "../../services/userService";
 import { useAuthContext } from "../../context/auth/useAuthContext";
 import { isApiError } from "../../types/apiTypes";
 import type { BackendUsers } from "../../types/packageTypes";
+import { colors, radius } from "@chas/ui";
+import styled from "styled-components";
 
 const ProfileInfo = () => {
   const { userId } = useAuthContext();
@@ -55,7 +57,7 @@ const ProfileInfo = () => {
   }
 
   return (
-    <div>
+    <StyledBox>
       <h3>Profilinformation</h3>
       <p>
         <strong>Namn:</strong> {user.name}
@@ -66,8 +68,21 @@ const ProfileInfo = () => {
       <p>
         <strong>Roll:</strong> {user.role}
       </p>
-    </div>
+    </StyledBox>
   );
 };
 
 export default ProfileInfo;
+
+const StyledBox = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 4rem;
+  background-color: ${colors.blueBackground};
+  gap: 2rem;
+  border-radius: ${radius.box};
+  margin-top: 2rem;
+`;
