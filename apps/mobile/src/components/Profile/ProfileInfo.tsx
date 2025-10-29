@@ -3,7 +3,7 @@ import { userService } from "../../services/userService";
 import { useAuthContext } from "../../context/auth/useAuthContext";
 import { isApiError } from "../../types/apiTypes";
 import type { BackendUsers } from "../../types/packageTypes";
-import { colors, radius } from "@chas/ui";
+import { colors, radius, textMobile, textWeb } from "@chas/ui";
 import styled from "styled-components";
 
 const ProfileInfo = () => {
@@ -58,16 +58,16 @@ const ProfileInfo = () => {
 
   return (
     <StyledBox>
-      <h3>Profilinformation</h3>
-      <p>
+      <StyledTitle>Profil</StyledTitle>
+      <StyledText>
         <strong>Namn:</strong> {user.name}
-      </p>
-      <p>
+      </StyledText>
+      <StyledText>
         <strong>Email:</strong> {user.email}
-      </p>
-      <p>
+      </StyledText>
+      <StyledText>
         <strong>Roll:</strong> {user.role}
-      </p>
+      </StyledText>
     </StyledBox>
   );
 };
@@ -80,9 +80,18 @@ const StyledBox = styled.section`
   align-items: center;
   flex-direction: column;
   margin: 0 auto;
-  padding: 4rem;
+  padding: 3rem;
   background-color: ${colors.blueBackground};
-  gap: 2rem;
+  gap: 0.7rem;
   border-radius: ${radius.box};
   margin-top: 2rem;
+`;
+const StyledTitle = styled.div`
+  color: ${colors.cardText};
+  ${textMobile.h2}
+  margin-bottom: 1.5rem;
+`;
+const StyledText = styled.div`
+  color: ${colors.cardText};
+  ${textMobile.body.md}
 `;
