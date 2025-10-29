@@ -1,6 +1,6 @@
 import SmallCard from "./SmallCard";
 import LargeCard from "./LargeCard";
-import { colors } from "@chas/ui";
+import { getCardColor, getStatusText } from "../../utils/cardUtils";
 
 type CardVariant = "small" | "large";
 
@@ -8,6 +8,7 @@ interface CardProps {
   variant?: CardVariant;
   title: string;
   temperature: number;
+  humidity?: number;
   deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
@@ -19,57 +20,13 @@ const Card = ({
   variant = "large",
   title,
   temperature,
+  humidity,
   deliveryStatus,
   ETA,
   id,
   threshold,
   onClick,
 }: CardProps) => {
-  const getCardColor = (
-    deliveryStatus: "delivered" | "late" | "on time",
-    temperature: number,
-    threshold: number
-  ) => {
-    if (temperature >= threshold) {
-      return {
-        backgroundColor: colors.critical,
-        textColor: "accent" as keyof typeof colors,
-      };
-    } else if (deliveryStatus === "late") {
-      return {
-        backgroundColor: colors.minor,
-        textColor: "cardText" as keyof typeof colors,
-      };
-    } else if (deliveryStatus === "delivered") {
-      return {
-        backgroundColor: colors.pause,
-        textColor: "cardText" as keyof typeof colors,
-      };
-    } else {
-      return {
-        backgroundColor: colors.ok,
-        textColor: "cardText" as keyof typeof colors,
-      };
-    }
-  };
-
-  const getStatusText = (
-    deliveryStatus: "delivered" | "late" | "on time",
-    temperature: number,
-    threshold: number
-  ) => {
-    if (temperature >= threshold) {
-      return "Temp issues";
-    }
-    if (deliveryStatus === "late") {
-      return "Late";
-    }
-    if (deliveryStatus === "delivered") {
-      return "Delivered";
-    }
-    return "On time";
-  };
-
   const { backgroundColor, textColor } = getCardColor(
     deliveryStatus,
     temperature,
@@ -82,6 +39,7 @@ const Card = ({
     <LargeCard
       title={title}
       temperature={temperature}
+      humidity={humidity}
       id={id}
       ETA={ETA}
       backgroundColor={backgroundColor}

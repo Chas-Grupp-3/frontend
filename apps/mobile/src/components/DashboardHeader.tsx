@@ -1,5 +1,6 @@
-import { colors, Text, Icon, TextInput } from "@chas/ui";
+import { colors, Text, Icon } from "@chas/ui";
 import styled from "styled-components";
+import DashboardSerchFilter from "./DashboardSerchFilter";
 
 interface DashboardHeaderProps {
   searchTerm: string;
@@ -24,16 +25,10 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
       <StyledText variant="nav">My shipments</StyledText>
 
-      <SearchContainer>
-        <TextInput
-          label="Search by ID / name / QR"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <SearchIcon>
-          <Icon name="qrScan" size="sm" />
-        </SearchIcon>
-      </SearchContainer>
+      <DashboardSerchFilter
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
     </StyledBox>
   );
 };
@@ -48,7 +43,6 @@ const StyledBox = styled.section`
   width: 100%;
   padding: 1rem;
   background-color: ${colors.primary};
-  margin-bottom: 2rem;
   gap: 2rem;
 `;
 
@@ -72,20 +66,4 @@ const LogoText = styled.div`
 
 const StyledText = styled(Text)`
   color: ${colors.whiteBackground};
-`;
-
-const SearchContainer = styled.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 1rem;
-`;
-
-const SearchIcon = styled.div`
-  position: absolute;
-  right: 12px;
-  pointer-events: none;
-  color: ${colors.greyText};
 `;

@@ -4,6 +4,7 @@ import { Icon, Text, colors, radius } from "@chas/ui";
 interface CardProps {
   title: string;
   temperature: number;
+  humidity?: number;
   ETA?: string;
   id: string;
   backgroundColor: string;
@@ -11,10 +12,14 @@ interface CardProps {
   statusText: string;
   onClick: () => void;
 }
+interface PillProps {
+  $backgroundColor: string;
+}
 
 const LargeCard = ({
   title,
   temperature,
+  humidity,
   ETA,
   id,
   backgroundColor,
@@ -24,39 +29,31 @@ const LargeCard = ({
   ...rest
 }: CardProps) => {
   return (
-    <StyledCard
-      style={{
-        backgroundColor: backgroundColor,
-      }}
-      onClick={onClick}
-      {...rest}
-    >
-      <StyledInfo>
-        <Text variant="body-smBold" color={textColor}>
-          {title}
-        </Text>
-        <StyledDeliveryStatus>
+    <StyledCard onClick={onClick} {...rest}>
+      <FlexRow>
+        <Text variant="h1">{title}</Text>
+        <Pill $backgroundColor={backgroundColor}>
           <Text variant="body-smBold" color={textColor}>
             {statusText}
           </Text>
-        </StyledDeliveryStatus>
-      </StyledInfo>
-      <StyledContent>
-        <StyledLeftColumn>
+        </Pill>
+      </FlexRow>
+      <FlexRow>
+        <Temperature>
           <Icon name="smallTemp" size="sm" />
-          <Text variant="h1" color={textColor}>
-            {temperature}°
+          <Text variant="body-lg">{temperature}°</Text>
+        </Temperature>
+        <Temperature>
+          <Icon name="humidity" size="sm" />
+          <Text variant="body-lg">{humidity}%</Text>
+        </Temperature>
+        <PackageInfo>
+          <Text variant="body-sm">ETA: {ETA}</Text>
+          <Text variant="body-sm">
+            ID: <Ellipsis>{id}</Ellipsis>
           </Text>
-        </StyledLeftColumn>
-        <StyledRightColumn>
-          <Text variant="body-sm" color={textColor}>
-            ETA: {ETA}
-          </Text>
-          <Text variant="body-sm" color={textColor}>
-            ID: {id}
-          </Text>
-        </StyledRightColumn>
-      </StyledContent>
+        </PackageInfo>
+      </FlexRow>
     </StyledCard>
   );
 };
@@ -64,41 +61,45 @@ const LargeCard = ({
 export default LargeCard;
 
 const StyledCard = styled.article`
-  width: 348px;
-  height: 78px;
-  padding: 1rem;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
   border-radius: ${radius.box};
+  background-color: ${colors.pause};
+  padding: 0.6rem;
+  min-width: 250px;
 `;
-const StyledContent = styled.div`
+
+const FlexRow = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  width: 100%;
 `;
-const StyledInfo = styled.div`
+const Pill = styled.div<PillProps>`
+  background-color: ${(props) => props.$backgroundColor};
+  border-radius: ${radius.box};
   display: flex;
-  align-items: center;
-  width: 100%;
+  padding: 0.2rem 0.9rem;
 `;
-const StyledDeliveryStatus = styled.div`
-  margin-left: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 72px;
-  padding: 2px 6px;
-  white-space: nowrap;
-`;
-const StyledLeftColumn = styled.div`
+
+const Temperature = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 0.2rem;
   align-items: center;
 `;
-const StyledRightColumn = styled.div`
+const PackageInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 3;
+  gap: 0.2rem;
+  padding-right: 0.5em;
+`;
+
+const Ellipsis = styled.span`
+  display: inline-block;
+  max-width: 8.3rem; /* tweak this value to fit your layout (px, rem, % are fine) */
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

@@ -23,7 +23,9 @@ const LoginForm = () => {
     handleBlur,
     handleSubmit,
   } = useFormValidation<{ email: string; password: string }>(validateLogin);
-  const [serverError, setServerError] = useState<string | undefined>(undefined);
+  const [serverError, setServerError] = useState<string | null | undefined>(
+    undefined
+  );
   const navigate = useNavigate();
 
   useEffect(() => {

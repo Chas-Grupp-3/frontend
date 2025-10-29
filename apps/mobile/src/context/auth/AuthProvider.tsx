@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import type { ReactNode } from "react";
 import AuthContext from "./AuthContext";
 import { authService } from "../../services/authServices";
@@ -7,36 +7,29 @@ import type {
   AuthState,
   LoginResponse,
 } from "../../types/authTypes";
-
-const STORAGE_KEY = "auth";
+import { AUTH_KEY } from "../../services/authStorage";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  token: undefined,
-  userId: undefined,
-  role: undefined,
+  token: null,
+  userId: null,
+  role: null,
   loading: false,
-  error: undefined,
+  error: null,
 };
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [auth, setAuth] = useState<AuthState>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : initialState;
-  });
+  const [authFromStorage, setAuth] = useLocalStorage<AuthState>(
+    AUTH_KEY,
+    initialState
+  );
 
-  const persistAuth = useCallback((newAuth: AuthState) => {
-    setAuth(newAuth);
-    if (newAuth.isAuthenticated) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newAuth));
-    } else {
-      localStorage.removeItem(STORAGE_KEY);
-    }
-  }, []);
+  const auth: AuthState = authFromStorage ?? initialState;
 
   const login = useCallback(
     async (credentials: UserCredentials): Promise<boolean> => {
-      persistAuth({ ...auth, loading: true, error: undefined });
+      setAuth((prev) => ({ ...prev, loading: true, error: undefined }));
 
       try {
         const result: LoginResponse = await authService.login(credentials);
@@ -51,29 +44,29 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             loading: false,
             error: undefined,
           };
-          persistAuth(newAuth);
+          setAuth(newAuth);
           return true;
         } else {
-          persistAuth({
+          setAuth({
             ...initialState,
             error: result.message || "Login failed",
           });
           return false;
         }
       } catch (error: unknown) {
-        persistAuth({
+        setAuth({
           ...initialState,
           error: (error as Error).message || "Something went wrong",
         });
         return false;
       }
     },
-    [auth, persistAuth]
+    [setAuth]
   );
 
   const logout = useCallback(() => {
-    persistAuth(initialState);
-  }, [persistAuth]);
+    setAuth(initialState);
+  }, [setAuth]);
 
   const value = useMemo(
     () => ({ ...auth, login, logout }),
