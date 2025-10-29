@@ -16,7 +16,7 @@ const ProfileHeader = () => {
         </LogoText>
       </Logo>
       <Button type="button" onClick={logout} buttonVariant="secondary">
-        Logout
+        Logga ut
       </Button>
     </StyledBox>
   );
