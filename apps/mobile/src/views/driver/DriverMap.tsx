@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { Icon } from "@chas/ui";
 import ReactDOMServer from "react-dom/server";
+import { locationService } from "../../services/locationService";
 
 const DriverMap = () => {
   const { coords, isGeolocationAvailable, isGeolocationEnabled } =
@@ -33,8 +34,20 @@ const DriverMap = () => {
     iconAnchor: [15, 30],
   });
 
+  const updateLocation = () => {
+    if (coords) {
+      locationService.putCurrentLocation(
+        "2e983926-843c-4b03-984d-5549ae1b3806",
+        coords.latitude.toString(),
+        coords.longitude.toString()
+      );
+    }
+  };
+  // setInterval(updateLocation, 60000); // Update location every 60 seconds
+
   return (
     <div className="page">
+      <button onClick={updateLocation}>Update Location</button>
       <MapContainer
         center={[coords.latitude, coords.longitude]}
         zoom={13}
