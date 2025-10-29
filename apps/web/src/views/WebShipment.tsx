@@ -1,68 +1,49 @@
-import { Text, colors, Icon, TextInput } from "@chas/ui";
+import { Text, colors } from "@chas/ui";
 import styled from "styled-components";
+import ShipmentForm from "../components/ShipmentForm";
+import HamburgerMenu from "../components/HamburgerMenu";
+import LogoWeb from "../components/LogoWeb";
+import { useState } from "react";
 
 const WebShipment = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <Container className="page">
       <Header>
-        <Logo>
-          <Icon name="smallTempHot" size={64} alt="ThermoTrack Logo" />
-          <LogoText>
-            <Text variant="h2">ThermoTrack</Text>
-            <Text variant="body-sm">Climate-Controlled Transport</Text>
-          </LogoText>
-        </Logo>
-        <List>
+        <LogoWeb />
+        <HamburgerMenu onToggle={setMenuOpen} />
+        <List menuOpen={menuOpen}>
           <ul>
             <li>
-              <Text variant="h3">Create Shipment</Text>
+              <Text variant="body">Create Shipment</Text>
             </li>
             <li>
-              <Text variant="h3">Dashboard</Text>
+              <Text variant="body">Dashboard</Text>
             </li>
             <li>
-              <Text variant="h3">Profile</Text>
+              <Text variant="body">Profile</Text>
             </li>
             <li>
-              <Text variant="h3">Log out</Text>
+              <Text variant="body">Log out</Text>
             </li>
           </ul>
         </List>
       </Header>
-      <MittleContainor>
+      <MiddleContainor>
         <ShipmentCard>
           <Text variant="h3">Create Shipment</Text>
           <Divider />
-          <Form>
-            <Sender>
-              <Text variant="button">Sender</Text>
-              <SenderForm>
-                <TextInput label="Full name" />
-                <TextInput label="Company (not required)" />
-                <TextInput label="Goods type" />
-                <TextInput label="Temperature range (°C)" />
-                <TextInput label="Estimated weight (kg)" />
-                <TextInput label="Pickup location (Full adress)" />
-                <TextInput label="Departure date & time" />
-                <TextInput label="Notes → any additional instructions (“may not be opened while driving”, etc.)" />
-              </SenderForm>
-            </Sender>
-            <Recipient>
-              <Text variant="button">Recipient</Text>
-              <RecipientForm>
-                <TextInput label="Full name" />
-                <TextInput label="Company (not required)" />
-                <TextInput label="Destination (Full adress)" />
-              </RecipientForm>
-            </Recipient>
-          </Form>
+          <ShipmentForm />
         </ShipmentCard>
         <QrCard>
           <Text variant="h3">QR Code Generator</Text>
           <Divider />
         </QrCard>
-      </MittleContainor>
-      <Footer></Footer>
+      </MiddleContainor>
+      <Footer>
+        <Text variant="body-sm">© 2024 ThermoTrack. All rights reserved.</Text>
+      </Footer>
     </Container>
   );
 };
@@ -71,66 +52,55 @@ export default WebShipment;
 
 const Container = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
   background-color: ${colors.background};
+
+  @media (min-width: 768px) {
+    padding: 0;
+  }
 `;
 
-const Header = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  background-color: #fff;
-  width: 100vw;
-  height: 10vh;
-`;
-
-const Logo = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-`;
-
-const LogoText = styled.div`
+const Header = styled.header`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  text-align: left;
-  align-items: flex-start;
-  color: ${colors.primary};
-`;
-
-const MittleContainor = styled.div`
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  width: 100vw;
-  height: 70vh;
-`;
+  margin-bottom: 3rem;
+  background-color: ${"#fff"};
+  padding: 16px;
 
-const Divider = styled.div`
-  width: 80%;
-  height: 4px;
-  background-color: ${colors.secondary};
-  margin: 1rem 0;
-  border-radius: 2px;
-`;
-
-const List = styled.div`
-  ul {
-    list-style-type: none;
-    display: flex;
+  @media (min-width: 768px) {
     flex-direction: row;
+    justify-content: center;
     gap: 2rem;
+    width: 100vw;
+  }
+`;
+
+const List = styled.nav<{ menuOpen: boolean }>`
+  ul {
+    display: ${({ menuOpen }) => (menuOpen ? "flex" : "none")};
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+
+    @media (min-width: 768px) {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+`;
+
+const MiddleContainor = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0 2rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
   }
 `;
 
@@ -138,52 +108,39 @@ const ShipmentCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  width: 60vw;
-  height: 70vh;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  justify-content: stretch;
+  background: ${"#fff"};
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+
+  @media (min-width: 768px) {
+  }
 `;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  width: 90%;
-  height: 80%;
-  justify-content: space-around;
-`;
-
-const Sender = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50vw;
-`;
-
-const SenderForm = styled.div``;
-
-const Recipient = styled.div`
-  width: 50vw;
-`;
-
-const RecipientForm = styled.div``;
 
 const QrCard = styled.div`
-  width: 40%;
-  height: 60vh;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: ${"#fff"};
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex: 1;
+`;
+
+const Divider = styled.hr`
+  border: none;
+  border-top: 2px solid ${colors.secondary};
+  margin: 16px 0;
+  position: relative;
+  width: 100%;
+  z-index: 10;
 `;
 
 const Footer = styled.footer`
-  align-items: center;
-  justify-content: center;
-  margin-top: 3rem;
-  height: 20vh;
-  width: 100vw;
+  display: flex;
   background-color: ${colors.primary};
+  text-color: ${"#fff"};
+  margin-top: 3rem;
+  padding: 16px;
+  width: 100vw;
 `;
