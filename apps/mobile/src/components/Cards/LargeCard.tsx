@@ -4,6 +4,7 @@ import { Icon, Text, colors, radius } from "@chas/ui";
 interface CardProps {
   title: string;
   temperature: number;
+  humidity?: number;
   ETA?: string;
   id: string;
   backgroundColor: string;
@@ -18,6 +19,7 @@ interface PillProps {
 const LargeCard = ({
   title,
   temperature,
+  humidity,
   ETA,
   id,
   backgroundColor,
@@ -29,7 +31,7 @@ const LargeCard = ({
   return (
     <StyledCard onClick={onClick} {...rest}>
       <FlexRow>
-        <Text variant="body-smBold">{title}</Text>
+        <Text variant="h1">{title}</Text>
         <Pill $backgroundColor={backgroundColor}>
           <Text variant="body-smBold" color={textColor}>
             {statusText}
@@ -38,8 +40,12 @@ const LargeCard = ({
       </FlexRow>
       <FlexRow>
         <Temperature>
-          <Icon name="smallTemp" size="md" />
-          <Text variant="h2">{temperature}°</Text>
+          <Icon name="smallTemp" size="sm" />
+          <Text variant="body-lg">{temperature}°</Text>
+        </Temperature>
+        <Temperature>
+          <Icon name="humidity" size="sm" />
+          <Text variant="body-lg">{humidity}%</Text>
         </Temperature>
         <PackageInfo>
           <Text variant="body-sm">ETA: {ETA}</Text>

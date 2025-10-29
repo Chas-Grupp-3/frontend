@@ -1,11 +1,15 @@
-import { Modal, radius, Text } from "@chas/ui";
+import { Button, Modal, Text } from "@chas/ui";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 import { colors } from "@chas/ui";
 import StatusCard from "../../components/StatusCard";
-import encodeQR from "qr";
+import { useState } from "react";
+import QRModal from "../../components/modals/QRModal";
+import { formatDate } from "../../utils/cardUtils";
 
 const DriverPackageDetails = () => {
+  const [showModal, setShowModal] = useState(false);
+  const closeModal = () => setShowModal(false);
   const location = useLocation();
   const { packageData } = location.state || {};
 
@@ -16,26 +20,63 @@ const DriverPackageDetails = () => {
       </Modal>
     );
   }
-  const { temperature, humidity, package_id: id } = packageData;
-
-  const qrInput = id ?? "";
-  let qrSVG = "";
-  try {
-    qrSVG = encodeQR(String(qrInput), "svg");
-  } catch (err) {
-    console.error("Failed to generate QR:", err);
-    qrSVG = "";
-  }
+  const {
+    temperature,
+    humidity,
+    package_id: id,
+    sender,
+    destination,
+    arrival_date: arrivalDate,
+    delivered,
+    thresholds,
+  } = packageData;
 
   const formattedTemperature = Number.isFinite(Number(temperature))
     ? `${Number(temperature).toFixed(1)}°C`
     : "N/A";
+  const formattedArrivalDate = formatDate(arrivalDate);
+
+  const bigCardData = () => {
+    if (delivered) {
+      return {
+        icon: "package" as const,
+        label: "Delivered",
+        status: undefined,
+      };
+    }
+    if (temperature >= thresholds[0]) {
+      return {
+        icon: "tempWarning" as const,
+        label: "Warning",
+        status: "Temperature Exceeded",
+      };
+    }
+    if (humidity >= thresholds[1]) {
+      return {
+        icon: "tempWarning" as const,
+        label: "Warnig",
+        status: "Humidity Exceeded",
+      };
+    }
+    if (!delivered && arrivalDate < new Date().toISOString()) {
+      return {
+        icon: "clock" as const,
+        label: "Late",
+        status: "Delivery Overdue",
+      };
+    }
+    return {
+      icon: "truck" as const,
+      label: "On Time",
+      status: undefined,
+    };
+  };
 
   return (
     <Container className="page">
       <Header>
         <Text variant="h1" color="accent">
-          Sender name
+          {sender || "Unknown Sender"}
         </Text>
         <Text color="accent" variant="body-sm">
           Package ID: {id}
@@ -44,25 +85,25 @@ const DriverPackageDetails = () => {
       <StatusSection>
         <LeftColumn>
           <StatusCard
-            IconName="package"
+            IconName={bigCardData().icon}
             IconSize={100}
-            Status="On time"
+            Status={bigCardData().status}
             Type="indicator"
-            label="Package Status"
+            label={bigCardData().label}
             backgroundColor={colors.accent}
           />
         </LeftColumn>
         <RightColumn>
           <StatusCard
-            IconName="smallTemp"
-            IconSize="md"
+            IconName="solidWhiteTemp"
+            IconSize="sm"
             label={formattedTemperature}
             labelColor="accent"
             Type="temperature"
             backgroundColor={colors.blueLines}
           />
           <StatusCard
-            IconName="smallTemp"
+            IconName="humidity"
             IconSize="md"
             label={`${humidity}%`}
             Type="humidity"
@@ -72,28 +113,28 @@ const DriverPackageDetails = () => {
       </StatusSection>
       <DetailsSection>
         <Details>
-          <Text>Address</Text>
+          <Text>Address: {destination || "Unknown destination"}</Text>
           <Text> Thresholds:</Text>
-          <ul>
-            <li>Temperature: {formattedTemperature}</li>
-            <li>Humidity: {humidity}%</li>
+          <ul style={{ listStyleType: "none", padding: 0 }}>
+            <li>
+              <Text variant="body-sm">Temperature: {thresholds[0]}°C</Text>
+            </li>
+            <li>
+              <Text variant="body-sm">Humidity: {thresholds[1]}%</Text>
+            </li>
           </ul>
         </Details>
-        <QR>
-          {qrSVG ? (
-            <img
-              width={255}
-              height={255}
-              src={
-                qrSVG.startsWith("data:")
-                  ? qrSVG
-                  : `data:image/svg+xml;utf8,${encodeURIComponent(qrSVG)}`
-              }
-              alt={`QR for ${id}`}
-            />
-          ) : null}
-        </QR>
+        <Text> Deliver by: {formattedArrivalDate || "Unknown date"}</Text>
+        <Button
+          disabled={delivered}
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
+          {delivered ? "Package Delivered" : "Show QR Code"}
+        </Button>
       </DetailsSection>
+      <QRModal showModal={showModal} closeModal={closeModal} qrCodeData={id} />
     </Container>
   );
 };
@@ -147,13 +188,8 @@ const DetailsSection = styled.div`
   flex-direction: column;
 `;
 
-const Details = styled.div``;
-
-const QR = styled.div`
+const Details = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.blueBackground};
-  max-width: fit-content;
-  border-radius: ${radius.box};
+  flex-direction: column;
+  gap: 0.5rem;
 `;
