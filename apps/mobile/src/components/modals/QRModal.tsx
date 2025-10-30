@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 interface QRModalProps {
   showModal: boolean;
   closeModal: () => void;
-  qrCodeData: string | null;
+  qrCodeData: number | null;
 }
 
 const QRModal = ({ showModal, closeModal, qrCodeData }: QRModalProps) => {
