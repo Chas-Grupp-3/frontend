@@ -11,7 +11,7 @@ const WebShipment = () => {
   return (
     <Container className="page">
       <Header>
-        <LogoWeb />
+        <Logo />
         <HamburgerMenu onToggle={setMenuOpen} />
         <List menuOpen={menuOpen}>
           <ul>
@@ -73,6 +73,14 @@ const Header = styled.header`
     justify-content: center;
     gap: 2rem;
     width: 100vw;
+  }
+`;
+
+const Logo = styled(LogoWeb)`
+  dislay: flex;
+  justify-content: start;
+  @media (min-width: 768px) {
+    margin-right: auto;
   }
 `;
 
