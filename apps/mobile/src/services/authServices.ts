@@ -20,7 +20,6 @@ export const authService = {
       });
 
       const data: Partial<BackendLoginResponse> = await response.json();
-      console.log("Login response:", data);
 
       if (!response.ok) {
         return {
