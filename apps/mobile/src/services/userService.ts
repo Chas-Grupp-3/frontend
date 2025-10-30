@@ -1,5 +1,5 @@
 import type { ApiResult, ApiError } from "../types/apiTypes";
-import type { BackendUser } from "../types/packageTypes";
+import type { BackendUser } from "../types/userTypes";
 import { getItem } from "../utils/localStorageUtils";
 import { AUTH_KEY } from "./authStorage";
 
