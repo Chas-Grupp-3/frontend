@@ -41,7 +41,7 @@ const UserPackageDetails = () => {
   const formattedArrivalDate = formatDate(arrivalDate);
 
   const iconHtml = ReactDOMServer.renderToStaticMarkup(
-    <Icon name="truck" size="md" />
+    <Icon name="truckRight" size="md" />
   );
 
   const markerIcon = L.divIcon({
