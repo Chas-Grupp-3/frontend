@@ -5,9 +5,13 @@ import { useAuthContext } from "../../context/auth/useAuthContext";
 const ProfileHeader = () => {
   const { logout } = useAuthContext();
   return (
-    <StyledBox>
+    <StyledBox role="banner" aria-label="Profile Header">
       <Logo>
-        <Icon name="whiteTemp" size="lg" alt="ThermoTrack Logo" />
+        <Icon
+          name="whiteTemp"
+          size="lg"
+          alt="ThermoTrack Logo - temperature icon"
+        />
         <LogoText>
           <StyledText variant="h3">ThermoTrack</StyledText>
           <StyledText variant="body-sm">
@@ -15,7 +19,12 @@ const ProfileHeader = () => {
           </StyledText>
         </LogoText>
       </Logo>
-      <Button type="button" onClick={logout} buttonVariant="secondary">
+      <Button
+        type="button"
+        onClick={logout}
+        buttonVariant="secondary"
+        aria-label="Log out button"
+      >
         Log out
       </Button>
     </StyledBox>
