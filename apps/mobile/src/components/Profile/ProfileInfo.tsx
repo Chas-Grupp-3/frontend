@@ -59,15 +59,15 @@ const ProfileInfo = () => {
   return (
     <StyledBox>
       <Icon name="delivery" size="xl" alt="Delivery Icon" />
-      <StyledTitle>Profil</StyledTitle>
+      <StyledTitle>Profile</StyledTitle>
       <StyledText>
-        <strong>Namn:</strong> {user.name}
+        <strong>Name:</strong> {user.name}
       </StyledText>
       <StyledText>
         <strong>Email:</strong> {user.email}
       </StyledText>
       <StyledText>
-        <strong>Roll:</strong> {user.role}
+        <strong>Role:</strong> {user.role}
       </StyledText>
     </StyledBox>
   );
