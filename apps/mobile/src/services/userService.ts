@@ -73,39 +73,10 @@ export const userService = {
         return abortError;
       }
 
-      // Hantera andra fel
       const apiError: ApiError = {
         success: false,
         message: error?.message || "Something went wrong while fetching user",
         error: error?.stack,
-      };
-      return apiError;
-    }
-  },
-
-  async fetchCurrentUserProfile(
-    signal?: AbortSignal
-  ): Promise<ApiResult<BackendUser>> {
-    try {
-      const authUser = getItem(AUTH_KEY) as {
-        userId?: string;
-        token?: string;
-      } | null;
-
-      if (!authUser?.userId) {
-        const error: ApiError = {
-          success: false,
-          message: "No user ID found in authentication data",
-        };
-        return error;
-      }
-
-      return this.fetchUserById(authUser.userId, signal);
-    } catch (err: unknown) {
-      const error = err as CustomError;
-      const apiError: ApiError = {
-        success: false,
-        message: error?.message || "Failed to fetch current user profile",
       };
       return apiError;
     }
