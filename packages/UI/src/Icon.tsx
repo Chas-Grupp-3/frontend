@@ -3,7 +3,7 @@ import type { IconName } from "./iconMap";
 
 interface IconProps {
   name: IconName;
-  size: "sm" | "md" | "lg" | number;
+  size: "sm" | "md" | "lg" | "xl" | number;
   alt?: string;
 }
 
