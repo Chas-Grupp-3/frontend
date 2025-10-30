@@ -36,6 +36,10 @@ const DriverPackageDetails = () => {
     ? `${Number(temperature).toFixed(1)}°C`
     : "N/A";
   const formattedArrivalDate = formatDate(arrivalDate);
+  const formattedMaxTemp = Number(thresholds.maxTemp).toFixed(1);
+  const formattedMinTemp = Number(thresholds.minTemp).toFixed(1);
+  const formattedMaxHumidity = Number(thresholds.maxHumidity).toFixed(1);
+  const formattedMinHumidity = Number(thresholds.minHumidity).toFixed(1);
 
   const bigCardData = () => {
     if (delivered) {
@@ -45,18 +49,32 @@ const DriverPackageDetails = () => {
         status: undefined,
       };
     }
-    if (temperature >= thresholds[0]) {
+    if (temperature >= formattedMaxTemp) {
       return {
         icon: "tempWarning" as const,
         label: "Warning",
         status: "Temperature Exceeded",
       };
     }
-    if (humidity >= thresholds[1]) {
+    if (humidity >= formattedMaxHumidity) {
       return {
         icon: "tempWarning" as const,
         label: "Warnig",
         status: "Humidity Exceeded",
+      };
+    }
+    if (temperature <= formattedMinTemp) {
+      return {
+        icon: "tempWarning" as const,
+        label: "Warning",
+        status: "Temperature Below Minimum",
+      };
+    }
+    if (humidity <= formattedMinHumidity) {
+      return {
+        icon: "tempWarning" as const,
+        label: "Warning",
+        status: "Humidity Below Minimum",
       };
     }
     if (!delivered && arrivalDate < new Date().toISOString()) {
