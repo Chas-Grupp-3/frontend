@@ -16,7 +16,7 @@ const UserRoutes: RouteObject[] = [
     ),
     children: [
       { index: true, element: <Dashboard /> },
-      { path: "scan/:mode", element: <ScanWrapper /> },
+      { path: "scan/:mode/:id?", element: <ScanWrapper /> },
       { path: "package/:id", element: <UserPackageDetails /> },
       { path: "profile", element: <Profile /> },
     ],
