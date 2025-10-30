@@ -34,17 +34,14 @@ export function useScanController({
     status: "success" | "error" | null;
   }>({ open: false, status: null });
 
-  // start camera on mount
   useEffect(() => {
     startCamera();
     return () => {
       stopQRScanning();
       stopCamera();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startCamera]);
+  }, [startCamera, stopCamera, stopQRScanning]);
 
-  // auto-start scanning when camera is ready and not actively scanning
   useEffect(() => {
     if (
       cameraStarted &&
@@ -113,7 +110,6 @@ export function useScanController({
     return "Align QR code within the frame";
   }, [isLoading]);
 
-  // re-use deliver hook — pass the same inputs the previous component used
   const { isDelivering } = useDeliverOnScan({
     qrCodeResult,
     packageId,

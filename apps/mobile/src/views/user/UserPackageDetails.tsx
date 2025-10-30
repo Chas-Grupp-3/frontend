@@ -63,6 +63,7 @@ const UserPackageDetails = () => {
           {sender || "Unknown Sender"}
         </Text>
       </Header>
+      //TODO: dont show map if no location data or if delivered
       <MapSection>
         <MapContainer
           center={[packageLocation.latitude, packageLocation.longitude]}

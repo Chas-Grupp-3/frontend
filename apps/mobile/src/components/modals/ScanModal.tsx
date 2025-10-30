@@ -37,7 +37,11 @@ const ScanModal = ({
               closeModal={closeModal}
             />
           ) : mode === "deliver" ? (
-            <DeliverModal isDelivering={isDelivering} status={status} />
+            <DeliverModal
+              isDelivering={isDelivering}
+              status={status}
+              handleNext={handleNext}
+            />
           ) : mode === "add" ? (
             <>
               <Text variant="h1">Package Added</Text>
@@ -46,6 +50,7 @@ const ScanModal = ({
               </Text>
             </>
           ) : (
+            // fallback for unexpected mode when there's a qrCodeResult
             <>
               <Text variant="h1">No QR Code Found</Text>
               <Text>
@@ -58,6 +63,19 @@ const ScanModal = ({
               </ButtonGroup>
             </>
           )
+        ) : // When there's no qrCodeResult, render the "No QR Code Found" UI if status indicates an error (e.g., scanner timeout)
+        status === "error" ? (
+          <>
+            <Text variant="h1">No QR Code Found</Text>
+            <Text>
+              Couldn't detect a valid QR code. Please try again or make sure the
+              QR code is clear and well-lit.
+            </Text>
+            <ButtonGroup>
+              <Button onClick={handleRetry}>Try Again</Button>
+              <Button onClick={handleGoBack}>Go Back</Button>
+            </ButtonGroup>
+          </>
         ) : null}
       </ModalContent>
     </Modal>

@@ -28,6 +28,15 @@ export const useDeliverOnScan = ({
 }: Params) => {
   const [isDelivering, setIsDelivering] = useState(false);
 
+  // Ensure we clear the delivering flag when the modal opens.
+  // This handles the race where the modal opens while an async deliver is in progress,
+  // which previously could leave `isDelivering` stuck as `true`.
+  useEffect(() => {
+    if (modalOpen) {
+      setIsDelivering(false);
+    }
+  }, [modalOpen]);
+
   useEffect(() => {
     if (!qrCodeResult || !packageId || mode !== "deliver" || modalOpen) return;
     if (qrCodeResult !== packageId) return;
@@ -50,8 +59,10 @@ export const useDeliverOnScan = ({
           return;
         }
         if (result && (result as BackendPackage).delivered === true) {
+          setIsDelivering(false);
           onSuccess?.();
         } else {
+          setIsDelivering(false);
           onError?.(
             new Error("markPackageAsDelivered returned unexpected payload")
           );
