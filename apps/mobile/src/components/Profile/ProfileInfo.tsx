@@ -15,7 +15,7 @@ const ProfileInfo = () => {
   useEffect(() => {
     const fetchUser = async () => {
       if (!userId) {
-        setError("Inget användar-ID tillgängligt");
+        setError("No user ID found");
         return;
       }
 
