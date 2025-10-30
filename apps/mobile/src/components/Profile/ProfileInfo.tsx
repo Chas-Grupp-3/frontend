@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { userService } from "../../services/userService";
 import { useAuthContext } from "../../context/auth/useAuthContext";
 import { isApiError } from "../../types/apiTypes";
-import type { BackendUser } from "../../types/packageTypes";
+import type { BackendUser } from "../../types/userTypes";
 import { colors, radius, textMobile, Icon } from "@chas/ui";
 import styled from "styled-components";
 

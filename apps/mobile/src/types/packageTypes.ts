@@ -35,9 +35,3 @@ export type BackendPackage = {
     minTemp: number;
   };
 };
-
-export type BackendUser = {
-  name: string;
-  email: string;
-  role: "driver" | "sender" | "admin";
-};
