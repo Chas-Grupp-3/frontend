@@ -66,7 +66,7 @@ const DriverPackageDetails = () => {
       };
     }
     return {
-      icon: "truck" as const,
+      icon: "truckRight" as const,
       label: "On Time",
       status: undefined,
     };

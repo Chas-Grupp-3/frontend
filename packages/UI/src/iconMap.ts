@@ -122,7 +122,6 @@ export const iconMap = {
   whiteQr: whiteQr,
   whiteMap: whiteMap,
   delivery: delivery,
-
 } as const;
 
 export type IconName = keyof typeof iconMap;
