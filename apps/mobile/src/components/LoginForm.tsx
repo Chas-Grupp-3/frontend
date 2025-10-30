@@ -53,11 +53,11 @@ const LoginForm = () => {
       noValidate
     >
       <ScreenReaderOnly as="h1" id="login-heading">
-        Logga in
+        Log in
       </ScreenReaderOnly>
 
       <ScreenReaderOnly id="login-description">
-        Fyll i din e-postadress och lösenord för att logga in i ThermoTrack
+        Enter your email address and password to log in to ThermoTrack.
       </ScreenReaderOnly>
 
       <TextInput
@@ -113,7 +113,7 @@ const LoginForm = () => {
             aria-label="Logging in, please wait"
           >
             <ClipLoader size={42} color={colors.primary} />
-            <ScreenReaderOnly>Loggar in...</ScreenReaderOnly>
+            <ScreenReaderOnly>Logging in...</ScreenReaderOnly>
           </LoadingContainer>
         ) : (
           <Button
@@ -122,8 +122,8 @@ const LoginForm = () => {
             disabled={loading || !values.email || !values.password}
             aria-label={
               loading || !values.email || !values.password
-                ? "Logga in - inaktiverad. Fyll i både e-post och lösenord"
-                : "Logga in i ThermoTrack"
+                ? "Login - disabled. Please enter both email and password"
+                : "Log in to ThermoTrack"
             }
             aria-describedby={serverError ? "server-error" : undefined}
           >
