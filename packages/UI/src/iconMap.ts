@@ -58,6 +58,7 @@ import home from "../assets/icons/home.svg";
 import whiteQr from "../assets/icons/whiteQr.svg";
 import truckRight from "../assets/icons/truckRight.svg";
 
+import whiteMap from "../assets/icons/whiteMap.svg";
 export const iconMap = {
   package: packageIcon,
   smallTemp: smallTemp,
@@ -118,6 +119,7 @@ export const iconMap = {
   blueClock: blueClock,
   home: home,
   whiteQr: whiteQr,
+  whiteMap: whiteMap,
 } as const;
 
 export type IconName = keyof typeof iconMap;

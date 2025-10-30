@@ -8,6 +8,7 @@ interface CardProps {
   variant?: CardVariant;
   title: string;
   temperature: number;
+  humidity?: number;
   deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
@@ -19,6 +20,7 @@ const Card = ({
   variant = "large",
   title,
   temperature,
+  humidity,
   deliveryStatus,
   ETA,
   id,
@@ -37,6 +39,7 @@ const Card = ({
     <LargeCard
       title={title}
       temperature={temperature}
+      humidity={humidity}
       id={id}
       ETA={ETA}
       backgroundColor={backgroundColor}

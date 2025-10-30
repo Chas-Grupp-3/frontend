@@ -3,9 +3,9 @@ import DriverLayout from "../layouts/DriverLayout";
 import Dashboard from "../views/driver/DriverDashboard";
 import Scan from "../views/Scan";
 import PackageDetails from "../views/driver/DriverPackageDetails";
-import Warnings from "../views/driver/DriverWarnings";
 import RequireAuth from "../components/RequireAuth";
 import Profile from "../views/driver/DriverProfile";
+import DriverMap from "../views/driver/DriverMap";
 
 const DriverRoutes: RouteObject[] = [
   {
@@ -19,7 +19,7 @@ const DriverRoutes: RouteObject[] = [
       { index: true, element: <Dashboard /> },
       { path: "scan", element: <Scan /> },
       { path: "package/:id", element: <PackageDetails /> },
-      { path: "warnings", element: <Warnings /> },
+      { path: "map", element: <DriverMap /> },
       { path: "profile", element: <Profile /> },
     ],
   },
