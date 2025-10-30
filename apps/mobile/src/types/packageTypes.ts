@@ -36,7 +36,7 @@ export type BackendPackage = {
   };
 };
 
-export type BackendUsers = {
+export type BackendUser = {
   name: string;
   email: string;
   role: "driver" | "sender" | "admin";

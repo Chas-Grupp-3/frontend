@@ -1,5 +1,5 @@
 import type { ApiResult, ApiError } from "../types/apiTypes";
-import type { BackendUsers } from "../types/packageTypes";
+import type { BackendUser } from "../types/packageTypes";
 import { getItem } from "../utils/localStorageUtils";
 import { AUTH_KEY } from "./authStorage";
 
@@ -26,7 +26,7 @@ export const userService = {
   async fetchUserById(
     userId: string,
     signal?: AbortSignal
-  ): Promise<ApiResult<BackendUsers>> {
+  ): Promise<ApiResult<BackendUser>> {
     try {
       const JWT = getJWTToken();
 
@@ -57,7 +57,7 @@ export const userService = {
       }
 
       const data = await response.json();
-      return data as BackendUsers;
+      return data as BackendUser;
     } catch (err: unknown) {
       const error = err as CustomError;
 
@@ -85,7 +85,7 @@ export const userService = {
 
   async fetchCurrentUserProfile(
     signal?: AbortSignal
-  ): Promise<ApiResult<BackendUsers>> {
+  ): Promise<ApiResult<BackendUser>> {
     try {
       const authUser = getItem(AUTH_KEY) as {
         userId?: string;

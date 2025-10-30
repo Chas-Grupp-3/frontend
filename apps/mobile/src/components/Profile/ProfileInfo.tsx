@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { userService } from "../../services/userService";
 import { useAuthContext } from "../../context/auth/useAuthContext";
 import { isApiError } from "../../types/apiTypes";
-import type { BackendUsers } from "../../types/packageTypes";
+import type { BackendUser } from "../../types/packageTypes";
 import { colors, radius, textMobile, Icon } from "@chas/ui";
 import styled from "styled-components";
 
 const ProfileInfo = () => {
   const { userId } = useAuthContext();
-  const [user, setUser] = useState<BackendUsers | null>(null);
+  const [user, setUser] = useState<BackendUser | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
