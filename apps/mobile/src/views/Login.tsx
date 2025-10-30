@@ -5,19 +5,19 @@ import Logo from "../components/Logo";
 
 const Login = () => {
   return (
-    <Container className="page">
+    <Container className="page" role="main" aria-label="Log in to ThermoTruck">
       <Logo />
-      <StyledForm>
+      <StyledForm aria-label="Login form">
         <Text variant="h2">Log in</Text>
-        <Divider />
+        <Divider role="separator" aria-hidden="true" />
         <LoginForm />
       </StyledForm>
       {/* <CreateUser>
         <Text variant="body-sm">New user?</Text>
         <Text variant="body-smBold">Create account</Text>
       </CreateUser> */}
-      <Footer>
-        <Icon name="truckPin" alt="TruckPin Logo" size={300} />
+      <Footer aria-label="Decorative footer">
+        <Icon name="truckPin" alt="ThermoTrack Logo" size={300} />
       </Footer>
     </Container>
   );
