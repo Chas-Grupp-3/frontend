@@ -3,7 +3,7 @@ import { userService } from "../../services/userService";
 import { useAuthContext } from "../../context/auth/useAuthContext";
 import { isApiError } from "../../types/apiTypes";
 import type { BackendUsers } from "../../types/packageTypes";
-import { colors, radius, textMobile } from "@chas/ui";
+import { colors, radius, textMobile, Icon } from "@chas/ui";
 import styled from "styled-components";
 
 const ProfileInfo = () => {
@@ -58,6 +58,7 @@ const ProfileInfo = () => {
 
   return (
     <StyledBox>
+      <Icon name="delivery" size="xl" alt="User Icon" />
       <StyledTitle>Profil</StyledTitle>
       <StyledText>
         <strong>Namn:</strong> {user.name}

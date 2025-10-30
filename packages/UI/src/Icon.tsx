@@ -12,6 +12,7 @@ export const Icon = ({ name, size, alt }: IconProps) => {
     sm: "24px",
     md: "40px",
     lg: "64px",
+    xl: "220px",
   };
 
   const iconSize = typeof size === "string" ? sizeMap[size] : `${size}px`;
