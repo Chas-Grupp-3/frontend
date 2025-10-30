@@ -1,88 +1,33 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
-import { useCamera } from "../hooks/useCamera";
-import { useQRScanner } from "../hooks/useQRScanner";
-import Camera from "../components/Camera";
-import { Button, colors, Text } from "@chas/ui";
-import { styled } from "styled-components";
+import { Button, Text, colors } from "@chas/ui";
 import { useNavigate } from "react-router";
+import Camera from "../components/Camera";
 import ScanModal from "../components/modals/ScanModal";
-import { useScanSearch } from "../hooks/useScanSearch";
+import useScanController from "../hooks/useScanController";
+import { styled } from "styled-components";
+
 interface ScanProps {
   mode: "search" | "add" | "deliver";
+  packageId?: string;
 }
 
-const Scan = ({ mode = "search" }: ScanProps) => {
+const Scan = ({ mode = "search", packageId }: ScanProps) => {
   const navigate = useNavigate();
-  const { videoRef, cameraStarted, isLoading, error, startCamera, stopCamera } =
-    useCamera();
   const {
+    videoRef,
     canvasRef,
-    qrCodeResult,
-    isActivelyScanning,
-    hasTimedOut,
-    beginQRScanning,
-    stopQRScanning,
-    resetQRScannerState,
-  } = useQRScanner(videoRef);
-  const { handleSearchScan } = useScanSearch();
-
-  const [showModal, setShowModal] = useState(false);
-
-  const handleGoBack = useCallback(() => {
-    stopQRScanning();
-    stopCamera();
-    navigate(-1);
-  }, [stopQRScanning, stopCamera, navigate]);
-
-  const handleRetry = useCallback(() => {
-    setShowModal(false);
-    resetQRScannerState();
-    if (cameraStarted) {
-      beginQRScanning();
-    }
-  }, [resetQRScannerState, cameraStarted, beginQRScanning]);
-
-  const handleNext = useCallback(async () => {
-    stopQRScanning();
-    stopCamera();
-    if (qrCodeResult) {
-      await handleSearchScan(qrCodeResult);
-    }
-  }, [stopQRScanning, stopCamera, qrCodeResult, handleSearchScan]);
-
-  const closeModal = useCallback(() => {
-    setShowModal(false);
-  }, []);
-
-  const displayText = useMemo(() => {
-    if (isLoading) return "Starting camera...";
-    return "Align QR code within the frame";
-  }, [isLoading]);
-
-  useEffect(() => {
-    startCamera();
-  }, [startCamera]);
-
-  useEffect(() => {
-    if (cameraStarted && !isActivelyScanning && !qrCodeResult && !showModal) {
-      beginQRScanning();
-    }
-  }, [
     cameraStarted,
+    error,
     isActivelyScanning,
+    modalState,
+    displayText,
+    isDelivering,
     qrCodeResult,
-    showModal,
-    beginQRScanning,
-  ]);
+    handleGoBack,
+    handleRetry,
+    handleNext,
+    closeModal,
+  } = useScanController({ mode, packageId, navigate });
 
-  // Handle scan results
-  useEffect(() => {
-    if (qrCodeResult || hasTimedOut) {
-      setShowModal(true);
-    }
-  }, [qrCodeResult, hasTimedOut]);
-
-  // Early return for error state
   if (error) {
     return (
       <Container className="page">
@@ -116,16 +61,18 @@ const Scan = ({ mode = "search" }: ScanProps) => {
       <ButtonContainer>
         <Button onClick={handleGoBack}>Close</Button>
       </ButtonContainer>
-      {mode === "search" && (
-        <ScanModal
-          showModal={showModal}
-          closeModal={closeModal}
-          qrCodeResult={qrCodeResult}
-          handleRetry={handleRetry}
-          handleGoBack={handleGoBack}
-          handleNext={handleNext}
-        />
-      )}
+
+      <ScanModal
+        mode={mode}
+        showModal={modalState.open}
+        status={modalState.status}
+        closeModal={closeModal}
+        qrCodeResult={qrCodeResult}
+        handleRetry={handleRetry}
+        handleGoBack={handleGoBack}
+        handleNext={handleNext}
+        isDelivering={isDelivering}
+      />
     </Container>
   );
 };
