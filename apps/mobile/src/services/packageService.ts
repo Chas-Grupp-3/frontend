@@ -92,4 +92,39 @@ export const packageService = {
       return error;
     }
   },
+  async markPackageAsDelivered(
+    packageId: string
+  ): Promise<ApiResult<BackendPackage>> {
+    try {
+      const response = await fetch(
+        `${API_URL}/packages/delivered/${packageId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${JWT}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        const message = `Request failed with status ${response.status}`;
+        const error: ApiError = { success: false, message };
+        return error;
+      }
+
+      const data = await response.json();
+      console.log("Delivery Response Data:", data);
+      return data;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      const error: ApiError = {
+        success: false,
+        message:
+          err?.message ||
+          "Something went wrong while marking package delivered",
+        error: err?.stack,
+      };
+      return error;
+    }
+  },
 };
