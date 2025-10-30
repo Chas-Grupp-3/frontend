@@ -58,7 +58,7 @@ const ProfileInfo = () => {
 
   return (
     <StyledBox>
-      <Icon name="delivery" size="xl" alt="User Icon" />
+      <Icon name="delivery" size="xl" alt="Delivery Icon" />
       <StyledTitle>Profil</StyledTitle>
       <StyledText>
         <strong>Namn:</strong> {user.name}
