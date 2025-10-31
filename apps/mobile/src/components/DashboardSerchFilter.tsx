@@ -23,18 +23,50 @@ const DashboardSearchFilter = ({
   children,
 }: DashboardSearchFilterProps) => {
   return (
-    <SearchFilterContainer>
+    <SearchFilterContainer
+      role="search"
+      aria-labelledby="search-heading"
+      aria-describedby="search-description"
+    >
+      <ScreenReaderOnly as="h2" id="search-heading">
+        Search Shipments
+      </ScreenReaderOnly>
+
+      <ScreenReaderOnly id="search-description">
+        Search for shipments by ID, name, or QR code. Use the QR button to scan
+        a code.
+      </ScreenReaderOnly>
+
       <SearchContainer>
         <StyledTextInput
           label="Search by ID / name / QR"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          aria-label="Search shipments by ID, name, or QR code"
+          aria-describedby="search-help"
+          role="searchbox"
+          type="search"
+          autoComplete="off"
+          placeholder="Enter ID, name, or scan QR..."
         />
-        <QrButtonContainer>
+
+        <ScreenReaderOnly id="search-help">
+          Type to search for your shipments or use the QR button
+        </ScreenReaderOnly>
+
+        <QrButtonContainer aria-label="QR scanner functions">
           <QrButton />
         </QrButtonContainer>
       </SearchContainer>
-      {children}
+
+      {children && (
+        <FiltersContainer
+          role="region"
+          aria-label="Additional filters and options"
+        >
+          {children}
+        </FiltersContainer>
+      )}
     </SearchFilterContainer>
   );
 };
@@ -60,4 +92,20 @@ const SearchContainer = styled.div`
 const QrButtonContainer = styled.div`
   position: absolute;
   right: 12px;
+`;
+
+const FiltersContainer = styled.div`
+  width: 100%;
+`;
+
+const ScreenReaderOnly = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 `;
