@@ -48,7 +48,18 @@ const LoginForm = () => {
         e.preventDefault();
         handleSubmit(onSubmit);
       }}
+      aria-labelledby="login-heading"
+      aria-describedby="login-description"
+      noValidate
     >
+      <ScreenReaderOnly as="h1" id="login-heading">
+        Log in
+      </ScreenReaderOnly>
+
+      <ScreenReaderOnly id="login-description">
+        Enter your email address and password to log in to ThermoTrack.
+      </ScreenReaderOnly>
+
       <TextInput
         autoComplete="email"
         label="E-mail"
@@ -60,6 +71,13 @@ const LoginForm = () => {
         }}
         onBlur={handleBlur("email")}
         error={touched.email ? validationErrors.email : undefined}
+        aria-required="true"
+        aria-invalid={
+          touched.email && validationErrors.email ? "true" : "false"
+        }
+        aria-describedby={
+          touched.email && validationErrors.email ? "email-error" : undefined
+        }
       />
       <TextInput
         label="Password"
@@ -71,21 +89,43 @@ const LoginForm = () => {
         }}
         onBlur={handleBlur("password")}
         error={touched.password ? validationErrors.password : undefined}
+        aria-required="true"
+        aria-invalid={
+          touched.password && validationErrors.password ? "true" : "false"
+        }
+        aria-describedby={
+          touched.password && validationErrors.password
+            ? "password-error"
+            : undefined
+        }
       />
       {/* <Text variant="body-smBold">Forgot password?</Text> */}
       {serverError && (
-        <Text color="critical" variant="body-sm">
+        <Text color="critical" variant="body-sm" aria-live="assertive">
           Something went wrong, please try again
         </Text>
       )}
       <ButtonContainer>
         {loading ? (
-          <ClipLoader size={42} color={colors.primary} />
+          <LoadingContainer
+            role="status"
+            aria-live="polite"
+            aria-label="Logging in, please wait"
+          >
+            <ClipLoader size={42} color={colors.primary} />
+            <ScreenReaderOnly>Logging in...</ScreenReaderOnly>
+          </LoadingContainer>
         ) : (
           <Button
             type="submit"
             buttonVariant="primary"
             disabled={loading || !values.email || !values.password}
+            aria-label={
+              loading || !values.email || !values.password
+                ? "Login - disabled. Please enter both email and password"
+                : "Log in to ThermoTrack"
+            }
+            aria-describedby={serverError ? "server-error" : undefined}
           >
             Log in
           </Button>
@@ -109,4 +149,22 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+`;
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const ScreenReaderOnly = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 `;
