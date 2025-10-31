@@ -29,11 +29,12 @@ const DashboardSearchFilter = ({
       aria-describedby="search-description"
     >
       <ScreenReaderOnly as="h2" id="search-heading">
-        Sök försändelser
+        Search Shipments
       </ScreenReaderOnly>
 
       <ScreenReaderOnly id="search-description">
-        Sök efter försändelser med ID, namn eller genom att skanna QR-kod
+        Search for shipments by ID, name, or QR code. Use the QR button to scan a
+        code.
       </ScreenReaderOnly>
 
       <SearchContainer>
@@ -41,19 +42,19 @@ const DashboardSearchFilter = ({
           label="Search by ID / name / QR"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          aria-label="Sök försändelser med ID, namn eller QR-kod"
+          aria-label="Search shipments by ID, name, or QR code"
           aria-describedby="search-help"
           role="searchbox"
           type="search"
           autoComplete="off"
-          placeholder="Ange ID, namn eller skanna QR..."
+          placeholder="Enter ID, name, or scan QR..."
         />
 
         <ScreenReaderOnly id="search-help">
-          Skriv för att söka bland dina försändelser eller använd QR-knappen
+          Type to search for your shipments or use the QR button
         </ScreenReaderOnly>
 
-        <QrButtonContainer aria-label="QR-skanner funktioner">
+        <QrButtonContainer aria-label="QR scanner functions">
           <QrButton />
         </QrButtonContainer>
       </SearchContainer>
@@ -61,7 +62,7 @@ const DashboardSearchFilter = ({
       {children && (
         <FiltersContainer
           role="region"
-          aria-label="Ytterligare filter och alternativ"
+          aria-label="Additional filters and options"
         >
           {children}
         </FiltersContainer>
