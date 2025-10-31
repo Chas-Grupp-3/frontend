@@ -1,6 +1,6 @@
 import { colors, Text, Icon } from "@chas/ui";
 import styled from "styled-components";
-import DashboardSerchFilter from "./DashboardSerchFilter";
+import DashboardSearchFilter from "./DashboardSerchFilter";
 
 interface DashboardHeaderProps {
   searchTerm: string;
@@ -12,12 +12,25 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   setSearchTerm,
 }) => {
   return (
-    <StyledBox>
-      <Logo>
+    <StyledBox
+      role="banner"
+      aria-labelledby="dashboard-title"
+      aria-describedby="dashboard-description"
+    >
+      <ScreenReaderOnly id="dashboard-description">
+        Dashboard header med logotyp, titel och sökfunktion för dina
+        försändelser
+      </ScreenReaderOnly>
+      <Logo
+        role="img"
+        aria-label="ThermoTrack Logo - Climate-Controlled Transport"
+      >
         <Icon name="whiteTemp" size="lg" alt="ThermoTrack Logo" />
         <LogoText>
-          <StyledText variant="h3">ThermoTrack</StyledText>
-          <StyledText variant="body-sm">
+          <StyledText variant="h3" aria-label="ThermoTrack company name">
+            ThermoTrack
+          </StyledText>
+          <StyledText variant="body-sm" aria-label="Company Logo">
             Climate-Controlled Transport
           </StyledText>
         </LogoText>
@@ -25,7 +38,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
       <StyledText variant="nav">My shipments</StyledText>
 
-      <DashboardSerchFilter
+      <DashboardSearchFilter
+        aria-label="Search and filter shipments"
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
       />
@@ -66,4 +80,15 @@ const LogoText = styled.div`
 
 const StyledText = styled(Text)`
   color: ${colors.whiteBackground};
+`;
+const ScreenReaderOnly = styled.div`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 `;
