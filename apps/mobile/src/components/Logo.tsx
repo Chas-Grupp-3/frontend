@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Text, Icon } from "@chas/ui";
 const Logo = () => {
   return (
-    <StyledLogo>
+    <StyledLogo aria-label="ThermoTrack Logo">
       <Icon name="smallTempHot" size={64} alt="ThermoTrack Logo" />
       <LogoText>
         <Text variant="h2" color="primary">
