@@ -33,8 +33,8 @@ const DashboardSearchFilter = ({
       </ScreenReaderOnly>
 
       <ScreenReaderOnly id="search-description">
-        Search for shipments by ID, name, or QR code. Use the QR button to scan a
-        code.
+        Search for shipments by ID, name, or QR code. Use the QR button to scan
+        a code.
       </ScreenReaderOnly>
 
       <SearchContainer>
