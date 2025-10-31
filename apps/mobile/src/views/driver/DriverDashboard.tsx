@@ -54,20 +54,27 @@ const Dashboard = () => {
   }));
 
   return (
-    <DashboardContainer className="page">
+    <DashboardContainer
+      className="page"
+      role="main"
+      aria-label="Driver dashboard for package management"
+    >
       <DashboardHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <Centered>
+
+      <Centered role="region" aria-label="Filter packages">
         <Toggle
           name="filters"
           options={toggleOptions}
           value={selectedFilter}
           onChange={(v) => setSelectedFilter(v as FilterOption["value"])}
           iconSize="sm"
+          aria-label={`Filter: ${selectedFilter}`}
         />
       </Centered>
-      <CardListContainer>
+
+      <CardListContainer role="region" aria-label="List of packages">
         {loading ? (
-          <Centered>
+          <Centered role="status" aria-label="Loading packages">
             <ClipLoader size={64} color={colors.primary} />
           </Centered>
         ) : (
@@ -83,11 +90,17 @@ const Dashboard = () => {
                 },
               });
             }}
+            aria-label={`${filteredPackages.length} packages`}
           />
         )}
       </CardListContainer>
-      <Centered>
-        <Button onClick={refresh} disabled={loading}>
+
+      <Centered role="region" aria-label="Dashboard actions">
+        <Button
+          onClick={refresh}
+          disabled={loading}
+          aria-label={loading ? "Updating..." : "Update packages"}
+        >
           {loading ? "Refreshing…" : "Refresh"}
         </Button>
       </Centered>
