@@ -32,14 +32,18 @@ const DriverPackageDetails = () => {
     thresholds,
   } = packageData as BackendPackage;
 
-  const formattedTemperature = Number.isFinite(Number(temperature))
-    ? `${Number(temperature).toFixed(1)}°C`
+  // Convert to numbers for comparison
+  const tempValue = Number(temperature);
+  const humidityValue = Number(humidity);
+  const maxTemp = Number(thresholds.maxTemp);
+  const minTemp = Number(thresholds.minTemp);
+  const maxHumidity = Number(thresholds.maxHumidity);
+  const minHumidity = Number(thresholds.minHumidity);
+
+  const formattedTemperature = Number.isFinite(tempValue)
+    ? `${tempValue.toFixed(1)}°C`
     : "N/A";
   const formattedArrivalDate = formatDate(arrivalDate);
-  const formattedMaxTemp = Number(thresholds.maxTemp).toFixed(1);
-  const formattedMinTemp = Number(thresholds.minTemp).toFixed(1);
-  const formattedMaxHumidity = Number(thresholds.maxHumidity).toFixed(1);
-  const formattedMinHumidity = Number(thresholds.minHumidity).toFixed(1);
 
   const bigCardData = () => {
     if (delivered) {
@@ -49,28 +53,28 @@ const DriverPackageDetails = () => {
         status: undefined,
       };
     }
-    if (temperature >= formattedMaxTemp) {
+    if (tempValue >= maxTemp) {
       return {
         icon: "tempWarning" as const,
         label: "Warning",
         status: "Temperature Exceeded",
       };
     }
-    if (humidity >= formattedMaxHumidity) {
+    if (humidityValue >= maxHumidity) {
       return {
         icon: "tempWarning" as const,
-        label: "Warnig",
+        label: "Warning",
         status: "Humidity Exceeded",
       };
     }
-    if (temperature <= formattedMinTemp) {
+    if (tempValue <= minTemp) {
       return {
         icon: "tempWarning" as const,
         label: "Warning",
         status: "Temperature Below Minimum",
       };
     }
-    if (humidity <= formattedMinHumidity) {
+    if (humidityValue <= minHumidity) {
       return {
         icon: "tempWarning" as const,
         label: "Warning",
@@ -124,7 +128,7 @@ const DriverPackageDetails = () => {
           <StatusCard
             IconName="humidity"
             IconSize="md"
-            label={`${humidity}%`}
+            label={`${humidityValue}%`}
             Type="humidity"
             backgroundColor={colors.secondary}
           />
@@ -135,10 +139,10 @@ const DriverPackageDetails = () => {
           <Text>Address: {destination.address || "Unknown destination"}</Text>
           <Text> Thresholds:</Text>
           <Text variant="body-sm">
-            Temperature: {thresholds.minTemp}°C - {thresholds.maxTemp}°C
+            Temperature: {minTemp}°C - {maxTemp}°C
           </Text>
           <Text variant="body-sm">
-            Humidity: {thresholds.minHumidity}% - {thresholds.maxHumidity}%
+            Humidity: {minHumidity}% - {maxHumidity}%
           </Text>
         </Details>
         <Text> Deliver by: {formattedArrivalDate || "Unknown date"}</Text>
