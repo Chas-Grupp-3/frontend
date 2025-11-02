@@ -1,19 +1,30 @@
-import { Icon, Text, Button } from "@chas/ui";
+import { Text, Button } from "@chas/ui";
 import { useLocation, useNavigate } from "react-router";
 import StatusCard from "../../components/StatusCard";
 import styled from "styled-components";
 import { colors } from "@chas/ui";
 import { formatDate } from "../../utils/cardUtils";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import type { BackendPackage } from "../../types/packageTypes";
-import L from "leaflet";
-import ReactDOMServer from "react-dom/server";
 import { useAuthContext } from "../../context/auth/useAuthContext";
+import Map from "../../components/Map/Map";
+import { useLocationContext } from "../../context/location/useLocationContext";
 
 const UserPackageDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { role } = useAuthContext();
+  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
+    useLocationContext();
+
+  if (!isGeolocationAvailable) {
+    return <div>Your browser does not support Geolocation</div>;
+  }
+  if (!isGeolocationEnabled) {
+    return <div>Geolocation is not enabled</div>;
+  }
+  if (!coords) {
+    return <div>Getting the location data&hellip; </div>;
+  }
 
   const { packageData } = location.state || {};
   console.log("Package Data:", packageData);
@@ -40,17 +51,6 @@ const UserPackageDetails = () => {
     : "N/A";
   const formattedArrivalDate = formatDate(arrivalDate);
 
-  const iconHtml = ReactDOMServer.renderToStaticMarkup(
-    <Icon name="truckRight" size="md" />
-  );
-
-  const markerIcon = L.divIcon({
-    html: iconHtml,
-    className: "my-leaflet-div-icon", // override default .leaflet-div-icon styling as needed
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-  });
-
   const base = role ? `/${role}` : "";
   const handleClick = () => {
     navigate(`${base}/scan/deliver/${packageId}`);
@@ -65,21 +65,15 @@ const UserPackageDetails = () => {
       </Header>
       //TODO: dont show map if no location data or if delivered
       <MapSection>
-        <MapContainer
-          center={[packageLocation.latitude, packageLocation.longitude]}
+        <Map
+          latitude={coords.latitude}
+          longitude={coords.longitude}
+          mapHeight="16rem"
+          mapWidth="100%"
+          truckLatitude={packageLocation.latitude}
+          truckLongitude={packageLocation.longitude}
           zoom={16}
-          scrollWheelZoom={false}
-          style={{ height: "16rem", width: "100%", overflow: "hidden" }}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker
-            position={[packageLocation.latitude, packageLocation.longitude]}
-            icon={markerIcon}
-          ></Marker>
-        </MapContainer>
+        />
       </MapSection>
       <DetailsSection>
         <StatusCardRow>
