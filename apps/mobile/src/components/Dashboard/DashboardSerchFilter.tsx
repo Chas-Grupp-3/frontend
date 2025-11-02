@@ -9,14 +9,6 @@ interface DashboardSearchFilterProps {
   children?: React.ReactNode;
 }
 
-const StyledTextInput = styled(TextInput)`
-  width: 300px;
-
-  input {
-    padding-right: 8px 12px;
-  }
-`;
-
 const DashboardSearchFilter = ({
   searchTerm,
   setSearchTerm,
@@ -25,7 +17,8 @@ const DashboardSearchFilter = ({
   return (
     <SearchFilterContainer>
       <SearchContainer>
-        <StyledTextInput
+        <TextInput
+          inputSize="search"
           label="Search by ID / name / QR"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -44,20 +37,18 @@ export default DashboardSearchFilter;
 const SearchFilterContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 0 1rem;
+  flex: 1;
+  width: 100%;
 `;
 
 const SearchContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
-  max-width: 300px;
-  margin: 0 auto;
 `;
 
 const QrButtonContainer = styled.div`
   position: absolute;
+  transform: translateY(-5%);
   right: 12px;
 `;
