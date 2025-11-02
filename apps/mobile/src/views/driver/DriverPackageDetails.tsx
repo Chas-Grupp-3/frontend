@@ -7,6 +7,10 @@ import { useState } from "react";
 import QRModal from "../../components/modals/QRModal";
 import { formatDate } from "../../utils/cardUtils";
 import type { BackendPackage } from "../../types/packageTypes";
+import {
+  getStatusIndicators,
+  formattedTemperature,
+} from "../../utils/driverPackagesUtils";
 
 const DriverPackageDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -21,6 +25,7 @@ const DriverPackageDetails = () => {
       </Modal>
     );
   }
+
   const {
     temperature,
     delivered,
@@ -32,7 +37,6 @@ const DriverPackageDetails = () => {
     thresholds,
   } = packageData as BackendPackage;
 
-  // Convert to numbers for comparison
   const tempValue = Number(temperature);
   const humidityValue = Number(humidity);
   const maxTemp = Number(thresholds.maxTemp);
@@ -40,60 +44,20 @@ const DriverPackageDetails = () => {
   const maxHumidity = Number(thresholds.maxHumidity);
   const minHumidity = Number(thresholds.minHumidity);
 
-  const formattedTemperature = Number.isFinite(tempValue)
-    ? `${tempValue.toFixed(1)}°C`
-    : "N/A";
+  const temp = formattedTemperature(temperature);
+
   const formattedArrivalDate = formatDate(arrivalDate);
 
-  const bigCardData = () => {
-    if (delivered) {
-      return {
-        icon: "package" as const,
-        label: "Delivered",
-        status: undefined,
-      };
-    }
-    if (tempValue >= maxTemp) {
-      return {
-        icon: "tempWarning" as const,
-        label: "Warning",
-        status: "Temperature Exceeded",
-      };
-    }
-    if (humidityValue >= maxHumidity) {
-      return {
-        icon: "tempWarning" as const,
-        label: "Warning",
-        status: "Humidity Exceeded",
-      };
-    }
-    if (tempValue <= minTemp) {
-      return {
-        icon: "tempWarning" as const,
-        label: "Warning",
-        status: "Temperature Below Minimum",
-      };
-    }
-    if (humidityValue <= minHumidity) {
-      return {
-        icon: "tempWarning" as const,
-        label: "Warning",
-        status: "Humidity Below Minimum",
-      };
-    }
-    if (!delivered && arrivalDate < new Date().toISOString()) {
-      return {
-        icon: "clock" as const,
-        label: "Late",
-        status: "Delivery Overdue",
-      };
-    }
-    return {
-      icon: "truckRight" as const,
-      label: "On Time",
-      status: undefined,
-    };
-  };
+  const {
+    icon: statusIcon,
+    label: statusLabel,
+    status: statusStatus,
+  } = getStatusIndicators(delivered, tempValue, humidityValue, arrivalDate, {
+    maxTemp,
+    minTemp,
+    maxHumidity,
+    minHumidity,
+  });
 
   return (
     <Container className="page">
@@ -108,11 +72,11 @@ const DriverPackageDetails = () => {
       <StatusSection>
         <LeftColumn>
           <StatusCard
-            IconName={bigCardData().icon}
+            IconName={statusIcon}
             IconSize={100}
-            Status={bigCardData().status}
+            Status={statusStatus}
             Type="indicator"
-            label={bigCardData().label}
+            label={statusLabel}
             backgroundColor={colors.accent}
           />
         </LeftColumn>
@@ -120,7 +84,7 @@ const DriverPackageDetails = () => {
           <StatusCard
             IconName="solidWhiteTemp"
             IconSize="sm"
-            label={formattedTemperature}
+            label={temp}
             labelColor="accent"
             Type="temperature"
             backgroundColor={colors.blueLines}
