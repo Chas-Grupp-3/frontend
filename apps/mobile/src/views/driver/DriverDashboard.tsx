@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { filterOptions } from "../../utils/dashboardUtils";
 import { usePackagesContext } from "../../context/packages/usePackagesContext";
-import DashboardContent from "../../components/DashboardContent";
+import DashboardContent from "../../components/Dashboard/DashboardContent";
 
 const Dashboard = () => {
   const {
