@@ -1,12 +1,23 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import L from "leaflet";
-import { Icon } from "@chas/ui";
-import ReactDOMServer from "react-dom/server";
 import { useLocationContext } from "../../context/location/useLocationContext";
+import Map from "../../components/Map/Map";
+import { usePackagesContext } from "../../context/packages/usePackagesContext";
+import { Marker, Popup } from "react-leaflet";
+import {
+  greenPinIcon,
+  yellowPinIcon,
+  redPinIcon,
+} from "../../components/Map/MapPinIcons";
+import { Text } from "@chas/ui";
+import {
+  getStatusIndicators,
+  formattedTemperature,
+} from "../../utils/driverPackagesUtils";
 
 const DriverMap = () => {
   const { coords, isGeolocationAvailable, isGeolocationEnabled } =
     useLocationContext();
+  const { data } = usePackagesContext();
+  console.log("Packages Data:", data);
 
   if (!isGeolocationAvailable) {
     return <div>Your browser does not support Geolocation</div>;
@@ -18,38 +29,80 @@ const DriverMap = () => {
     return <div>Getting the location data&hellip; </div>;
   }
 
-  const iconHtml = ReactDOMServer.renderToStaticMarkup(
-    <Icon name="truckLeft" size="md" />
-  );
-
-  const markerIcon = L.divIcon({
-    html: iconHtml,
-    className: "my-leaflet-div-icon",
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-  });
+  const pins = data
+    ?.filter(
+      (pkg) =>
+        pkg.destination &&
+        pkg.destination.latitude != null &&
+        pkg.destination.longitude != null
+    )
+    .map((pkg) => ({
+      ...pkg,
+      lat: pkg.destination!.latitude,
+      lng: pkg.destination!.longitude,
+    }));
 
   return (
     <div className="page">
-      <MapContainer
-        center={[coords.latitude, coords.longitude]}
-        zoom={13}
-        scrollWheelZoom={false}
-        style={{ height: "100%", width: "100%", overflow: "hidden" }}
+      <Map
+        latitude={coords.latitude}
+        longitude={coords.longitude}
+        mapHeight="100%"
+        mapWidth="100%"
+        truckLatitude={coords.latitude}
+        truckLongitude={coords.longitude}
+        zoom={15}
+        pins={[{ lat: coords.latitude, lng: coords.longitude }]}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker
-          position={[coords.latitude, coords.longitude]}
-          icon={markerIcon}
-        >
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
+        {pins &&
+          pins.map((pin, index) => {
+            const { pin: pinIcon } = getStatusIndicators(
+              pin.delivered,
+              Number(pin.temperature),
+              Number(pin.humidity),
+              pin.arrival_date,
+              {
+                maxTemp: Number(pin.thresholds.maxTemp),
+                minTemp: Number(pin.thresholds.minTemp),
+                maxHumidity: Number(pin.thresholds.maxHumidity),
+                minHumidity: Number(pin.thresholds.minHumidity),
+              }
+            );
+
+            const icon =
+              pinIcon === "red"
+                ? redPinIcon
+                : pinIcon === "yellow"
+                  ? yellowPinIcon
+                  : greenPinIcon;
+
+            return (
+              <Marker key={index} position={[pin.lat, pin.lng]} icon={icon}>
+                <Popup>
+                  <Text>Address: {pin.destination.address}</Text>
+                  <Text>
+                    Current Temp: {formattedTemperature(pin.temperature)}
+                    <br />
+                    Current Humidity: {pin.humidity}%
+                  </Text>
+                  {pin.thresholds && (
+                    <>
+                      <Text>Thresholds:</Text>
+                      <Text>
+                        Temp: {pin.thresholds.minTemp}°C -{" "}
+                        {pin.thresholds.maxTemp}
+                        °C
+                        <br />
+                        Humidity: {pin.thresholds.minHumidity}% -{" "}
+                        {pin.thresholds.maxHumidity}%
+                      </Text>
+                    </>
+                  )}
+                </Popup>
+              </Marker>
+            );
+          })}
+      </Map>
     </div>
   );
 };
