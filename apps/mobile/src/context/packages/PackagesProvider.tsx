@@ -14,7 +14,7 @@ interface PackagesProviderProps {
 
 export const PackagesProvider: React.FC<PackagesProviderProps> = ({
   children,
-  pollIntervalMs = 30000, // Default 30s polling
+  pollIntervalMs = null, // Default 30s polling
 }) => {
   const packagesHook = usePackages({ pollIntervalMs });
 
