@@ -66,7 +66,6 @@ export const formatDate = (dateString: string | undefined): string => {
 };
 
 export const mapBackendPackageToCardInfo = (pkg: BackendPackage): CardInfo => {
-  console.log("Mapping package:", pkg);
   const id = pkg.package_id;
   const packageId = String(id);
 
@@ -88,7 +87,7 @@ export const mapBackendPackageToCardInfo = (pkg: BackendPackage): CardInfo => {
     }
   }
 
-  const threshold = 5;
+  const threshold = parseNumber(pkg.thresholds?.maxTemp) ?? 5;
 
   const cardInfo: CardInfo = {
     id,
