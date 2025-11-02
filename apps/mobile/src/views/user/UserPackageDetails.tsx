@@ -44,6 +44,7 @@ const UserPackageDetails = () => {
     arrival_date: arrivalDate,
     thresholds,
     location: packageLocation,
+    delivered,
   } = packageData as BackendPackage;
 
   const formattedTemperature = Number.isFinite(Number(temperature))
@@ -63,17 +64,22 @@ const UserPackageDetails = () => {
           {sender || "Unknown Sender"}
         </Text>
       </Header>
-      //TODO: dont show map if no location data or if delivered
       <MapSection>
-        <Map
-          latitude={coords.latitude}
-          longitude={coords.longitude}
-          mapHeight="16rem"
-          mapWidth="100%"
-          truckLatitude={packageLocation.latitude}
-          truckLongitude={packageLocation.longitude}
-          zoom={16}
-        />
+        {delivered ? (
+          <TextSection>
+            <Text>Package has been delivered</Text>
+          </TextSection>
+        ) : (
+          <Map
+            latitude={coords.latitude}
+            longitude={coords.longitude}
+            mapHeight="16rem"
+            mapWidth="100%"
+            truckLatitude={packageLocation.latitude}
+            truckLongitude={packageLocation.longitude}
+            zoom={16}
+          />
+        )}
       </MapSection>
       <DetailsSection>
         <StatusCardRow>
@@ -104,8 +110,10 @@ const UserPackageDetails = () => {
           </Text>
         </Details>
         <Text> Latest arrival: {formattedArrivalDate || "Unknown date"}</Text>
-        <Button onClick={handleClick}>
-          Open QR scanner to mark as delivered
+        <Button disabled={delivered} onClick={handleClick}>
+          {delivered
+            ? "Package Delivered"
+            : "Open QR scanner to mark as delivered"}
         </Button>
       </DetailsSection>
     </Container>
@@ -137,6 +145,13 @@ const MapSection = styled.div`
   gap: 1.5rem;
   background-color: ${colors.blueBackground};
   border-bottom: 2px solid ${colors.secondary};
+  min-height: 16rem;
+`;
+const TextSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
 
 const StatusCardRow = styled.div`
