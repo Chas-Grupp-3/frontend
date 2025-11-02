@@ -1,18 +1,16 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { mapBackendPackageToCardInfo } from "../utils/cardUtils";
 import { packageService } from "../services/packageService";
 import { isApiError } from "../types/apiTypes";
-import type { CardInfo, BackendPackage } from "../types/packageTypes";
+import type { BackendPackage } from "../types/packageTypes";
 
 type UsePackagesOptions = {
   pollIntervalMs?: number | null; // null = no polling
-  defaultThreshold?: number;
 };
 
 type UsePackagesResult = {
-  mappedData: CardInfo[] | null;
   data: BackendPackage[] | null;
   loading: boolean;
+  isRefreshing: boolean;
   error: Error | null;
   refresh: () => void;
 };
@@ -22,20 +20,34 @@ export function usePackages(
 ): UsePackagesResult {
   const { pollIntervalMs = null } = options;
 
-  const [mappedData, setMappedData] = useState<CardInfo[] | null>(null);
   const [data, setData] = useState<BackendPackage[] | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   const mountedRef = useRef(true);
   const abortRef = useRef<AbortController | null>(null);
+  const hasDataRef = useRef(false); // Track if we have data already
 
-  const fetchAndMap = useCallback(async () => {
+  const isAbortError = (err: unknown): boolean => {
+    return (
+      (err as Error)?.name === "AbortError" ||
+      (err as Error)?.message?.includes("aborted")
+    );
+  };
+
+  const fetchPackages = useCallback(async () => {
+    // Cancel any pending requests
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
 
-    setLoading(true);
+    // If we already have data, this is a refresh (not initial load)
+    if (hasDataRef.current) {
+      setIsRefreshing(true);
+    } else {
+      setLoading(true);
+    }
     setError(null);
 
     try {
@@ -47,51 +59,55 @@ export function usePackages(
         throw new Error(result.message || "Failed to fetch packages");
       }
 
-      const mapped = result.map((pkg: BackendPackage) =>
-        mapBackendPackageToCardInfo(pkg)
-      );
-
+      // Only update state if component is still mounted
       if (!mountedRef.current) return;
-      setMappedData(mapped);
+
       setData(result);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
+      hasDataRef.current = true; // Mark that we now have data
+    } catch (err: unknown) {
       if (!mountedRef.current) return;
 
-      if (err?.name === "AbortError" || err?.message?.includes("aborted"))
-        return;
+      // Ignore abort errors - they're intentional
+      if (isAbortError(err)) return;
 
-      setError(err instanceof Error ? err : new Error(String(err)));
-      setMappedData(null);
+      const errorMessage = err instanceof Error ? err : new Error(String(err));
+      setError(errorMessage);
       setData(null);
     } finally {
-      if (mountedRef.current) setLoading(false);
+      if (mountedRef.current) {
+        setLoading(false);
+        setIsRefreshing(false);
+      }
     }
   }, []);
 
   const refresh = useCallback(() => {
-    void fetchAndMap();
-  }, [fetchAndMap]);
+    void fetchPackages();
+  }, [fetchPackages]);
 
   useEffect(() => {
     mountedRef.current = true;
-    void fetchAndMap();
 
+    // Initial fetch
+    void fetchPackages();
+
+    // Setup polling if enabled
     let intervalId: number | undefined;
-
     if (pollIntervalMs && pollIntervalMs > 0) {
       intervalId = window.setInterval(() => {
-        void fetchAndMap();
+        void fetchPackages();
       }, pollIntervalMs);
     }
 
+    // Cleanup
     return () => {
       mountedRef.current = false;
       abortRef.current?.abort();
-      if (intervalId) clearInterval(intervalId);
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
     };
-  }, [fetchAndMap, pollIntervalMs]);
+  }, [fetchPackages, pollIntervalMs]);
 
-  return { mappedData, data, loading, error, refresh };
+  return { data, loading, isRefreshing, error, refresh };
 }
