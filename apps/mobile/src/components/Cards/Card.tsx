@@ -35,6 +35,8 @@ const Card = ({
 
   const statusText = getStatusText(deliveryStatus, temperature, threshold);
 
+  const ariaLabel = `Paket ${title}, temperatur ${temperature} grader${humidity ? `, luftfuktighet ${humidity} procent` : ""}, status ${statusText}${ETA ? `, ankomst ${ETA}` : ""}`;
+
   return variant === "large" ? (
     <LargeCard
       title={title}
@@ -46,6 +48,8 @@ const Card = ({
       textColor={textColor}
       statusText={statusText}
       onClick={onClick}
+      aria-label={ariaLabel}
+      aria-describedby={`card-details-${id}`}
     />
   ) : (
     <SmallCard
@@ -56,6 +60,8 @@ const Card = ({
       textColor={textColor}
       statusText={statusText}
       onClick={onClick}
+      aria-label={ariaLabel}
+      aria-describedby={`card-details-${id}`}
     />
   );
 };
