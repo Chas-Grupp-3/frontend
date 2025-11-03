@@ -29,27 +29,52 @@ const LargeCard = ({
   ...rest
 }: CardProps) => {
   return (
-    <StyledCard onClick={onClick} {...rest}>
-      <FlexRow>
-        <Text variant="h1">{title}</Text>
-        <Pill $backgroundColor={backgroundColor}>
+    <StyledCard
+      onClick={onClick}
+      {...rest}
+      role="article"
+      aria-label={`Paket ${title}, temperatur ${temperature} grader${humidity ? `, luftfuktighet ${humidity} procent` : ""}, status ${statusText}`}
+      tabIndex={0}
+      aria-describedby={`card-content-${id}`}
+    >
+      <FlexRow role="group" aria-label="Paketrubrik och status">
+        <Text variant="h1" aria-label={`Paketnamn: ${title}`}>
+          {title}
+        </Text>
+        <Pill
+          $backgroundColor={backgroundColor}
+          role="status"
+          aria-label={`Paketstatus: ${statusText}`}
+        >
           <Text variant="body-smBold" color={textColor}>
             {statusText}
           </Text>
         </Pill>
       </FlexRow>
-      <FlexRow>
-        <Temperature>
-          <Icon name="smallTemp" size="sm" />
+      <FlexRow
+        role="group"
+        aria-label="Paketinformation"
+        id={`card-content-${id}`}
+      >
+        <Temperature
+          role="group"
+          aria-label={`Temperatur: ${temperature} grader`}
+        >
+          <Icon name="smallTemp" size="sm" aria-hidden="true" />
           <Text variant="body-lg">{temperature}°</Text>
         </Temperature>
-        <Temperature>
-          <Icon name="humidity" size="sm" />
+        <Temperature
+          role="group"
+          aria-label={`Luftfuktighet: ${humidity} procent`}
+        >
+          <Icon name="humidity" size="sm" aria-hidden="true" />
           <Text variant="body-lg">{humidity}%</Text>
         </Temperature>
-        <PackageInfo>
-          <Text variant="body-sm">ETA: {ETA}</Text>
-          <Text variant="body-sm">
+        <PackageInfo role="group" aria-label="Leveransinformation">
+          <Text variant="body-sm" aria-label={`Beräknad ankomst: ${ETA}`}>
+            ETA: {ETA}
+          </Text>
+          <Text variant="body-sm" aria-label={`Paket-ID: ${id}`}>
             ID: <Ellipsis>{id}</Ellipsis>
           </Text>
         </PackageInfo>
