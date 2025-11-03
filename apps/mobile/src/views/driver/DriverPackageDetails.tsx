@@ -1,9 +1,9 @@
 import { Button, Modal, Text } from "@chas/ui";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import styled from "styled-components";
 import { colors } from "@chas/ui";
 import StatusCard from "../../components/StatusCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QRModal from "../../components/modals/QRModal";
 import { formatDate } from "../../utils/cardUtils";
 import type { BackendPackage } from "../../types/packageTypes";
@@ -11,17 +11,63 @@ import {
   getStatusIndicators,
   formattedTemperature,
 } from "../../utils/driverPackagesUtils";
+import { packageService } from "../../services/packageService";
+import { ClipLoader } from "react-spinners";
 
 const DriverPackageDetails = () => {
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
   const location = useLocation();
-  const { packageData } = location.state || {};
+  const { id } = useParams<{ id: string }>();
 
-  if (!packageData) {
+  // Initialize with state data if available, otherwise null
+  const [packageData, setPackageData] = useState<BackendPackage | null>(
+    location.state?.packageData || null
+  );
+  const [loading, setLoading] = useState(!location.state?.packageData);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPackage = async () => {
+      if (!id) return;
+
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await packageService.fetchPackageById(id);
+
+        if ("success" in result && !result.success) {
+          setError(result.message || "Failed to fetch package");
+          setPackageData(null);
+        } else {
+          setPackageData(result as BackendPackage);
+        }
+      } catch (err) {
+        setError("An unexpected error occurred");
+        console.error("Error fetching package:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPackage();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <Container className="page">
+        <LoadingContainer>
+          <ClipLoader size={64} color={colors.primary} />
+          <Text>Loading package details...</Text>
+        </LoadingContainer>
+      </Container>
+    );
+  }
+
+  if (error || !packageData) {
     return (
       <Modal isOpen={true} onClose={() => {}}>
-        <Text variant="h2">No package data available.</Text>
+        <Text variant="h2">{error || "No package data available."}</Text>
       </Modal>
     );
   }
@@ -35,7 +81,7 @@ const DriverPackageDetails = () => {
     destination,
     arrival_date: arrivalDate,
     thresholds,
-  } = packageData as BackendPackage;
+  } = packageData;
 
   const tempValue = Number(temperature);
   const humidityValue = Number(humidity);
@@ -132,6 +178,15 @@ export default DriverPackageDetails;
 
 const Container = styled.div`
   background-color: ${colors.background};
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
 `;
 
 const Header = styled.div`

@@ -1,5 +1,5 @@
 import { Text, Button } from "@chas/ui";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import StatusCard from "../../components/StatusCard";
 import styled from "styled-components";
 import { colors } from "@chas/ui";
@@ -8,13 +8,50 @@ import type { BackendPackage } from "../../types/packageTypes";
 import { useAuthContext } from "../../context/auth/useAuthContext";
 import Map from "../../components/Map/Map";
 import { useLocationContext } from "../../context/location/useLocationContext";
+import { packageService } from "../../services/packageService";
+import { useState, useEffect } from "react";
+import { ClipLoader } from "react-spinners";
 
 const UserPackageDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
   const { role } = useAuthContext();
   const { coords, isGeolocationAvailable, isGeolocationEnabled } =
     useLocationContext();
+
+  // Initialize with state data if available, otherwise null
+  const [packageData, setPackageData] = useState<BackendPackage | null>(
+    location.state?.packageData || null
+  );
+  const [loading, setLoading] = useState(!location.state?.packageData);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPackage = async () => {
+      if (!id) return;
+
+      try {
+        setLoading(true);
+        setError(null);
+        const result = await packageService.fetchPackageById(id);
+
+        if ("success" in result && !result.success) {
+          setError(result.message || "Failed to fetch package");
+          setPackageData(null);
+        } else {
+          setPackageData(result as BackendPackage);
+        }
+      } catch (err) {
+        setError("An unexpected error occurred");
+        console.error("Error fetching package:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPackage();
+  }, [id]);
 
   if (!isGeolocationAvailable) {
     return <div>Your browser does not support Geolocation</div>;
@@ -26,15 +63,27 @@ const UserPackageDetails = () => {
     return <div>Getting the location data&hellip; </div>;
   }
 
-  const { packageData } = location.state || {};
-  console.log("Package Data:", packageData);
-  if (!packageData) {
+  if (loading) {
     return (
-      <div>
-        <Text variant="h2">No package data available.</Text>
-      </div>
+      <Container className="page">
+        <LoadingContainer>
+          <ClipLoader size={64} color={colors.primary} />
+          <Text>Loading package details...</Text>
+        </LoadingContainer>
+      </Container>
     );
   }
+
+  if (error || !packageData) {
+    return (
+      <Container className="page">
+        <ErrorContainer>
+          <Text variant="h2">{error || "No package data available."}</Text>
+        </ErrorContainer>
+      </Container>
+    );
+  }
+
   const {
     temperature,
     humidity,
@@ -45,7 +94,7 @@ const UserPackageDetails = () => {
     thresholds,
     location: packageLocation,
     delivered,
-  } = packageData as BackendPackage;
+  } = packageData;
 
   const formattedTemperature = Number.isFinite(Number(temperature))
     ? `${Number(temperature).toFixed(1)}°C`
@@ -124,6 +173,24 @@ export default UserPackageDetails;
 
 const Container = styled.div`
   background-color: ${colors.background};
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+`;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 2rem;
 `;
 
 const Header = styled.div`
