@@ -84,7 +84,7 @@ const ScanModal = ({
           )
         ) : status === "error" ? (
           <>
-            <Text variant="h1" role="alert" aria-live="assertive">
+            <Text variant="h1" aria-live="assertive">
               No QR Code Found
             </Text>
             <Text aria-label="Error message: Couldn't detect a valid QR code. Please try again or make sure the QR code is clear and well-lit">
