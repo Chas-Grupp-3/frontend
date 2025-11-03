@@ -1,6 +1,10 @@
 import SmallCard from "./SmallCard";
 import LargeCard from "./LargeCard";
-import { getCardColor, getStatusText } from "../../utils/cardUtils";
+import {
+  getCardIssues,
+  getCardColor,
+  getStatusText,
+} from "../../utils/cardUtils";
 
 type CardVariant = "small" | "large";
 
@@ -8,7 +12,7 @@ interface CardProps {
   variant?: CardVariant;
   title: string;
   temperature: number;
-  humidity?: number;
+  humidity: number;
   deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
@@ -24,16 +28,11 @@ const Card = ({
   deliveryStatus,
   ETA,
   id,
-  threshold,
   onClick,
 }: CardProps) => {
-  const { backgroundColor, textColor } = getCardColor(
-    deliveryStatus,
-    temperature,
-    threshold
-  );
-
-  const statusText = getStatusText(deliveryStatus, temperature, threshold);
+  const issues = getCardIssues(deliveryStatus, temperature, humidity);
+  const { backgroundColor, textColor } = getCardColor(issues);
+  const statusText = getStatusText(issues);
 
   return variant === "large" ? (
     <LargeCard

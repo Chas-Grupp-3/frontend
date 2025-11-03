@@ -2,7 +2,7 @@ export type CardInfo = {
   id: number;
   title: string;
   temperature: number;
-  humidity?: number;
+  humidity: number;
   deliveryStatus: "delivered" | "on time" | "late";
   ETA?: string;
   packageId: string;

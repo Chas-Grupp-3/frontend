@@ -5,7 +5,7 @@ import { isApiError } from "../types/apiTypes";
 import type { CardInfo, BackendPackage } from "../types/packageTypes";
 
 type UsePackagesOptions = {
-  pollIntervalMs?: number | null; // null = no polling
+  pollIntervalMs?: number | null;
   defaultThreshold?: number;
 };
 
@@ -54,15 +54,15 @@ export function usePackages(
       if (!mountedRef.current) return;
       setMappedData(mapped);
       setData(result);
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (!mountedRef.current) return;
 
-      if (err?.name === "AbortError" || err?.message?.includes("aborted"))
+      const error = err as Error;
+
+      if (error?.name === "AbortError" || error?.message?.includes("aborted"))
         return;
 
-      setError(err instanceof Error ? err : new Error(String(err)));
+      setError(error instanceof Error ? error : new Error(String(err)));
       setMappedData(null);
       setData(null);
     } finally {

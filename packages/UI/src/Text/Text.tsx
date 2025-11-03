@@ -1,10 +1,10 @@
-import type { ReactNode } from "react";
+import type { ReactNode, HTMLAttributes } from "react";
 import styled from "styled-components";
 import { colors } from "../styles";
-import { textVariantsConfig, defaultElementMap } from "./textConfig";
+import { textVariantsConfig } from "./textConfig";
 import type { TextVariant } from "./textConfig";
 
-interface TextProps {
+interface TextProps extends HTMLAttributes<HTMLElement> {
   variant?: TextVariant;
   color?: keyof typeof colors;
   children: ReactNode;
@@ -26,19 +26,10 @@ export const Text = ({
   variant = "body",
   color = "blueText",
   children,
-  htmlFor,
   ...rest
 }: TextProps) => {
-  const element = defaultElementMap[variant];
-
   return (
-    <StyledText
-      as={element}
-      $variant={variant}
-      $color={color}
-      htmlFor={htmlFor}
-      {...rest}
-    >
+    <StyledText $variant={variant} $color={color} {...rest}>
       {children}
     </StyledText>
   );

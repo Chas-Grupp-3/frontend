@@ -13,28 +13,37 @@ import {
 } from "../../utils/dashboardUtils";
 import { usePackages } from "../../hooks/usePackages";
 import { ClipLoader } from "react-spinners";
+import { getHardcodedCards, sortCardsByPriority } from "../../utils/cardUtils";
 
 const Dashboard = () => {
-  const {
-    data: packagesData,
-    mappedData: mappedPackagesData,
-    loading,
-    refresh,
-  } = usePackages({ pollIntervalMs: null, defaultThreshold: 10 });
+  const { loading, refresh } = usePackages({
+    pollIntervalMs: null,
+    defaultThreshold: 10,
+  });
   const [selectedFilter, setSelectedFilter] =
     useState<FilterOption["value"]>("all");
   const [searchTerm, setSearchTerm] = useState("");
 
   const navigate = useNavigate();
 
-  const mappedPackages: CardInfo[] = useMemo(
-    () => mappedPackagesData ?? [],
-    [mappedPackagesData]
-  );
-  const packages: BackendPackage[] = useMemo(
-    () => packagesData ?? [],
-    [packagesData]
-  );
+  const mappedPackages: CardInfo[] = useMemo(() => {
+    console.log("Using hardcoded cards for testing");
+    return sortCardsByPriority(getHardcodedCards());
+  }, []);
+
+  const packages: BackendPackage[] = useMemo(() => {
+    return mappedPackages.map(
+      (card) =>
+        ({
+          package_id: card.id,
+          sender: card.title,
+          temperature: String(card.temperature),
+          humidity: String(card.humidity),
+          delivered: card.deliveryStatus === "delivered",
+          arrival_date: card.ETA,
+        }) as BackendPackage
+    );
+  }, [mappedPackages]);
 
   const filteredPackages = useMemo(
     () => getFilteredCards(mappedPackages, selectedFilter, searchTerm),
@@ -53,53 +62,72 @@ const Dashboard = () => {
     count: counts[o.value] ?? 0,
   }));
 
+  console.log("Mapped packages:", mappedPackages);
+  console.log("Filtered packages:", filteredPackages);
+
   return (
     <DashboardContainer
       className="page"
       role="main"
-      aria-label="Driver dashboard for package management"
+      aria-label="Förardashboard för pakethantering"
     >
       <DashboardHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      <Centered role="region" aria-label="Filter packages">
+      <Centered role="region" aria-label="Filtrera försändelser">
         <Toggle
           name="filters"
           options={toggleOptions}
           value={selectedFilter}
           onChange={(v) => setSelectedFilter(v as FilterOption["value"])}
           iconSize="sm"
-          aria-label={`Filter: ${selectedFilter}`}
+          aria-label={`Aktuellt filter: ${selectedFilter}`}
         />
       </Centered>
 
-      <CardListContainer role="region" aria-label="List of packages">
+      <CardListContainer
+        role="region"
+        aria-label="Lista över försändelser"
+        aria-live="polite"
+        aria-busy={loading}
+      >
         {loading ? (
-          <Centered role="status" aria-label="Loading packages">
+          <Centered role="status" aria-label="Laddar försändelser...">
             <ClipLoader size={64} color={colors.primary} />
           </Centered>
         ) : (
-          <CardList
-            cards={filteredPackages}
-            variant="large"
-            onCardClick={(packageId) => {
-              navigate(`package/${packageId}`, {
-                state: {
-                  packageData: packages.find(
-                    (pkg) => String(pkg.package_id) === String(packageId)
-                  ),
-                },
-              });
-            }}
-            aria-label={`${filteredPackages.length} packages`}
-          />
+          <>
+            <p>Antal kort: {filteredPackages.length}</p>
+            <CardList
+              cards={filteredPackages}
+              variant="large"
+              onCardClick={(packageId) => {
+                console.log("Clicked package:", packageId);
+                navigate(`package/${packageId}`, {
+                  state: {
+                    packageData: packages.find(
+                      (pkg) => String(pkg.package_id) === String(packageId)
+                    ),
+                  },
+                });
+              }}
+              aria-label={`${filteredPackages.length} försändelser`}
+            />
+          </>
         )}
       </CardListContainer>
 
-      <Centered role="region" aria-label="Dashboard actions">
+      <Centered role="region" aria-label="Dashboard-åtgärder">
         <Button
-          onClick={refresh}
+          onClick={() => {
+            console.log("Refresh clicked");
+            refresh();
+          }}
           disabled={loading}
-          aria-label={loading ? "Updating..." : "Update packages"}
+          aria-label={
+            loading
+              ? "Uppdaterar försändelser, vänta..."
+              : "Uppdatera listan med försändelser"
+          }
         >
           {loading ? "Refreshing…" : "Refresh"}
         </Button>

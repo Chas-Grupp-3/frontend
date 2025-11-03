@@ -26,6 +26,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       rest.defaultValue || rest.value || ""
     );
     const inputId = id || `input-${Math.random().toString(36).slice(2, 9)}`;
+    const hintId = `${inputId}-hint`;
+    const errorId = `${inputId}-error`;
 
     const hasValue = Boolean(
       rest.value !== undefined
@@ -41,7 +43,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     };
 
     return (
-      <InputWrapper>
+      <InputWrapper role="group">
         <InputContainer>
           <StyledInput
             id={inputId}
@@ -52,6 +54,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             onBlur={() => setFocused(false)}
             onChange={handleChange}
             aria-invalid={!!error}
+            aria-describedby={error ? errorId : hint ? hintId : undefined}
+            aria-required={rest.required}
             {...rest}
           />
           {label && (
@@ -66,9 +70,13 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         </InputContainer>
 
         <HintWrapper>
-          {error && <Text color="critical">{error}</Text>}
+          {error && (
+            <Text color="critical" id={errorId} role="alert">
+              {error}
+            </Text>
+          )}
           {!error && hint && (
-            <Text color="greyText" variant="body">
+            <Text color="greyText" variant="body" id={hintId}>
               {hint}
             </Text>
           )}
