@@ -17,8 +17,30 @@ export const QrButton = ({ size = "sm" }: QrButtonProps) => {
   };
 
   return (
-    <IconButton onClick={handleClick} aria-label="Open QR-scanner">
-      <Icon name="qrScan" size={size} />
+    <IconButton
+      onClick={handleClick}
+      aria-label="Open QR-scanner"
+      role="button"
+      aria-describedby="qr-button-description"
+      tabIndex={0}
+    >
+      <Icon
+        name="qrScan"
+        size={size}
+        aria-hidden="true"
+        alt="QR code scanner icon"
+      />
+      <span
+        id="qr-button-description"
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          width: "1px",
+          height: "1px",
+        }}
+      >
+        Click to open QR code scanner for package search
+      </span>
     </IconButton>
   );
 };
