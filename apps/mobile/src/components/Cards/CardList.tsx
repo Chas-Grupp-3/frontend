@@ -28,16 +28,16 @@ const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
   return (
     <StyledCardListContainer
       role="region"
-      aria-label={`Lista med ${cards.length} paket`}
+      aria-label={`List of ${cards.length} packages`}
       aria-live="polite"
     >
-      <StyledCardList role="list" aria-label="Paketlista">
+      <StyledCardList role="list" aria-label="Package list">
         {cards.map((card) => (
           <StyledLi
             key={card.id}
             $variant={variant}
             role="listitem"
-            aria-label={`Paket ${card.title}`}
+            aria-label={`Package ${card.title}`}
           >
             <Card
               variant={variant}

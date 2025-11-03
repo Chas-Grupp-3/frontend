@@ -33,18 +33,18 @@ const LargeCard = ({
       onClick={onClick}
       {...rest}
       role="article"
-      aria-label={`Paket ${title}, temperatur ${temperature} grader${humidity ? `, luftfuktighet ${humidity} procent` : ""}, status ${statusText}`}
+      aria-label={`Package ${title}, temperature ${temperature} degrees celsius${humidity ? `, humidity ${humidity} percent` : ""}, status ${statusText}`}
       tabIndex={0}
       aria-describedby={`card-content-${id}`}
     >
-      <FlexRow role="group" aria-label="Paketrubrik och status">
-        <Text variant="h1" aria-label={`Paketnamn: ${title}`}>
+      <FlexRow role="group" aria-label="Package title and status">
+        <Text variant="h1" aria-label={`Package name: ${title}`}>
           {title}
         </Text>
         <Pill
           $backgroundColor={backgroundColor}
           role="status"
-          aria-label={`Paketstatus: ${statusText}`}
+          aria-label={`Package status: ${statusText}`}
         >
           <Text variant="body-smBold" color={textColor}>
             {statusText}
@@ -53,28 +53,25 @@ const LargeCard = ({
       </FlexRow>
       <FlexRow
         role="group"
-        aria-label="Paketinformation"
+        aria-label="Package information"
         id={`card-content-${id}`}
       >
         <Temperature
           role="group"
-          aria-label={`Temperatur: ${temperature} grader`}
+          aria-label={`Temperature: ${temperature} degrees celsius`}
         >
           <Icon name="smallTemp" size="sm" aria-hidden="true" />
           <Text variant="body-lg">{temperature}°</Text>
         </Temperature>
-        <Temperature
-          role="group"
-          aria-label={`Luftfuktighet: ${humidity} procent`}
-        >
+        <Temperature role="group" aria-label={`Humidity: ${humidity} percent`}>
           <Icon name="humidity" size="sm" aria-hidden="true" />
           <Text variant="body-lg">{humidity}%</Text>
         </Temperature>
-        <PackageInfo role="group" aria-label="Leveransinformation">
-          <Text variant="body-sm" aria-label={`Beräknad ankomst: ${ETA}`}>
+        <PackageInfo role="group" aria-label="Delivery information">
+          <Text variant="body-sm" aria-label={`Estimated arrival: ${ETA}`}>
             ETA: {ETA}
           </Text>
-          <Text variant="body-sm" aria-label={`Paket-ID: ${id}`}>
+          <Text variant="body-sm" aria-label={`Package ID: ${id}`}>
             ID: <Ellipsis>{id}</Ellipsis>
           </Text>
         </PackageInfo>

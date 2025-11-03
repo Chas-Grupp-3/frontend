@@ -35,7 +35,7 @@ const Card = ({
 
   const statusText = getStatusText(deliveryStatus, temperature, threshold);
 
-  const ariaLabel = `Paket ${title}, temperatur ${temperature} grader${humidity ? `, luftfuktighet ${humidity} procent` : ""}, status ${statusText}${ETA ? `, ankomst ${ETA}` : ""}`;
+  const ariaLabel = `Package ${title}, temperature ${temperature} degrees${humidity ? `, humidity ${humidity} procent` : ""}, status ${statusText}${ETA ? `, arrival ${ETA}` : ""}`;
 
   return variant === "large" ? (
     <LargeCard
