@@ -30,7 +30,15 @@ const RequireAuth = ({ children, role }: RequireAuthProps) => {
   }, [loading, isAuthenticated, userRole, role, navigate, location]);
 
   if (loading) {
-    return <LoaderContainer>Loading…</LoaderContainer>;
+    return (
+      <LoaderContainer
+        role="status"
+        aria-label="Authentication loading"
+        aria-live="polite"
+      >
+        Loading…
+      </LoaderContainer>
+    );
   }
 
   if (!isAuthenticated) return null;
