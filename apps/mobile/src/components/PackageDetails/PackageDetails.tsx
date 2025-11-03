@@ -16,13 +16,23 @@ const PackageDetails = ({
   maxHumidity,
 }: PackageDetailsProps) => {
   return (
-    <Details>
-      <Text>Address: {address || "Unknown destination"}</Text>
-      <Text> Thresholds:</Text>
-      <Text variant="body-sm">
+    <Details role="region" aria-label="Package delivery information">
+      <Text
+        aria-label={`Delivery address: ${address || "Unknown destination"}`}
+      >
+        Address: {address || "Unknown destination"}
+      </Text>
+      <Text aria-label="Package threshold requirements">Thresholds:</Text>
+      <Text
+        variant="body-sm"
+        aria-label={`Temperature range: ${minTemp} to ${maxTemp} degrees celsius`}
+      >
         Temperature: {minTemp}°C - {maxTemp}°C
       </Text>
-      <Text variant="body-sm">
+      <Text
+        variant="body-sm"
+        aria-label={`Humidity range: ${minHumidity} to ${maxHumidity} percent`}
+      >
         Humidity: {minHumidity}% - {maxHumidity}%
       </Text>
     </Details>
