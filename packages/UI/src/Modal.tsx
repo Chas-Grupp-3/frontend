@@ -61,7 +61,16 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
 
   if (!isOpen) return null;
 
-  return <StyledDialog ref={dialogRef}>{children}</StyledDialog>;
+  return (
+    <StyledDialog
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Modal Dialog"
+    >
+      {children}
+    </StyledDialog>
+  );
 };
 
 const StyledDialog = styled.dialog`
