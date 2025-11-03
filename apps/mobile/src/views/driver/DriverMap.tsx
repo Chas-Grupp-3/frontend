@@ -1,18 +1,13 @@
-import { useGeolocated } from "react-geolocated";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import { Icon } from "@chas/ui";
 import ReactDOMServer from "react-dom/server";
-import { locationService } from "../../services/locationService";
+import { useLocationContext } from "../../context/location/useLocationContext";
 
 const DriverMap = () => {
   const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-    useGeolocated({
-      positionOptions: {
-        enableHighAccuracy: false,
-      },
-      userDecisionTimeout: 5000,
-    });
+    useLocationContext();
+
   if (!isGeolocationAvailable) {
     return <div>Your browser does not support Geolocation</div>;
   }
@@ -24,29 +19,18 @@ const DriverMap = () => {
   }
 
   const iconHtml = ReactDOMServer.renderToStaticMarkup(
-    <Icon name="truckRight" size="md" />
+    <Icon name="truckLeft" size="md" />
   );
 
   const markerIcon = L.divIcon({
     html: iconHtml,
-    className: "my-leaflet-div-icon", // override default .leaflet-div-icon styling as needed
+    className: "my-leaflet-div-icon",
     iconSize: [30, 30],
     iconAnchor: [15, 30],
   });
 
-  const updateLocation = () => {
-    if (coords) {
-      locationService.putCurrentLocation(
-        coords.latitude.toString(),
-        coords.longitude.toString()
-      );
-    }
-  };
-  // setInterval(updateLocation, 60000); // Update location every 60 seconds
-
   return (
     <div className="page">
-      <button onClick={updateLocation}>Update Location</button>
       <MapContainer
         center={[coords.latitude, coords.longitude]}
         zoom={13}
