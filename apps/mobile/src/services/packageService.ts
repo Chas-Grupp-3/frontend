@@ -5,19 +5,30 @@ import type { BackendPackage } from "../types/packageTypes";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const authItem = getItem(AUTH_KEY) as {
-  token?: string;
-  userId?: string;
-} | null;
-
-const JWT = authItem?.token;
-const userId = "2e983926-843c-4b03-984d-5549ae1b3806"; // test user
+const getAuthData = () => {
+  return getItem(AUTH_KEY) as {
+    token?: string;
+    userId?: string;
+  } | null;
+};
 
 export const packageService = {
   async fetchAllUserPackages(
     signal?: AbortSignal
   ): Promise<ApiResult<BackendPackage[]>> {
     try {
+      const authData = getAuthData();
+      const JWT = authData?.token;
+      const userId = authData?.userId;
+
+      if (!userId) {
+        const error: ApiError = {
+          success: false,
+          message: "User ID not found in authentication data",
+        };
+        return error;
+      }
+
       const response = await fetch(`${API_URL}/packages/${userId}`, {
         method: "GET",
         headers: {
@@ -58,6 +69,9 @@ export const packageService = {
     signal?: AbortSignal
   ): Promise<ApiResult<BackendPackage>> {
     try {
+      const authData = getAuthData();
+      const JWT = authData?.token;
+
       const response = await fetch(`${API_URL}/packages/package/${packageId}`, {
         method: "GET",
         headers: {
@@ -96,6 +110,9 @@ export const packageService = {
     packageId: string
   ): Promise<ApiResult<BackendPackage>> {
     try {
+      const authData = getAuthData();
+      const JWT = authData?.token;
+
       const response = await fetch(
         `${API_URL}/packages/delivered/${packageId}`,
         {
@@ -113,7 +130,6 @@ export const packageService = {
       }
 
       const data = await response.json();
-      console.log("Delivery Response Data:", data);
       return data;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {

@@ -5,7 +5,7 @@ import { colors, radius, textMobile, textWeb } from "./styles";
 import { Text } from "./Text/Text";
 
 type InputVariant = "default" | "error" | "success";
-type InputSize = "sm" | "md" | "lg";
+type InputSize = "sm" | "md" | "lg" | "search";
 
 interface TextInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -95,6 +95,11 @@ const sizeStyles: Record<InputSize, ReturnType<typeof css>> = {
     font-size: ${textWeb.body.lg};
     padding: 12px 16px;
     border-radius: ${radius.input};
+  `,
+  search: css`
+    font-size: ${textWeb.body.md};
+    padding: 8px 12px;
+    border-radius: ${radius.box};
   `,
 };
 

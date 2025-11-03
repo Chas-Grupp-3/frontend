@@ -63,6 +63,7 @@ const StyledCardListContainer = styled.section`
   overflow-y: auto;
   overflow-x: hidden;
   min-height: 0;
+  flex: 1;
 `;
 
 const StyledCardList = styled.ul`

@@ -1,110 +1,45 @@
-import { useNavigate } from "react-router";
-import { useState, useMemo } from "react";
 import styled from "styled-components";
-import CardList from "../../components/Cards/CardList";
-import type { BackendPackage, CardInfo } from "../../types/packageTypes";
-import DashboardHeader from "../../components/DashboardHeader";
-import { Button, Toggle, colors } from "@chas/ui";
-import {
-  filterOptions,
-  getFilterCounts,
-  getFilteredCards,
-  type FilterOption,
-} from "../../utils/dashboardUtils";
-import { usePackages } from "../../hooks/usePackages";
-import { ClipLoader } from "react-spinners";
+import { filterOptions } from "../../utils/dashboardUtils";
+import { usePackagesContext } from "../../context/packages/usePackagesContext";
+import DashboardContent from "../../components/Dashboard/DashboardContent";
 
 const Dashboard = () => {
   const {
-    data: packagesData,
-    mappedData: mappedPackagesData,
     loading,
-    refresh,
-  } = usePackages({ pollIntervalMs: null, defaultThreshold: 10 });
-  const [selectedFilter, setSelectedFilter] =
-    useState<FilterOption["value"]>("all");
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const navigate = useNavigate();
-
-  const mappedPackages: CardInfo[] = useMemo(
-    () => mappedPackagesData ?? [],
-    [mappedPackagesData]
-  );
-  const packages: BackendPackage[] = useMemo(
-    () => packagesData ?? [],
-    [packagesData]
-  );
-
-  const filteredPackages = useMemo(
-    () => getFilteredCards(mappedPackages, selectedFilter, searchTerm),
-    [mappedPackages, selectedFilter, searchTerm]
-  );
-
-  const counts = useMemo(
-    () => getFilterCounts(mappedPackages),
-    [mappedPackages]
-  );
+    isRefreshing,
+    selectedFilter,
+    setSelectedFilter,
+    searchTerm,
+    setSearchTerm,
+    filteredPackages,
+    filterCounts,
+    getPackageById,
+  } = usePackagesContext();
 
   const toggleOptions = filterOptions.map((o) => ({
     value: o.value,
     label: o.value,
     icon: o.icon,
-    count: counts[o.value] ?? 0,
+    count: filterCounts[o.value] ?? 0,
   }));
 
   return (
     <DashboardContainer
       className="page"
       role="main"
-      aria-label="Customer dashboard for package management"
+      aria-label="Driver dashboard for package management"
     >
-      <DashboardHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <Centered role="region" aria-label="Filter packages">
-        <Toggle
-          name="filters"
-          options={toggleOptions}
-          value={selectedFilter}
-          onChange={(v) => setSelectedFilter(v as FilterOption["value"])}
-          iconSize="sm"
-          aria-label={`Current filter: ${selectedFilter}`}
-        />
-      </Centered>
-      <CardListContainer
-        role="region"
-        aria-label="List of packages"
-        aria-live="polite"
-      >
-        {loading ? (
-          <Centered role="status" aria-label="Loading packages">
-            <ClipLoader size={64} color={colors.primary} />
-          </Centered>
-        ) : (
-          <CardList
-            cards={filteredPackages}
-            variant="small"
-            onCardClick={(packageId) => {
-              navigate(`package/${packageId}`, {
-                state: {
-                  packageData: packages.find(
-                    (pkg) => String(pkg.package_id) === String(packageId)
-                  ),
-                },
-              });
-            }}
-            aria-label={`${filteredPackages.length} packages`}
-          />
-        )}
-      </CardListContainer>
-      <Centered role="region" aria-label="Update packages">
-        <Button
-          onClick={refresh}
-          disabled={loading}
-          aria-label={loading ? "Updating..." : "Update package list"}
-        >
-          {loading ? "Refreshing…" : "Refresh"}
-        </Button>
-      </Centered>
+      <DashboardContent
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectedFilter={selectedFilter}
+        setSelectedFilter={setSelectedFilter}
+        filteredPackages={filteredPackages}
+        loading={loading}
+        isRefreshing={isRefreshing}
+        getPackageById={getPackageById}
+        toggleOptions={toggleOptions}
+      />
     </DashboardContainer>
   );
 };
@@ -116,17 +51,4 @@ const DashboardContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
   height: calc(100vh - 80px);
-`;
-const Centered = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CardListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  padding: 0 1rem;
-  padding-bottom: 1rem;
 `;

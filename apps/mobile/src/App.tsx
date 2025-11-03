@@ -7,11 +7,13 @@ import AuthProvider from "./context/auth/AuthProvider";
 import Navigation from "./components/Navigation";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { useAuthContext } from "./context/auth/useAuthContext";
+import LocationProvider from "./context/location/LocationProvider";
+import { PackagesProvider } from "./context/packages/PackagesProvider";
 
 const AppContent = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
-  const { role } = useAuthContext();
+  const { role, isAuthenticated } = useAuthContext(); // Add isAuthenticated
 
   const base = role ? `/${role}` : "";
 
@@ -19,9 +21,11 @@ const AppContent = () => {
 
   // Use pattern-based check
   const shouldHideNav =
+    !isAuthenticated || // Hide nav if not authenticated
     hideNavRoutes.some((pattern) =>
       matchPath({ path: pattern, end: false }, location.pathname)
-    ) || location.pathname.startsWith(`${base}/package/`);
+    ) ||
+    location.pathname.startsWith(`${base}/package/`);
 
   const allRoutes = [...PublicRoutes, ...DriverRoutes, ...UserRoutes];
   const element = useRoutes(allRoutes);
@@ -46,7 +50,11 @@ const AppContent = () => {
 
 const App = () => (
   <AuthProvider>
-    <AppContent />
+    <LocationProvider>
+      <PackagesProvider>
+        <AppContent />
+      </PackagesProvider>
+    </LocationProvider>
   </AuthProvider>
 );
 
