@@ -1,47 +1,27 @@
 import SmallCard from "./SmallCard";
 import LargeCard from "./LargeCard";
 import { getCardColor, getStatusText } from "../../utils/cardUtils";
+import type { CardInfo } from "../../types/packageTypes";
 
 type CardVariant = "small" | "large";
 
 interface CardProps {
   variant?: CardVariant;
-  title: string;
-  temperature: number;
-  humidity?: number;
-  deliveryStatus: "delivered" | "late" | "on time";
-  ETA?: string;
-  id: string;
-  threshold: number;
+  card: CardInfo;
   onClick: () => void;
 }
 
-const Card = ({
-  variant = "large",
-  title,
-  temperature,
-  humidity,
-  deliveryStatus,
-  ETA,
-  id,
-  threshold,
-  onClick,
-}: CardProps) => {
-  const { backgroundColor, textColor } = getCardColor(
-    deliveryStatus,
-    temperature,
-    threshold
-  );
-
-  const statusText = getStatusText(deliveryStatus, temperature, threshold);
+const Card = ({ variant = "large", card, onClick }: CardProps) => {
+  const { backgroundColor, textColor } = getCardColor(card);
+  const statusText = getStatusText(card);
 
   return variant === "large" ? (
     <LargeCard
-      title={title}
-      temperature={temperature}
-      humidity={humidity}
-      id={id}
-      ETA={ETA}
+      title={card.title}
+      temperature={card.temperature}
+      humidity={card.humidity}
+      id={card.packageId}
+      ETA={card.ETA}
       backgroundColor={backgroundColor}
       textColor={textColor}
       statusText={statusText}
@@ -49,9 +29,9 @@ const Card = ({
     />
   ) : (
     <SmallCard
-      title={title}
-      temperature={temperature}
-      id={id}
+      title={card.title}
+      temperature={card.temperature}
+      id={card.packageId}
       backgroundColor={backgroundColor}
       textColor={textColor}
       statusText={statusText}

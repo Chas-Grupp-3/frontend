@@ -18,7 +18,6 @@ const listVariantsConfig = {
     flex: 1 1 100%;
     max-width: 100%;
   `,
-
   small: css`
     flex: 0 0 calc(50% - 0.5rem);
   `,
@@ -32,13 +31,7 @@ const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
           <StyledLi key={card.id} $variant={variant}>
             <Card
               variant={variant}
-              title={card.title}
-              temperature={card.temperature}
-              humidity={card.humidity}
-              deliveryStatus={card.deliveryStatus}
-              ETA={card.ETA}
-              id={card.packageId}
-              threshold={card.threshold}
+              card={card}
               onClick={() => {
                 onCardClick?.(card.packageId);
               }}
