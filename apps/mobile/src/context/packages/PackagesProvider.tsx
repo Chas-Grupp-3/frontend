@@ -1,7 +1,10 @@
 import React, { useCallback, useMemo, useState } from "react";
 import { usePackages } from "../../hooks/usePackages";
 import { packageService } from "../../services/packageService";
-import { mapBackendPackageToCardInfo } from "../../utils/cardUtils";
+import {
+  mapBackendPackageToCardInfo,
+  sortPackages,
+} from "../../utils/cardUtils";
 import PackagesContext from "./PackagesContext";
 import type { PackagesContextType } from "./PackagesContext";
 import type { FilterOption } from "../../utils/dashboardUtils";
@@ -23,10 +26,11 @@ export const PackagesProvider: React.FC<PackagesProviderProps> = ({
     useState<FilterOption["value"]>("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Map backend data to card info
+  // Map backend data to card info and sort (delivered at bottom)
   const mappedData = useMemo(() => {
     if (!packagesHook.data) return null;
-    return packagesHook.data.map(mapBackendPackageToCardInfo);
+    const mapped = packagesHook.data.map(mapBackendPackageToCardInfo);
+    return sortPackages(mapped);
   }, [packagesHook.data]);
 
   // Mark package as delivered
