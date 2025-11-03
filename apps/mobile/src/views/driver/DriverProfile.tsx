@@ -3,7 +3,12 @@ import ProfileHeader from "../../components/Profile/ProfileHeader";
 
 const Profile = () => {
   return (
-    <div className="page">
+    <div
+      className="page"
+      role="main"
+      aria-labelledby="page-title"
+      aria-describedby="page-description"
+    >
       <ProfileHeader />
       <ProfileInfo />
     </div>
