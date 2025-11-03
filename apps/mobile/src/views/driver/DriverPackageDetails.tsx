@@ -1,4 +1,4 @@
-import { Button, Modal, Text } from "@chas/ui";
+import { Button, Text } from "@chas/ui";
 import { useLocation, useParams } from "react-router";
 import styled from "styled-components";
 import { colors } from "@chas/ui";
@@ -9,18 +9,18 @@ import { formatDate } from "../../utils/cardUtils";
 import type { BackendPackage } from "../../types/packageTypes";
 import {
   getStatusIndicators,
-  formattedTemperature,
-} from "../../utils/driverPackagesUtils";
+  formatTemperature,
+} from "../../utils/packageDetailsUtils";
 import { packageService } from "../../services/packageService";
 import { ClipLoader } from "react-spinners";
+import PackageDetailsHeader from "../../components/PackageDetails/PackageDetailsHeader";
+import PackageDetails from "../../components/PackageDetails/PackageDetails";
 
 const DriverPackageDetails = () => {
   const [showModal, setShowModal] = useState(false);
   const closeModal = () => setShowModal(false);
   const location = useLocation();
   const { id } = useParams<{ id: string }>();
-
-  // Initialize with state data if available, otherwise null
   const [packageData, setPackageData] = useState<BackendPackage | null>(
     location.state?.packageData || null
   );
@@ -66,9 +66,9 @@ const DriverPackageDetails = () => {
 
   if (error || !packageData) {
     return (
-      <Modal isOpen={true} onClose={() => {}}>
+      <Container className="page">
         <Text variant="h2">{error || "No package data available."}</Text>
-      </Modal>
+      </Container>
     );
   }
 
@@ -90,8 +90,7 @@ const DriverPackageDetails = () => {
   const maxHumidity = Number(thresholds.maxHumidity);
   const minHumidity = Number(thresholds.minHumidity);
 
-  const temp = formattedTemperature(temperature);
-
+  const formattedTemp = formatTemperature(temperature);
   const formattedArrivalDate = formatDate(arrivalDate);
 
   const {
@@ -107,14 +106,7 @@ const DriverPackageDetails = () => {
 
   return (
     <Container className="page">
-      <Header>
-        <Text variant="h1" color="accent">
-          {sender || "Unknown Sender"}
-        </Text>
-        <Text color="accent" variant="body-sm">
-          Package ID: {packageId}
-        </Text>
-      </Header>
+      <PackageDetailsHeader sender={sender} packageId={packageId} />
       <StatusSection>
         <LeftColumn>
           <StatusCard
@@ -130,7 +122,7 @@ const DriverPackageDetails = () => {
           <StatusCard
             IconName="solidWhiteTemp"
             IconSize="sm"
-            label={temp}
+            label={formattedTemp}
             labelColor="accent"
             Type="temperature"
             backgroundColor={colors.blueLines}
@@ -145,16 +137,13 @@ const DriverPackageDetails = () => {
         </RightColumn>
       </StatusSection>
       <DetailsSection>
-        <Details>
-          <Text>Address: {destination.address || "Unknown destination"}</Text>
-          <Text> Thresholds:</Text>
-          <Text variant="body-sm">
-            Temperature: {minTemp}°C - {maxTemp}°C
-          </Text>
-          <Text variant="body-sm">
-            Humidity: {minHumidity}% - {maxHumidity}%
-          </Text>
-        </Details>
+        <PackageDetails
+          address={destination.address}
+          minTemp={minTemp}
+          maxTemp={maxTemp}
+          minHumidity={minHumidity}
+          maxHumidity={maxHumidity}
+        />
         <Text> Deliver by: {formattedArrivalDate || "Unknown date"}</Text>
         <Button
           disabled={delivered}
@@ -189,18 +178,6 @@ const LoadingContainer = styled.div`
   gap: 1rem;
 `;
 
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 1rem;
-  padding-top: 4rem;
-  padding-bottom: 2rem;
-  background-color: ${colors.primary};
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-`;
 const StatusSection = styled.div`
   display: flex;
   align-items: stretch;
@@ -230,10 +207,4 @@ const DetailsSection = styled.div`
   gap: 1rem;
   display: flex;
   flex-direction: column;
-`;
-
-const Details = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 `;
