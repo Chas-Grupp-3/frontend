@@ -68,7 +68,7 @@ export const getStatusIndicators = (
   };
 };
 
-export const formattedTemperature = (tempValue: string) =>
+export const formatTemperature = (tempValue: string) =>
   Number.isFinite(Number(tempValue))
     ? `${Number(tempValue).toFixed(1)}°C`
     : "N/A";

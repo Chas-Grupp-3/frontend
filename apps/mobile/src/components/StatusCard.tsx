@@ -25,8 +25,8 @@ const StatusCard = ({
   return (
     <Card $backgroundColor={backgroundColor}>
       <Icon name={IconName} size={IconSize} />
-      {Type === "indicator" && <Text>{Status}</Text>}
       <Text color={labelColor}>{label}</Text>
+      {Type === "indicator" && <Text>{Status}</Text>}
     </Card>
   );
 };
@@ -46,4 +46,5 @@ const Card = styled.div<{ $backgroundColor?: string }>`
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   gap: 0.5rem;
+  text-align: center;
 `;
