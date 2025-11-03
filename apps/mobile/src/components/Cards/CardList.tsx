@@ -38,7 +38,7 @@ const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
               deliveryStatus={card.deliveryStatus}
               ETA={card.ETA}
               id={card.packageId}
-              threshold={card.threshold}
+              thresholds={card.thresholds}
               onClick={() => {
                 onCardClick?.(card.packageId);
               }}
