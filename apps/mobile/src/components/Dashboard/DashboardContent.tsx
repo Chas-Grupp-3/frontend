@@ -39,26 +39,62 @@ const DashboardContent = ({
   const { role } = useAuthContext();
 
   return (
-    <>
-      <DashboardHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+    <main role="main" aria-label="Dashboard content">
+      <DashboardHeader
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        aria-label="Search and navigation header"
+      />
 
-      <Centered role="region" aria-label="Filter packages">
+      <Centered
+        role="region"
+        aria-label="Filter packages"
+        aria-describedby="filter-description"
+      >
         <Toggle
           name="filters"
           options={toggleOptions}
           value={selectedFilter}
           onChange={(v) => setSelectedFilter(v as typeof selectedFilter)}
           iconSize="sm"
-          aria-label={`Filter: ${selectedFilter}`}
+          aria-label={`Current filter: ${selectedFilter}`}
+          aria-describedby="filter-description"
         />
+        <span
+          id="filter-description"
+          style={{ position: "absolute", left: "-9999px" }}
+        >
+          Filter packages by status. Use arrow keys to navigate options.
+        </span>
       </Centered>
-      <CardListContainer role="region" aria-label="List of packages">
+      <CardListContainer
+        role="region"
+        aria-label="List of packages"
+        aria-live="polite"
+        aria-busy={loading}
+        aria-describedby="package-count"
+      >
         {loading ? (
-          <Centered role="status" aria-label="Loading packages">
-            <ClipLoader size={64} color={colors.primary} />
+          <Centered
+            role="status"
+            aria-label="Loading packages"
+            aria-live="assertive"
+          >
+            <ClipLoader
+              size={64}
+              color={colors.primary}
+              aria-label="Loading spinner"
+            />
           </Centered>
         ) : (
           <>
+            <div
+              id="package-count"
+              aria-live="polite"
+              style={{ position: "absolute", left: "-9999px" }}
+            >
+              {filteredPackages.length} packages found
+            </div>
             <CardList
               cards={filteredPackages}
               variant={
@@ -75,21 +111,25 @@ const DashboardContent = ({
                   },
                 });
               }}
-              aria-label={`${filteredPackages.length} packages`}
+              aria-label={`${filteredPackages.length} packages displayed`}
             />
           </>
         )}
         {isRefreshing ? (
-          <RefreshIndicator>
+          <RefreshIndicator
+            role="status"
+            aria-label="Updating package data"
+            aria-live="polite"
+          >
             <Text variant="body-sm" color="secondary">
               Updating...
             </Text>
           </RefreshIndicator>
         ) : (
-          <RefreshIndicator>&nbsp;</RefreshIndicator>
+          <RefreshIndicator aria-hidden="true">&nbsp;</RefreshIndicator>
         )}
       </CardListContainer>
-    </>
+    </main>
   );
 };
 export default DashboardContent;
