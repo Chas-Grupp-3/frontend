@@ -30,26 +30,48 @@ const SmallCard = ({
       }}
       onClick={onClick}
       {...rest}
+      role="article"
+      aria-label={`Package ${title}, temperature ${temperature} degrees, status ${statusText}`}
+      tabIndex={0}
+      aria-describedby={`small-card-content-${id}`}
     >
-      <Text variant="body-smBold" color={textColor}>
+      <Text
+        variant="body-smBold"
+        color={textColor}
+        aria-label={`Package name: ${title}`}
+      >
         {title}
       </Text>
-      <StyledTemperature>
-        <Icon name="smallTemp" size="sm" />
+      <StyledTemperature
+        aria-label={`Temperature: ${temperature} degrees celsius`}
+        role="group"
+      >
+        <Icon name="smallTemp" size="sm" aria-hidden="true" />
         <Text variant="h1" color={textColor}>
           {temperature}°C
         </Text>
       </StyledTemperature>
-      <StyledDeliverystatus>
+      <StyledDeliverystatus
+        role="status"
+        aria-label={`Package status: ${statusText}`}
+      >
         <Text variant="body-smBold" color={textColor}>
           {statusText}
         </Text>
       </StyledDeliverystatus>
-      <Text variant="body-sm" color={textColor}>
+      <Text
+        variant="body-sm"
+        color={textColor}
+        aria-label={`Estimated arrival: ${ETA}`}
+      >
         {ETA}
       </Text>
 
-      <Text variant="body-sm" color={textColor}>
+      <Text
+        variant="body-sm"
+        color={textColor}
+        aria-label={`Package ID: ${id}`}
+      >
         ID:&nbsp;
         <Ellipsis>{id}</Ellipsis>
       </Text>
