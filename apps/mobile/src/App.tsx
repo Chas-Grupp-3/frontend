@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import { useIsMobile } from "./hooks/useIsMobile";
 import { useAuthContext } from "./context/auth/useAuthContext";
 import LocationProvider from "./context/location/LocationProvider";
+import { PackagesProvider } from "./context/packages/PackagesProvider";
 
 const AppContent = () => {
   const location = useLocation();
@@ -48,7 +49,9 @@ const AppContent = () => {
 const App = () => (
   <AuthProvider>
     <LocationProvider>
-      <AppContent />
+      <PackagesProvider>
+        <AppContent />
+      </PackagesProvider>
     </LocationProvider>
   </AuthProvider>
 );
