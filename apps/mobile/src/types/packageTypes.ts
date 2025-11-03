@@ -6,7 +6,12 @@ export type CardInfo = {
   deliveryStatus: "delivered" | "on time" | "late";
   ETA?: string;
   packageId: string;
-  threshold: number;
+  thresholds: {
+    minTemp: number;
+    maxTemp: number;
+    minHumidity: number;
+    maxHumidity: number;
+  };
 };
 
 export type BackendPackage = {
