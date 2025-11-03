@@ -1,5 +1,7 @@
 import { Modal, Text, Button } from "@chas/ui";
 import { styled } from "styled-components";
+import SearchModal from "./scanModals/SearchModal";
+import DeliverModal from "./scanModals/DeliverModal";
 
 interface ScanModalProps {
   showModal: boolean;
@@ -8,6 +10,9 @@ interface ScanModalProps {
   handleRetry: () => void;
   handleGoBack: () => void;
   handleNext: () => void;
+  mode: "search" | "add" | "deliver";
+  status?: "success" | "error" | null;
+  isDelivering?: boolean;
 }
 
 const ScanModal = ({
@@ -17,25 +22,49 @@ const ScanModal = ({
   handleRetry,
   handleGoBack,
   handleNext,
+  mode,
+  status,
+  isDelivering,
 }: ScanModalProps) => {
   return (
     <Modal isOpen={showModal} onClose={closeModal}>
       <ModalContent>
         {qrCodeResult ? (
-          <>
-            <Text variant="h1">
-              Package with id:
-              <Text variant="h3" color="secondary">
-                {qrCodeResult}
+          mode === "search" ? (
+            <SearchModal
+              qrCodeResult={qrCodeResult}
+              handleNext={handleNext}
+              closeModal={closeModal}
+            />
+          ) : mode === "deliver" ? (
+            <DeliverModal
+              isDelivering={isDelivering}
+              status={status}
+              handleNext={handleNext}
+            />
+          ) : mode === "add" ? (
+            <>
+              <Text variant="h1">Package Added</Text>
+              <Text>
+                The package has been successfully added to your account.
               </Text>
-              found
-            </Text>
-            <ButtonGroup>
-              <Button onClick={handleNext}>Go to package </Button>
-              <Button onClick={closeModal}>Cancel</Button>
-            </ButtonGroup>
-          </>
-        ) : (
+            </>
+          ) : (
+            // fallback for unexpected mode when there's a qrCodeResult
+            <>
+              <Text variant="h1">No QR Code Found</Text>
+              <Text>
+                Couldn't detect a valid QR code. Please try again or make sure
+                the QR code is clear and well-lit.
+              </Text>
+              <ButtonGroup>
+                <Button onClick={handleRetry}>Try Again</Button>
+                <Button onClick={handleGoBack}>Go Back</Button>
+              </ButtonGroup>
+            </>
+          )
+        ) : // When there's no qrCodeResult, render the "No QR Code Found" UI if status indicates an error (e.g., scanner timeout)
+        status === "error" ? (
           <>
             <Text variant="h1">No QR Code Found</Text>
             <Text>
@@ -47,7 +76,7 @@ const ScanModal = ({
               <Button onClick={handleGoBack}>Go Back</Button>
             </ButtonGroup>
           </>
-        )}
+        ) : null}
       </ModalContent>
     </Modal>
   );

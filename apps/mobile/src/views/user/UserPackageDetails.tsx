@@ -1,5 +1,5 @@
-import { Icon, Text } from "@chas/ui";
-import { useLocation } from "react-router";
+import { Icon, Text, Button } from "@chas/ui";
+import { useLocation, useNavigate } from "react-router";
 import StatusCard from "../../components/StatusCard";
 import styled from "styled-components";
 import { colors } from "@chas/ui";
@@ -8,9 +8,13 @@ import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import type { BackendPackage } from "../../types/packageTypes";
 import L from "leaflet";
 import ReactDOMServer from "react-dom/server";
+import { useAuthContext } from "../../context/auth/useAuthContext";
 
 const UserPackageDetails = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { role } = useAuthContext();
+
   const { packageData } = location.state || {};
   console.log("Package Data:", packageData);
   if (!packageData) {
@@ -23,7 +27,7 @@ const UserPackageDetails = () => {
   const {
     temperature,
     humidity,
-    //package_id: packageId,
+    package_id: packageId,
     sender,
     destination,
     arrival_date: arrivalDate,
@@ -37,7 +41,7 @@ const UserPackageDetails = () => {
   const formattedArrivalDate = formatDate(arrivalDate);
 
   const iconHtml = ReactDOMServer.renderToStaticMarkup(
-    <Icon name="truck" size="md" />
+    <Icon name="truckRight" size="md" />
   );
 
   const markerIcon = L.divIcon({
@@ -46,6 +50,12 @@ const UserPackageDetails = () => {
     iconSize: [30, 30],
     iconAnchor: [15, 30],
   });
+
+  const base = role ? `/${role}` : "";
+  const handleClick = () => {
+    navigate(`${base}/scan/deliver/${packageId}`);
+  };
+
   return (
     <Container className="page">
       <Header>
@@ -53,6 +63,7 @@ const UserPackageDetails = () => {
           {sender || "Unknown Sender"}
         </Text>
       </Header>
+      //TODO: dont show map if no location data or if delivered
       <MapSection>
         <MapContainer
           center={[packageLocation.latitude, packageLocation.longitude]}
@@ -99,6 +110,9 @@ const UserPackageDetails = () => {
           </Text>
         </Details>
         <Text> Latest arrival: {formattedArrivalDate || "Unknown date"}</Text>
+        <Button onClick={handleClick}>
+          Open QR scanner to mark as delivered
+        </Button>
       </DetailsSection>
     </Container>
   );

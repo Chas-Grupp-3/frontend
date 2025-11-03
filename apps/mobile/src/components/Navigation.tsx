@@ -9,22 +9,30 @@ const Navigation = () => {
   const base = role ? `/${role}` : "";
 
   return (
-    <NavContainer>
-      <NavLink to={`${base}`} $isActive={location.pathname === "/"}>
-        <Icon name="home" size="sm" alt="Dashboard Icon" />
-      </NavLink>
-
-      <NavLink to={`${base}/scan`} $isActive={location.pathname === "/scan"}>
-        <Icon name="whiteQr" size="sm" alt="Scan Icon" />
+    <NavContainer role="navigation" aria-label="Main navigation">
+      <NavLink
+        to={`${base}`}
+        $isActive={location.pathname === "/"}
+        aria-label="Dashboard - overview of packages"
+        aria-current={location.pathname === "/" ? "page" : undefined}
+      >
+        <Icon name="whitePackage" size="sm" alt="Dashboard Icon" />
       </NavLink>
       {role === "driver" && (
-        <NavLink to={`${base}/map`} $isActive={location.pathname === "/map"}>
+        <NavLink
+          to={`${base}/map`}
+          $isActive={location.pathname === "/map"}
+          aria-label="Map - show delivery routes"
+          aria-current={location.pathname === "/map" ? "page" : undefined}
+        >
           <Icon name="whiteMap" size="sm" alt="Map Icon" />
         </NavLink>
       )}
       <NavLink
         to={`${base}/profile`}
         $isActive={location.pathname === "/profile"}
+        aria-label="Profile - Handle your user settings"
+        aria-current={location.pathname === "/profile" ? "page" : undefined}
       >
         <Icon name="whiteUser" size="sm" alt="User Icon" />
       </NavLink>

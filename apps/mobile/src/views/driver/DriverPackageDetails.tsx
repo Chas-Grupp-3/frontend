@@ -6,6 +6,7 @@ import StatusCard from "../../components/StatusCard";
 import { useState } from "react";
 import QRModal from "../../components/modals/QRModal";
 import { formatDate } from "../../utils/cardUtils";
+import type { BackendPackage } from "../../types/packageTypes";
 
 const DriverPackageDetails = () => {
   const [showModal, setShowModal] = useState(false);
@@ -22,19 +23,23 @@ const DriverPackageDetails = () => {
   }
   const {
     temperature,
+    delivered,
     humidity,
-    package_id: id,
+    package_id: packageId,
     sender,
     destination,
     arrival_date: arrivalDate,
-    delivered,
     thresholds,
-  } = packageData;
+  } = packageData as BackendPackage;
 
   const formattedTemperature = Number.isFinite(Number(temperature))
     ? `${Number(temperature).toFixed(1)}°C`
     : "N/A";
   const formattedArrivalDate = formatDate(arrivalDate);
+  const formattedMaxTemp = Number(thresholds.maxTemp).toFixed(1);
+  const formattedMinTemp = Number(thresholds.minTemp).toFixed(1);
+  const formattedMaxHumidity = Number(thresholds.maxHumidity).toFixed(1);
+  const formattedMinHumidity = Number(thresholds.minHumidity).toFixed(1);
 
   const bigCardData = () => {
     if (delivered) {
@@ -44,18 +49,32 @@ const DriverPackageDetails = () => {
         status: undefined,
       };
     }
-    if (temperature >= thresholds[0]) {
+    if (temperature >= formattedMaxTemp) {
       return {
         icon: "tempWarning" as const,
         label: "Warning",
         status: "Temperature Exceeded",
       };
     }
-    if (humidity >= thresholds[1]) {
+    if (humidity >= formattedMaxHumidity) {
       return {
         icon: "tempWarning" as const,
         label: "Warnig",
         status: "Humidity Exceeded",
+      };
+    }
+    if (temperature <= formattedMinTemp) {
+      return {
+        icon: "tempWarning" as const,
+        label: "Warning",
+        status: "Temperature Below Minimum",
+      };
+    }
+    if (humidity <= formattedMinHumidity) {
+      return {
+        icon: "tempWarning" as const,
+        label: "Warning",
+        status: "Humidity Below Minimum",
       };
     }
     if (!delivered && arrivalDate < new Date().toISOString()) {
@@ -66,7 +85,7 @@ const DriverPackageDetails = () => {
       };
     }
     return {
-      icon: "truck" as const,
+      icon: "truckRight" as const,
       label: "On Time",
       status: undefined,
     };
@@ -79,7 +98,7 @@ const DriverPackageDetails = () => {
           {sender || "Unknown Sender"}
         </Text>
         <Text color="accent" variant="body-sm">
-          Package ID: {id}
+          Package ID: {packageId}
         </Text>
       </Header>
       <StatusSection>
@@ -113,16 +132,14 @@ const DriverPackageDetails = () => {
       </StatusSection>
       <DetailsSection>
         <Details>
-          <Text>Address: {destination || "Unknown destination"}</Text>
+          <Text>Address: {destination.address || "Unknown destination"}</Text>
           <Text> Thresholds:</Text>
-          <ul style={{ listStyleType: "none", padding: 0 }}>
-            <li>
-              <Text variant="body-sm">Temperature: {thresholds[0]}°C</Text>
-            </li>
-            <li>
-              <Text variant="body-sm">Humidity: {thresholds[1]}%</Text>
-            </li>
-          </ul>
+          <Text variant="body-sm">
+            Temperature: {thresholds.minTemp}°C - {thresholds.maxTemp}°C
+          </Text>
+          <Text variant="body-sm">
+            Humidity: {thresholds.minHumidity}% - {thresholds.maxHumidity}%
+          </Text>
         </Details>
         <Text> Deliver by: {formattedArrivalDate || "Unknown date"}</Text>
         <Button
@@ -134,7 +151,11 @@ const DriverPackageDetails = () => {
           {delivered ? "Package Delivered" : "Show QR Code"}
         </Button>
       </DetailsSection>
-      <QRModal showModal={showModal} closeModal={closeModal} qrCodeData={id} />
+      <QRModal
+        showModal={showModal}
+        closeModal={closeModal}
+        qrCodeData={packageId}
+      />
     </Container>
   );
 };

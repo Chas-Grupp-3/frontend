@@ -1,4 +1,4 @@
-import { useLocation, useRoutes } from "react-router";
+import { useLocation, useRoutes, matchPath } from "react-router";
 import DriverRoutes from "./routes/DriverRoutes";
 import UserRoutes from "./routes/UserRoutes";
 import PublicRoutes from "./routes/PublicRoutes";
@@ -14,11 +14,14 @@ const AppContent = () => {
   const { role } = useAuthContext();
 
   const base = role ? `/${role}` : "";
-  const hideNavRoutes = ["/login", `${base}/scan`];
 
+  const hideNavRoutes = ["/login", `${base}/scan/:mode`];
+
+  // Use pattern-based check
   const shouldHideNav =
-    hideNavRoutes.includes(location.pathname) ||
-    location.pathname.startsWith(`${base}/package/`);
+    hideNavRoutes.some((pattern) =>
+      matchPath({ path: pattern, end: false }, location.pathname)
+    ) || location.pathname.startsWith(`${base}/package/`);
 
   const allRoutes = [...PublicRoutes, ...DriverRoutes, ...UserRoutes];
   const element = useRoutes(allRoutes);
@@ -41,12 +44,10 @@ const AppContent = () => {
   );
 };
 
-const App = () => {
-  return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  );
-};
+const App = () => (
+  <AuthProvider>
+    <AppContent />
+  </AuthProvider>
+);
 
 export default App;
