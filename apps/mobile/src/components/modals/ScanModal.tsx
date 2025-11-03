@@ -27,53 +27,83 @@ const ScanModal = ({
   isDelivering,
 }: ScanModalProps) => {
   return (
-    <Modal isOpen={showModal} onClose={closeModal}>
-      <ModalContent>
+    <Modal
+      isOpen={showModal}
+      onClose={closeModal}
+      aria-label={`Scan modal - ${mode} mode`}
+    >
+      <ModalContent role="main" aria-live="polite">
         {qrCodeResult ? (
           mode === "search" ? (
             <SearchModal
               qrCodeResult={qrCodeResult}
               handleNext={handleNext}
               closeModal={closeModal}
+              aria-label="Search results modal"
             />
           ) : mode === "deliver" ? (
             <DeliverModal
               isDelivering={isDelivering}
               status={status}
               handleNext={handleNext}
+              aria-label="Delivery status modal"
             />
           ) : mode === "add" ? (
             <>
-              <Text variant="h1">Package Added</Text>
-              <Text>
+              <Text variant="h1" aria-live="assertive">
+                Package Added
+              </Text>
+              <Text aria-label="Success message: The package has been successfully added to your account">
                 The package has been successfully added to your account.
               </Text>
             </>
           ) : (
-            // fallback for unexpected mode when there's a qrCodeResult
             <>
-              <Text variant="h1">No QR Code Found</Text>
-              <Text>
+              <Text variant="h1" aria-live="assertive">
+                No QR Code Found
+              </Text>
+              <Text aria-label="Error message: Couldn't detect a valid QR code. Please try again or make sure the QR code is clear and well-lit">
                 Couldn't detect a valid QR code. Please try again or make sure
                 the QR code is clear and well-lit.
               </Text>
-              <ButtonGroup>
-                <Button onClick={handleRetry}>Try Again</Button>
-                <Button onClick={handleGoBack}>Go Back</Button>
+              <ButtonGroup role="group" aria-label="Retry options">
+                <Button
+                  onClick={handleRetry}
+                  aria-label="Try scanning QR code again"
+                >
+                  Try Again
+                </Button>
+                <Button
+                  onClick={handleGoBack}
+                  aria-label="Go back to previous screen"
+                >
+                  Go Back
+                </Button>
               </ButtonGroup>
             </>
           )
-        ) : // When there's no qrCodeResult, render the "No QR Code Found" UI if status indicates an error (e.g., scanner timeout)
-        status === "error" ? (
+        ) : status === "error" ? (
           <>
-            <Text variant="h1">No QR Code Found</Text>
-            <Text>
+            <Text variant="h1" role="alert" aria-live="assertive">
+              No QR Code Found
+            </Text>
+            <Text aria-label="Error message: Couldn't detect a valid QR code. Please try again or make sure the QR code is clear and well-lit">
               Couldn't detect a valid QR code. Please try again or make sure the
               QR code is clear and well-lit.
             </Text>
-            <ButtonGroup>
-              <Button onClick={handleRetry}>Try Again</Button>
-              <Button onClick={handleGoBack}>Go Back</Button>
+            <ButtonGroup role="group" aria-label="Retry options">
+              <Button
+                onClick={handleRetry}
+                aria-label="Try scanning QR code again"
+              >
+                Try Again
+              </Button>
+              <Button
+                onClick={handleGoBack}
+                aria-label="Go back to previous screen"
+              >
+                Go Back
+              </Button>
             </ButtonGroup>
           </>
         ) : null}
