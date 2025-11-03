@@ -14,31 +14,27 @@ interface PackagesProviderProps {
 
 export const PackagesProvider: React.FC<PackagesProviderProps> = ({
   children,
-  pollIntervalMs = null, // Default 30s polling
+  pollIntervalMs = null,
 }) => {
   const packagesHook = usePackages({ pollIntervalMs });
 
-  // Filter and search state
   const [selectedFilter, setSelectedFilter] =
     useState<FilterOption["value"]>("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Map backend data to card info
   const mappedData = useMemo(() => {
     if (!packagesHook.data) return null;
     return packagesHook.data.map(mapBackendPackageToCardInfo);
   }, [packagesHook.data]);
 
-  // Mark package as delivered
   const markAsDelivered = useCallback(
     async (packageId: string) => {
       await packageService.markPackageAsDelivered(packageId);
-      packagesHook.refresh(); // Refresh data after delivery
+      packagesHook.refresh();
     },
     [packagesHook]
   );
 
-  // Get package by ID
   const getPackageById = useCallback(
     (packageId: string) => {
       return packagesHook.data?.find(
@@ -48,13 +44,11 @@ export const PackagesProvider: React.FC<PackagesProviderProps> = ({
     [packagesHook.data]
   );
 
-  // Compute filtered packages
   const filteredPackages = useMemo(() => {
     if (!mappedData) return [];
     return getFilteredCards(mappedData, selectedFilter, searchTerm);
   }, [mappedData, selectedFilter, searchTerm]);
 
-  // Compute filter counts
   const filterCounts = useMemo(() => {
     if (!mappedData) {
       return { all: 0, late: 0, "Temp issues": 0 };

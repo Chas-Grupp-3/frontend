@@ -4,7 +4,7 @@ import { isApiError } from "../types/apiTypes";
 import type { BackendPackage } from "../types/packageTypes";
 
 type UsePackagesOptions = {
-  pollIntervalMs?: number | null; // null = no polling
+  pollIntervalMs?: number | null;
 };
 
 type UsePackagesResult = {
@@ -27,7 +27,7 @@ export function usePackages(
 
   const mountedRef = useRef(true);
   const abortRef = useRef<AbortController | null>(null);
-  const hasDataRef = useRef(false); // Track if we have data already
+  const hasDataRef = useRef(false);
 
   const isAbortError = (err: unknown): boolean => {
     return (
@@ -37,12 +37,10 @@ export function usePackages(
   };
 
   const fetchPackages = useCallback(async () => {
-    // Cancel any pending requests
     abortRef.current?.abort();
     const controller = new AbortController();
     abortRef.current = controller;
 
-    // If we already have data, this is a refresh (not initial load)
     if (hasDataRef.current) {
       setIsRefreshing(true);
     } else {
@@ -59,15 +57,13 @@ export function usePackages(
         throw new Error(result.message || "Failed to fetch packages");
       }
 
-      // Only update state if component is still mounted
       if (!mountedRef.current) return;
 
       setData(result);
-      hasDataRef.current = true; // Mark that we now have data
+      hasDataRef.current = true;
     } catch (err: unknown) {
       if (!mountedRef.current) return;
 
-      // Ignore abort errors - they're intentional
       if (isAbortError(err)) return;
 
       const errorMessage = err instanceof Error ? err : new Error(String(err));
@@ -88,10 +84,8 @@ export function usePackages(
   useEffect(() => {
     mountedRef.current = true;
 
-    // Initial fetch
     void fetchPackages();
 
-    // Setup polling if enabled
     let intervalId: number | undefined;
     if (pollIntervalMs && pollIntervalMs > 0) {
       intervalId = window.setInterval(() => {
@@ -99,7 +93,6 @@ export function usePackages(
       }, pollIntervalMs);
     }
 
-    // Cleanup
     return () => {
       mountedRef.current = false;
       abortRef.current?.abort();
