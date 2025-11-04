@@ -6,194 +6,194 @@
 [![Turbo](https://img.shields.io/badge/Turbo-2.5.8-red.svg)](https://turbo.build/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue.svg)](https://docker.com/)
 
-En komplett leveranshanteringslösning för temperaturkänsliga paket med separata applikationer för mobila enheter och desktop/webb. Byggd med React, TypeScript och monorepo-arkitektur.
+A complete delivery management solution for temperature-sensitive packages with separate applications for mobile devices and desktop/web. Built with React, TypeScript and monorepo architecture.
 
-## 📋 Innehållsförteckning
+## 📋 Table of Contents
 
-- [Översikt](#översikt)
-- [Applikationer](#applikationer)
-- [Funktioner](#funktioner)
-- [Arkitektur](#arkitektur)
-- [Kom igång](#kom-igång)
-- [Utveckling](#utveckling)
+- [Overview](#overview)
+- [Applications](#applications)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Development](#development)
 - [Deployment](#deployment)
 - [Testing](#testing)
-- [Miljövariabler](#miljövariabler)
+- [Environment Variables](#environment-variables)
 - [API Integration](#api-integration)
-- [Bidra](#bidra)
+- [Contributing](#contributing)
 
-## 🎯 Översikt
+## 🎯 Overview
 
-ThermoTruck är ett komplett frontend-ekosystem för hantering av temperaturkänsliga leveranser, bestående av:
+ThermoTruck is a complete frontend ecosystem for managing temperature-sensitive deliveries, consisting of:
 
-- **📱 Mobile App** - PWA för förare och mottagare (iOS/Android-optimerad)
-- **💻 Web App** - Desktop-applikation för avsändare och administratörer
-- **🧱 UI Package** - Delat komponentbibliotek för konsistent design
+- **📱 Mobile App** - PWA for drivers and recipients (iOS/Android optimized)
+- **💻 Web App** - Desktop application for senders and administrators
+- **🧱 UI Package** - Shared component library for consistent design
 
-Systemet stöder olika användarroller med rollbaserad funktionalitet och realtidsuppdateringar.
+The system supports different user roles with role-based functionality and real-time updates.
 
-## 📱💻 Applikationer
+## 📱💻 Applications
 
 ### Mobile App (`apps/mobile/`)
 
-**Målgrupp:** Förare och paketmottagare  
-**Optimerad för:** Smartphones och tablets  
-**Teknologi:** PWA (Progressive Web App)
+**Target Audience:** Drivers and package recipients  
+**Optimized for:** Smartphones and tablets  
+**Technology:** PWA (Progressive Web App)
 
-#### Funktioner:
+#### Features:
 
-- QR-kodscanning för pakethantering
-- GPS-spårning och kartvisning
-- Temperatur- och luftfuktighetsövervakning
-- Offline-funktionalitet
-- Push-notifikationer
-- Touch-optimerat gränssnitt
+- QR code scanning for package management
+- GPS tracking and map visualization
+- Temperature and humidity monitoring
+- Offline functionality
+- Push notifications
+- Touch-optimized interface
 
 ### Web App (`apps/web/`)
 
-**Målgrupp:** Avsändare, administratörer och kontorspersonal  
-**Optimerad för:** Desktop-webbläsare  
-**Teknologi:** Responsiv webbapplikation
+**Target Audience:** Senders, administrators and office staff  
+**Optimized for:** Desktop web browsers  
+**Technology:** Responsive web application
 
-#### Funktioner:
+#### Features:
 
-- Skapa nya försändelser
-- QR-kodgenerering för paket
-- Dashboard för försändelsesöversikt
-- Administrationsverktyg
-- Rapporter och analytics
-- Desktop-optimerad workflow
+- Create new shipments
+- QR code generation for packages
+- Dashboard for shipment overview
+- Administration tools
+- Reports and analytics
+- Desktop-optimized workflow
 
-## ✨ Funktioner
+## ✨ Features
 
-### 🚚 För Förare (Mobile)
+### 🚚 For Drivers (Mobile)
 
-- **Paketscanning** - QR-kodscanning för identifiering och leverans
-- **GPS-spårning** - Automatisk positionsuppdatering
-- **Temperaturövervakning** - Realtidsdata från sensorer
-- **Leveranshantering** - Markera paket som levererade
-- **Kartintegration** - Leaflet-baserad navigation
-- **Offline-stöd** - Fungerar utan internetanslutning
+- **Package Scanning** - QR code scanning for identification and delivery
+- **GPS Tracking** - Automatic position updates
+- **Temperature Monitoring** - Real-time data from sensors
+- **Delivery Management** - Mark packages as delivered
+- **Map Integration** - Leaflet-based navigation
+- **Offline Support** - Works without internet connection
 
-### 📦 För Mottagare (Mobile)
+### 📦 For Recipients (Mobile)
 
-- **Paketspårning** - Realtidsspårning av leveranser
-- **Temperaturhistorik** - Historisk data och trender
-- **Leveransbekräftelse** - QR-scanning för att bekräfta mottagning
-- **Notifikationer** - Aviseringar om status och leverans
-- **Kartvy** - Se pakets aktuella position
+- **Package Tracking** - Real-time tracking of deliveries
+- **Temperature History** - Historical data and trends
+- **Delivery Confirmation** - QR scanning to confirm receipt
+- **Notifications** - Alerts about status and delivery
+- **Map View** - See package current location
 
-### 💼 För Avsändare (Web)
+### 💼 For Senders (Web)
 
-- **Försändelsehantering** - Skapa och hantera nya försändelser
-- **QR-kodgenerering** - Automatisk generering av unika koder
-- **Temperaturinställningar** - Definiera temperatur- och luftfuktighetsgränser
-- **Mottagarinformation** - Hantera leveransadresser och kontakter
-- **Spårningsöversikt** - Övervaka aktiva försändelser
+- **Shipment Management** - Create and manage new shipments
+- **QR Code Generation** - Automatic generation of unique codes
+- **Temperature Settings** - Define temperature and humidity thresholds
+- **Recipient Information** - Manage delivery addresses and contacts
+- **Tracking Overview** - Monitor active shipments
 
-### 🏢 För Administratörer (Web)
+### 🏢 For Administrators (Web)
 
-- **Dashboard** - Komplett översikt över alla försändelser
-- **Användarhantering** - Hantera förare, avsändare och mottagare
-- **Rapporter** - Detaljerade analytics och prestationsdata
-- **Systemkonfiguration** - Inställningar och parametrar
+- **Dashboard** - Complete overview of all shipments
+- **User Management** - Manage drivers, senders and recipients
+- **Reports** - Detailed analytics and performance data
+- **System Configuration** - Settings and parameters
 
-## 🏗️ Arkitektur
+## 🏗️ Architecture
 
-### Monorepo Struktur
+### Monorepo Structure
 
 ```
 frontend/
 ├── apps/
-│   ├── mobile/          # 📱 PWA för förare/mottagare
+│   ├── mobile/          # 📱 PWA for drivers/recipients
 │   │   ├── src/
 │   │   │   ├── views/
-│   │   │   │   ├── driver/      # Förare-vyer
-│   │   │   │   └── user/        # Mottagare-vyer
-│   │   │   ├── components/      # Mobil-komponenter
+│   │   │   │   ├── driver/      # Driver views
+│   │   │   │   └── user/        # Recipient views
+│   │   │   ├── components/      # Mobile components
 │   │   │   ├── context/         # State management
-│   │   │   ├── services/        # API-tjänster
+│   │   │   ├── services/        # API services
 │   │   │   └── hooks/          # Custom hooks
-│   │   └── vite.config.ts      # PWA-konfiguration
-│   └── web/             # 💻 Webbapp för avsändare/admin
+│   │   └── vite.config.ts      # PWA configuration
+│   └── web/             # 💻 Web app for senders/admin
 │       ├── src/
-│       │   ├── views/          # Webb-vyer
-│       │   ├── components/     # Webb-komponenter
-│       │   └── styles/         # Webb-specifika stilar
-│       └── vite.config.ts      # Webb-konfiguration
+│       │   ├── views/          # Web views
+│       │   ├── components/     # Web components
+│       │   └── styles/         # Web-specific styles
+│       └── vite.config.ts      # Web configuration
 ├── packages/
-│   └── UI/              # 🧱 Delat komponentbibliotek
+│   └── UI/              # 🧱 Shared component library
 │       ├── src/
-│       │   ├── components/     # Återanvändbara komponenter
-│       │   ├── assets/         # Ikoner och resurser
-│       │   └── tests/          # Komponenttester
-│       └── package.json        # UI-paket konfiguration
-├── docker-compose.yml   # 🐳 Container-orchestrering
-├── turbo.json          # 🔄 Monorepo build-system
-└── package.json        # 📦 Root-konfiguration
+│       │   ├── components/     # Reusable components
+│       │   ├── assets/         # Icons and resources
+│       │   └── tests/          # Component tests
+│       └── package.json        # UI package configuration
+├── docker-compose.yml   # 🐳 Container orchestration
+├── turbo.json          # 🔄 Monorepo build system
+└── package.json        # 📦 Root configuration
 ```
 
-### Teknisk Stack
+### Tech Stack
 
-#### Kärn Framework
+#### Core Framework
 
-- **React 19.1.1** - Komponentbibliotek med senaste funktioner
-- **TypeScript 5.9.2** - Statisk typkontroll
-- **Vite 7.1.5** - Snabb build-verktyg och dev-server
-- **React Router 7.9.3** - Clientside routing
+- **React 19.1.1** - Component library with latest features
+- **TypeScript 5.9.2** - Static type checking
+- **Vite 7.1.5** - Fast build tool and dev server
+- **React Router 7.9.3** - Client-side routing
 
 #### Styling & Design
 
-- **Styled Components 6.1.19** - CSS-in-JS med teman
-- **@chas/ui** - Internt designsystem
-- **React Icons 5.5.0** - Omfattande ikonbibliotek
+- **Styled Components 6.1.19** - CSS-in-JS with themes
+- **@chas/ui** - Internal design system
+- **React Icons 5.5.0** - Comprehensive icon library
 - **Responsive Design** - Mobile-first approach
 
-#### Mobil-specifik Teknologi
+#### Mobile-specific Technology
 
-- **PWA (Vite Plugin)** - Service workers och manifest
-- **Leaflet 1.9.4** - Interaktiva kartor
-- **React Geolocated 4.4.0** - GPS-hantering
-- **QR Library** - QR-kodgenerering och scanning
+- **PWA (Vite Plugin)** - Service workers and manifest
+- **Leaflet 1.9.4** - Interactive maps
+- **React Geolocated 4.4.0** - GPS handling
+- **QR Library** - QR code generation and scanning
 
-#### Webb-specifik Funktioner
+#### Web-specific Features
 
-- **Responsive Grid** - Desktop-optimerade layouts
-- **Form Validation** - Avancerad validering för formulär
-- **File Upload** - Hantering av dokument och bilder
-- **Print Styles** - Optimerad utskrift
+- **Responsive Grid** - Desktop-optimized layouts
+- **Form Validation** - Advanced form validation
+- **File Upload** - Document and image handling
+- **Print Styles** - Optimized printing
 
 #### Development & Build
 
-- **Turbo 2.5.8** - Intelligent monorepo-hantering
-- **ESLint 9.35.0** - Kodkvalitet och standards
-- **Prettier 3.6.2** - Konsistent kodformatering
-- **Vitest 3.2.4** - Snabb testning
+- **Turbo 2.5.8** - Intelligent monorepo management
+- **ESLint 9.35.0** - Code quality and standards
+- **Prettier 3.6.2** - Consistent code formatting
+- **Vitest 3.2.4** - Fast testing
 
-## 🚀 Kom igång
+## 🚀 Getting Started
 
-### Förkunskaper
+### Prerequisites
 
-- Node.js (v18 eller senare)
-- npm (v8 eller senare)
+- Node.js (v18 or later)
+- npm (v8 or later)
 - Git
 
 ### Installation
 
-1. **Klona repositoriet**
+1. **Clone the repository**
 
 ```bash
 git clone https://github.com/Chas-Grupp-3/frontend.git
 cd frontend
 ```
 
-2. **Installera alla beroenden**
+2. **Install all dependencies**
 
 ```bash
 npm install
 ```
 
-3. **Konfigurera miljövariabler**
+3. **Configure environment variables**
 
 ```bash
 # Mobile app
@@ -203,138 +203,138 @@ cp apps/mobile/.env.example apps/mobile/.env
 cp apps/web/.env.example apps/web/.env
 ```
 
-4. **Starta utvecklingsservrar**
+4. **Start development servers**
 
 ```bash
-# Starta båda apparna samtidigt
+# Start both apps simultaneously
 npm run dev
 
-# Eller starta specifik app
-npm run dev:mobile    # Startar på http://localhost:5173
-npm run dev:web      # Startar på http://localhost:5174
+# Or start specific app
+npm run dev:mobile    # Starts on http://localhost:5173
+npm run dev:web      # Starts on http://localhost:5174
 ```
 
 ### Docker Setup
 
 ```bash
-# Bygg och starta alla containers
+# Build and start all containers
 npm run docker:build
 npm run docker:frontend
 
-# Starta specifik app
-npm run docker:mobile    # Mobile app på port 5173
-npm run docker:web      # Web app på port 5174
+# Start specific app
+npm run docker:mobile    # Mobile app on port 5173
+npm run docker:web      # Web app on port 5174
 
-# Detached mode (kör i bakgrunden)
+# Detached mode (run in background)
 npm run docker:mobile:detached
 npm run docker:web:detached
 ```
 
-## 💻 Utveckling
+## 💻 Development
 
-### Utvecklingskommandon
+### Development Commands
 
 ```bash
-# Starta development
-npm run dev                 # Båda apparna
-npm run dev:mobile         # Endast mobilapp
-npm run dev:web           # Endast webbapp
+# Start development
+npm run dev                 # Both apps
+npm run dev:mobile         # Mobile app only
+npm run dev:web           # Web app only
 
-# Build för produktion
-npm run build             # Bygg alla appar
-npm run type-check        # TypeScript-validering
+# Build for production
+npm run build             # Build all apps
+npm run type-check        # TypeScript validation
 
-# Kodkvalitet
-npm run lint              # Kör linting på alla appar
-npm run lint:fix          # Fixa automatiska lint-problem
-npm run format:write      # Formatera all kod
-npm run check            # Fullständig kvalitetskontroll
+# Code quality
+npm run lint              # Run linting on all apps
+npm run lint:fix          # Fix automatic lint issues
+npm run format:write      # Format all code
+npm run check            # Complete quality check
 
 # Testing
-npm run test             # Kör alla tester i monorepo
+npm run test             # Run all tests in monorepo
 
-# Docker-kommandon
-npm run docker:build     # Bygg alla containers
-npm run docker:logs     # Visa loggar från alla services
-npm run docker:clean    # Rensa containers och volymer
+# Docker commands
+npm run docker:build     # Build all containers
+npm run docker:logs     # Show logs from all services
+npm run docker:clean    # Clean containers and volumes
 ```
 
-### Projektstruktur
+### Project Structure
 
-#### Mobile App Struktur
+#### Mobile App Structure
 
 ```
 apps/mobile/src/
-├── components/          # Återanvändbara UI-komponenter
-│   ├── Cards/          # Paket-kort (SmallCard, LargeCard)
-│   ├── Dashboard/      # Dashboard-komponenter
-│   ├── Map/           # Kart-komponenter (Leaflet)
-│   ├── modals/        # Modal-dialoger (QR, confirmationer)
-│   └── Profile/       # Profil-komponenter
-├── context/           # React Context för state
-│   ├── auth/         # Autentisering och roller
-│   ├── location/     # GPS och positionering
-│   └── packages/     # Paketdata och cache
+├── components/          # Reusable UI components
+│   ├── Cards/          # Package cards (SmallCard, LargeCard)
+│   ├── Dashboard/      # Dashboard components
+│   ├── Map/           # Map components (Leaflet)
+│   ├── modals/        # Modal dialogs (QR, confirmations)
+│   └── Profile/       # Profile components
+├── context/           # React Context for state
+│   ├── auth/         # Authentication and roles
+│   ├── location/     # GPS and positioning
+│   └── packages/     # Package data and cache
 ├── hooks/            # Custom React hooks
-│   ├── useCamera.ts      # Kamera-access
-│   ├── useQRScanner.ts   # QR-scanning
-│   └── useGeolocation.ts # GPS-funktionalitet
-├── services/         # API-kommunikation
+│   ├── useCamera.ts      # Camera access
+│   ├── useQRScanner.ts   # QR scanning
+│   └── useGeolocation.ts # GPS functionality
+├── services/         # API communication
 │   ├── authService.ts    # Login/logout
-│   ├── packageService.ts # CRUD för paket
-│   └── locationService.ts # GPS-uppdateringar
-├── views/           # Huvudsidor
-│   ├── driver/      # Förare-specifika vyer
+│   ├── packageService.ts # CRUD for packages
+│   └── locationService.ts # GPS updates
+├── views/           # Main pages
+│   ├── driver/      # Driver-specific views
 │   │   ├── DriverDashboard.tsx
 │   │   ├── DriverPackageDetails.tsx
 │   │   └── DriverMap.tsx
-│   └── user/        # Mottagare-specifika vyer
+│   └── user/        # Recipient-specific views
 │       ├── UserDashboard.tsx
 │       └── UserPackageDetails.tsx
-└── utils/           # Hjälpfunktioner
+└── utils/           # Helper functions
 ```
 
-#### Web App Struktur
+#### Web App Structure
 
 ```
 apps/web/src/
-├── components/          # Webb-specifika komponenter
-│   ├── ShipmentForm.tsx    # Försändelseformulär
-│   ├── HamburgerMenu.tsx   # Navigationsmenyn
-│   └── LogoWeb.tsx        # Webb-anpassad logotyp
-├── views/              # Webb-sidor
-│   └── WebShipment.tsx    # Huvudsida för försändelser
-├── styles/             # Webb-specifik styling
+├── components/          # Web-specific components
+│   ├── ShipmentForm.tsx    # Shipment form
+│   ├── HamburgerMenu.tsx   # Navigation menu
+│   └── LogoWeb.tsx        # Web-adapted logo
+├── views/              # Web pages
+│   └── WebShipment.tsx    # Main shipment page
+├── styles/             # Web-specific styling
 │   └── GlobalStylesWeb.ts
-└── utils/              # Webb-specifika utilities
+└── utils/              # Web-specific utilities
 ```
 
-#### UI Package Struktur
+#### UI Package Structure
 
 ```
 packages/UI/src/
-├── components/         # Delade UI-komponenter
-│   ├── Button.tsx     # Knapp-komponent
-│   ├── Icon.tsx       # Ikon-system
-│   ├── Modal.tsx      # Modal-dialoger
-│   ├── TextInput.tsx  # Input-fält
-│   ├── Text/         # Text-komponenter
-│   └── Toggle/       # Toggle-switchar
-├── assets/           # Statiska resurser
-│   └── icons/        # SVG-ikoner (100+ ikoner)
-├── tests/           # Komponenttester
+├── components/         # Shared UI components
+│   ├── Button.tsx     # Button component
+│   ├── Icon.tsx       # Icon system
+│   ├── Modal.tsx      # Modal dialogs
+│   ├── TextInput.tsx  # Input fields
+│   ├── Text/         # Text components
+│   └── Toggle/       # Toggle switches
+├── assets/           # Static resources
+│   └── icons/        # SVG icons (100+ icons)
+├── tests/           # Component tests
 │   ├── Button.test.tsx
 │   ├── Icon.test.tsx
 │   └── Modal.test.tsx
-└── types/           # TypeScript-definitioner
+└── types/           # TypeScript definitions
 ```
 
 ## 🚢 Deployment
 
-### Utvecklingsmiljö
+### Development Environment
 
 ```bash
-# Lokal utveckling med hot reload
+# Local development with hot reload
 npm run dev
 
 # Preview production build
@@ -349,7 +349,7 @@ npm run build && npm run preview
 # Production build
 docker-compose -f docker-compose.prod.yml up --build -d
 
-# Scaling för hög trafik
+# Scaling for high traffic
 docker-compose up --scale mobile=3 --scale web=2
 
 # Health checks
@@ -357,19 +357,19 @@ docker-compose ps
 docker-compose logs -f
 ```
 
-#### Separata Deployments
+#### Separate Deployments
 
 ```bash
-# Deploy endast mobile app
+# Deploy mobile app only
 npm run build:mobile
 npm run docker:mobile:detached
 
-# Deploy endast web app
+# Deploy web app only
 npm run build:web
 npm run docker:web:detached
 ```
 
-### Miljökonfiguration
+### Environment Configuration
 
 #### Mobile App (.env)
 
@@ -392,43 +392,43 @@ VITE_SHIPMENT_API_ENDPOINT=/shipments
 
 ## 🧪 Testing
 
-### Test-strategi
+### Test Strategy
 
-#### Enhetstester
+#### Unit Tests
 
 ```bash
-# UI-komponenter (packages/UI)
+# UI components (packages/UI)
 npm run test Button.test.tsx
 npm run test Icon.test.tsx
 npm run test Modal.test.tsx
 
-# Mobile app-komponenter
+# Mobile app components
 npm run test --filter=mobile
 
-# Web app-komponenter
+# Web app components
 npm run test --filter=web
 ```
 
-#### Integrationstester
+#### Integration Tests
 
 ```bash
-# API-integrationstester
+# API integration tests
 npm run test -- --grep "API"
 
-# Context och state-tester
+# Context and state tests
 npm run test -- --grep "Context"
 
-# Router-tester
+# Router tests
 npm run test -- --grep "Routes"
 ```
 
-#### E2E-tester
+#### E2E Tests
 
 ```bash
-# Fullständiga användarflöden
+# Complete user flows
 npm run test:e2e
 
-# Specifika app-flöden
+# Specific app flows
 npm run test:e2e:mobile
 npm run test:e2e:web
 ```
@@ -436,17 +436,17 @@ npm run test:e2e:web
 ### Test Coverage
 
 ```bash
-# Komplett coverage-rapport
+# Complete coverage report
 npm run test -- --coverage
 
-# App-specifik coverage
+# App-specific coverage
 npm run test --filter=mobile -- --coverage
 npm run test --filter=web -- --coverage
 ```
 
-## 🔧 Miljövariabler
+## 🔧 Environment Variables
 
-### Delade Variabler
+### Shared Variables
 
 ```bash
 # API Configuration
@@ -459,7 +459,7 @@ VITE_JWT_EXPIRES=3600000
 VITE_REFRESH_TOKEN_ENDPOINT=/auth/refresh
 ```
 
-### Mobile-specifika
+### Mobile-specific
 
 ```bash
 # PWA Configuration
@@ -477,7 +477,7 @@ VITE_CAMERA_RESOLUTION_HEIGHT=720
 VITE_QR_SCAN_INTERVAL=500
 ```
 
-### Web-specifika
+### Web-specific
 
 ```bash
 # File Upload
@@ -492,10 +492,10 @@ VITE_PRINT_PAGE_MARGINS="20mm"
 
 ## 🔗 API Integration
 
-### Autentisering
+### Authentication
 
 ```typescript
-// Login (alla appar)
+// Login (all apps)
 POST /login/login
 {
   "email": "user@example.com",
@@ -514,20 +514,20 @@ POST /login/login
 ### Mobile API Endpoints
 
 ```typescript
-// Pakethantering
-GET /packages/:userId           // Hämta användarens paket
-GET /packages/single/:packageId // Hämta specifikt paket
-PUT /packages/:packageId/delivered // Markera som levererat
+// Package management
+GET /packages/:userId           // Get user's packages
+GET /packages/single/:packageId // Get specific package
+PUT /packages/:packageId/delivered // Mark as delivered
 
-// GPS-spårning
-PUT /user/location/:driverId    // Uppdatera förarposition
+// GPS tracking
+PUT /user/location/:driverId    // Update driver position
 {
   "latitude": "59.3293",
   "longitude": "18.0686"
 }
 
-// QR-scanning
-POST /packages/scan            // Validera QR-kod
+// QR scanning
+POST /packages/scan            // Validate QR code
 {
   "qrCode": "package-12345",
   "action": "deliver|pickup|verify"
@@ -537,8 +537,8 @@ POST /packages/scan            // Validera QR-kod
 ### Web API Endpoints
 
 ```typescript
-// Försändelsehantering
-POST /shipments               // Skapa ny försändelse
+// Shipment management
+POST /shipments               // Create new shipment
 {
   "sender": {
     "name": "John Doe",
@@ -561,8 +561,8 @@ POST /shipments               // Skapa ny försändelse
   }
 }
 
-// QR-kod generering
-POST /qr/generate            // Generera QR för paket
+// QR code generation
+POST /qr/generate            // Generate QR for package
 {
   "packageId": "pkg-12345",
   "format": "svg|png",
@@ -570,14 +570,14 @@ POST /qr/generate            // Generera QR för paket
 }
 
 // Dashboard data
-GET /dashboard/stats         // Hämta statistik
-GET /dashboard/shipments     // Hämta alla försändelser
-GET /dashboard/users        // Användaröversikt (admin)
+GET /dashboard/stats         // Get statistics
+GET /dashboard/shipments     // Get all shipments
+GET /dashboard/users        // User overview (admin)
 ```
 
-## 🎨 UI Komponentbibliotek (@chas/ui)
+## 🎨 UI Component Library (@chas/ui)
 
-### Tillgängliga Komponenter
+### Available Components
 
 ```typescript
 import {
@@ -591,69 +591,69 @@ import {
   radius
 } from '@chas/ui';
 
-// Button med variants
+// Button with variants
 <Button variant="primary" size="lg" disabled={false}>
-  Klicka här
+  Click here
 </Button>
 
-// Icon-system (100+ ikoner)
-<Icon name="package" size="md" alt="Paket-ikon" />
+// Icon system (100+ icons)
+<Icon name="package" size="md" alt="Package icon" />
 <Icon name="temperatureWarning" size="lg" />
 <Icon name="qrScan" size="sm" />
 
-// Typografi-system
-<Text variant="h1" color="primary">Huvudrubrik</Text>
-<Text variant="body-lg" color="secondary">Brödtext</Text>
-<Text variant="caption" color="muted">Bildtext</Text>
+// Typography system
+<Text variant="h1" color="primary">Main heading</Text>
+<Text variant="body-lg" color="secondary">Body text</Text>
+<Text variant="caption" color="muted">Caption</Text>
 
-// Modal-system
+// Modal system
 <Modal isOpen={isOpen} onClose={onClose} size="lg">
-  <Text variant="h2">Modal titel</Text>
-  <Text>Modal innehåll...</Text>
+  <Text variant="h2">Modal title</Text>
+  <Text>Modal content...</Text>
 </Modal>
 
-// Form-komponenter
+// Form components
 <TextInput
-  label="Användarnamn"
+  label="Username"
   type="text"
   required
-  errorMessage="Fältet krävs"
+  errorMessage="Field is required"
 />
 
 <Toggle
   checked={isEnabled}
   onChange={setIsEnabled}
-  label="Aktivera funktion"
+  label="Enable feature"
 />
 ```
 
-### Designsystem
+### Design System
 
-#### Färgpalett
+#### Color Palette
 
 ```typescript
 const colors = {
-  // Primära färger
-  primary: "#1F4F82", // Mörkblå
-  secondary: "#9DC1DA", // Ljusblå
+  // Primary colors
+  primary: "#1F4F82", // Dark blue
+  secondary: "#9DC1DA", // Light blue
   accent: "#FFA712", // Orange
-  background: "#E0F2FE", // Ljus bakgrund
+  background: "#E0F2FE", // Light background
 
-  // Status-färger
-  critical: "#B62D2D", // Röd (kritisk temperatur)
-  minor: "#F59E0B", // Gul (varning)
-  ok: "#2CEB72", // Grön (OK status)
-  pause: "#D1D5DB", // Grå (levererat/pausat)
+  // Status colors
+  critical: "#B62D2D", // Red (critical temperature)
+  minor: "#F59E0B", // Yellow (warning)
+  ok: "#2CEB72", // Green (OK status)
+  pause: "#D1D5DB", // Gray (delivered/paused)
 
-  // Specialfärger
-  blueBackground: "#0284C7", // Dashboard-bakgrund
-  blueLines: "#075985", // Linjer och borders
-  cardText: "#111827", // Text på kort
-  whiteBackground: "#FFFFFF", // Vit bakgrund
+  // Special colors
+  blueBackground: "#0284C7", // Dashboard background
+  blueLines: "#075985", // Lines and borders
+  cardText: "#111827", // Text on cards
+  whiteBackground: "#FFFFFF", // White background
 };
 ```
 
-#### Typografi
+#### Typography
 
 ```typescript
 const textVariants = {
@@ -669,53 +669,53 @@ const textVariants = {
 };
 ```
 
-#### Ikoner
+#### Icons
 
 ```typescript
-// Paket och leverans
+// Package and delivery
 (package, whitePackage, whitePackageHover);
 (delivery, truckPin, truckLeft, truckRight);
 
-// Temperatur och miljö
+// Temperature and environment
 (smallTemp, bigTemp, whiteTemp, tempWarning);
 (smallTempHot, solidWhiteTemp, whiteTempHover);
 (humidity, snowflake);
 
-// Navigation och UI
+// Navigation and UI
 (qrScan, qrScanHover, whiteQr);
 (hamburger, whiteHamburger, whiteHamburgerHover);
 (map, mapHover, whiteMap);
 (home, cross, crossHover);
 
-// Status-indikatorer
+// Status indicators
 (greenCheck, yellowWarning, whiteWarning);
 (redPin, yellowPin, greenPin, bluePin);
 (clock, whiteClock, blueClock);
 
-// Sociala medier
+// Social media
 (facebook, twitter, instagram, mail);
 ```
 
-## 📱 PWA Funktioner (Mobile)
+## 📱 PWA Features (Mobile)
 
 ### Service Worker
 
 ```javascript
-// Caching-strategier
-- Statiska filer: Cache First
-- API-anrop: Network First med fallback
-- Bilder: Stale While Revalidate
-- GPS-data: Network Only
+// Caching strategies
+- Static files: Cache First
+- API calls: Network First with fallback
+- Images: Stale While Revalidate
+- GPS data: Network Only
 ```
 
-### Offline Funktionalitet
+### Offline Functionality
 
 ```typescript
-// Offline-capabilities
-- Visa sparade paket-data
-- Caching av scannningshistorik
-- GPS-positioner sparas lokalt
-- Synkronisering när online
+// Offline capabilities
+- Show cached package data
+- Cache scanning history
+- GPS positions saved locally
+- Sync when online
 ```
 
 ### App Manifest
@@ -748,15 +748,15 @@ const textVariants = {
 ```css
 /* Smartphones (default) */
 @media (max-width: 767px) {
-  /* Touch-optimerad UI */
-  /* Stora knappar (min 44px) */
-  /* Enkla navigationsstrukturer */
+  /* Touch-optimized UI */
+  /* Large buttons (min 44px) */
+  /* Simple navigation structures */
 }
 
 /* Tablets */
 @media (min-width: 768px) and (max-width: 1024px) {
-  /* Hybridlayout */
-  /* Större informationstäthet */
+  /* Hybrid layout */
+  /* Higher information density */
 }
 ```
 
@@ -766,29 +766,29 @@ const textVariants = {
 /* Desktop (default) */
 @media (min-width: 1024px) {
   /* Multi-column layouts */
-  /* Komplexa formulär */
-  /* Hover-effekter */
+  /* Complex forms */
+  /* Hover effects */
 }
 
 /* Tablets */
 @media (max-width: 1023px) {
-  /* Adaptiva kolumner */
-  /* Touch-anpassade kontroller */
+  /* Adaptive columns */
+  /* Touch-adapted controls */
 }
 
 /* Mobile (graceful degradation) */
 @media (max-width: 767px) {
-  /* Stackade layouter */
-  /* Förenklade menyer */
+  /* Stacked layouts */
+  /* Simplified menus */
 }
 ```
 
-## 🔒 Säkerhet
+## 🔒 Security
 
-### Autentisering & Auktorisering
+### Authentication & Authorization
 
 ```typescript
-// JWT-baserad auth med roller
+// JWT-based auth with roles
 interface AuthState {
   token: string;
   userId: string;
@@ -809,55 +809,55 @@ interface AuthState {
 ### Data Protection
 
 ```typescript
-// Känslig data hanteras säkert
+// Sensitive data handled securely
 - JWT tokens: HttpOnly cookies (web) / Secure storage (mobile)
-- GPS-data: Krypterad transmission
-- Paketdata: Anonymiserad i logs
-- GDPR-compliance: Data retention policies
+- GPS data: Encrypted transmission
+- Package data: Anonymized in logs
+- GDPR compliance: Data retention policies
 ```
 
-### API Säkerhet
+### API Security
 
 ```typescript
-// Säkra API-anrop
-- CORS-konfiguration per miljö
+// Secure API calls
+- CORS configuration per environment
 - Rate limiting per endpoint
-- Input validation på alla formulär
-- SQL injection-skydd
-- XSS-prevention via CSP headers
+- Input validation on all forms
+- SQL injection protection
+- XSS prevention via CSP headers
 ```
 
-## 📊 Performance & Optimering
+## 📊 Performance & Optimization
 
-### Bundle Optimering
+### Bundle Optimization
 
 ```bash
-# Analysera bundle-storlek
+# Analyze bundle size
 npm run build
 npm run analyze
 
 # Code splitting per route
 - Mobile: /driver, /user routes
 - Web: /shipment, /admin routes
-- UI: Tree-shaking för ikoner
+- UI: Tree-shaking for icons
 ```
 
-### Caching Strategier
+### Caching Strategies
 
 ```typescript
 // Service Worker (Mobile)
-- Statiska assets: 1 år
-- API responses: 5 minuter
-- GPS data: Ingen cache
-- QR codes: Session-baserad
+- Static assets: 1 year
+- API responses: 5 minutes
+- GPS data: No cache
+- QR codes: Session-based
 
 // Browser Cache (Web)
-- Komponenter: Långvarig cache
-- API data: Korttidscache
-- Formulärdata: Session storage
+- Components: Long-term cache
+- API data: Short-term cache
+- Form data: Session storage
 ```
 
-### Prestanda Metrics
+### Performance Metrics
 
 ```bash
 # Lighthouse audits
@@ -871,78 +871,78 @@ npm run perf:mobile
 npm run perf:web
 ```
 
-## 🤝 Bidra
+## 🤝 Contributing
 
-### Utvecklingsflöde
+### Development Workflow
 
-1. **Fork** repositoriet
-2. **Skapa** feature branch
+1. **Fork** the repository
+2. **Create** feature branch
    ```bash
    git checkout -b feature/mobile-new-feature
-   # eller
+   # or
    git checkout -b feature/web-new-feature
    ```
-3. **Utveckla** och testa
+3. **Develop** and test
    ```bash
-   npm run dev:mobile  # för mobile-features
-   npm run dev:web     # för web-features
-   npm run test        # kör alla tester
+   npm run dev:mobile  # for mobile features
+   npm run dev:web     # for web features
+   npm run test        # run all tests
    ```
-4. **Commit** med konventionella meddelanden
+4. **Commit** with conventional messages
    ```bash
    git commit -m "feat(mobile): add QR scanner improvements"
    git commit -m "feat(web): add shipment bulk operations"
    git commit -m "fix(ui): resolve button accessibility issue"
    ```
-5. **Push** och skapa PR
+5. **Push** and create PR
    ```bash
    git push origin feature/your-feature
    ```
 
-### Kodningsriktlinjer
+### Coding Guidelines
 
 #### Mobile App
 
 ```typescript
-// Använd hooks för state management
+// Use hooks for state management
 const [packages, setPackages] = useState<Package[]>([]);
 
-// PWA-optimering
+// PWA optimization
 if ("serviceWorker" in navigator) {
-  // Registrera service worker
+  // Register service worker
 }
 
 // Touch-first design
 const handleTouch = (e: TouchEvent) => {
-  // Touch-specifik logik
+  // Touch-specific logic
 };
 ```
 
 #### Web App
 
 ```typescript
-// Desktop-optimerade komponenter
+// Desktop-optimized components
 const handleKeyboard = (e: KeyboardEvent) => {
   // Keyboard shortcuts
 };
 
-// Formulärvalidering
+// Form validation
 const validateShipment = (data: ShipmentData) => {
-  // Komplex validering
+  // Complex validation
 };
 
-// Print-optimering
+// Print optimization
 @media print {
-  /* Print-specifika stilar */
+  /* Print-specific styles */
 }
 ```
 
 #### UI Package
 
 ```typescript
-// Komponent-dokumentation
+// Component documentation
 /**
- * Button component med variants och sizes
+ * Button component with variants and sizes
  * @param variant - primary | secondary | ghost
  * @param size - sm | md | lg
  * @param disabled - boolean
@@ -956,58 +956,58 @@ export const Button = ({ variant, size, disabled, ...props }) => {
 
 ### v3.0.0 (2024-11-04) - Web App Integration
 
-- ✨ **NY:** Web-applikation för avsändare
-- 📝 **NY:** Försändelseformulär med QR-generering
-- 🍔 **NY:** Hamburger-meny för webb-navigation
-- 📱 **FÖRBÄTTRING:** Mobile PWA-optimeringar
-- 🧪 **FÖRBÄTTRING:** Utökad testtäckning för båda appar
+- ✨ **NEW:** Web application for senders
+- 📝 **NEW:** Shipment form with QR generation
+- 🍔 **NEW:** Hamburger menu for web navigation
+- 📱 **IMPROVEMENT:** Mobile PWA optimizations
+- 🧪 **IMPROVEMENT:** Extended test coverage for both apps
 
 ### v2.5.0 (2024-10-28) - WCAG Compliance
 
-- ♿ **TILLGÄNGLIGHET:** Fullständig WCAG 2.1 AA-kompatibilitet
-- 🔊 **NY:** Screen reader-stöd för alla komponenter
-- ⌨️ **NY:** Keyboard navigation för mobil och webb
-- 🎨 **FÖRBÄTTRING:** Förbättrad färgkontrast
+- ♿ **ACCESSIBILITY:** Full WCAG 2.1 AA compliance
+- 🔊 **NEW:** Screen reader support for all components
+- ⌨️ **NEW:** Keyboard navigation for mobile and web
+- 🎨 **IMPROVEMENT:** Improved color contrast
 
 ### v2.0.0 (2024-10-15) - Mobile PWA Launch
 
-- 📱 **NY:** PWA med offline-stöd
-- 🗺️ **NY:** Leaflet-kartintegration
-- 📍 **NY:** GPS-spårning för förare
-- 🌡️ **NY:** Temperatur- och luftfuktighetsövervakning
-- 🧱 **NY:** UI-komponentbibliotek (@chas/ui)
+- 📱 **NEW:** PWA with offline support
+- 🗺️ **NEW:** Leaflet map integration
+- 📍 **NEW:** GPS tracking for drivers
+- 🌡️ **NEW:** Temperature and humidity monitoring
+- 🧱 **NEW:** UI component library (@chas/ui)
 
-## 📞 Support & Dokumentation
+## 📞 Support & Documentation
 
-### Dokumentation
+### Documentation
 
-- **📚 Fullständig Guide:** [GitHub Wiki](https://github.com/Chas-Grupp-3/frontend/wiki)
+- **📚 Complete Guide:** [GitHub Wiki](https://github.com/Chas-Grupp-3/frontend/wiki)
 - **🎯 Mobile App Guide:** [Mobile Documentation](https://github.com/Chas-Grupp-3/frontend/wiki/Mobile-App)
 - **💻 Web App Guide:** [Web Documentation](https://github.com/Chas-Grupp-3/frontend/wiki/Web-App)
 - **🧱 UI Components:** [Storybook](https://thermotruck-ui.netlify.app)
 
 ### Support
 
-- **🐛 Buggrapporter:** [GitHub Issues](https://github.com/Chas-Grupp-3/frontend/issues)
-- **💬 Diskussioner:** [GitHub Discussions](https://github.com/Chas-Grupp-3/frontend/discussions)
-- **📧 Direkt kontakt:** [frontend@thermotruck.com](mailto:frontend@thermotruck.com)
+- **🐛 Bug Reports:** [GitHub Issues](https://github.com/Chas-Grupp-3/frontend/issues)
+- **💬 Discussions:** [GitHub Discussions](https://github.com/Chas-Grupp-3/frontend/discussions)
+- **📧 Direct Contact:** [frontend@thermotruck.com](mailto:frontend@thermotruck.com)
 
 ### Community
 
-- **🚀 Feature Requests:** Använd GitHub Issues med `enhancement` label
-- **❓ Frågor:** GitHub Discussions för utvecklingsfrågor
-- **📱 Mobile Issues:** Använd `mobile` label
-- **💻 Web Issues:** Använd `web` label
-- **🧱 UI Issues:** Använd `ui-package` label
+- **🚀 Feature Requests:** Use GitHub Issues with `enhancement` label
+- **❓ Questions:** GitHub Discussions for development questions
+- **📱 Mobile Issues:** Use `mobile` label
+- **💻 Web Issues:** Use `web` label
+- **🧱 UI Issues:** Use `ui-package` label
 
-## 📄 Licens
+## 📄 License
 
-Detta projekt är licensierat under [MIT License](LICENSE).
+This project is licensed under [MIT License](LICENSE).
 
 ```
 MIT License
 
-Copyright (c) 2024 Chas Grupp 3
+Copyright (c) 2024 Chas Group 3
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -1022,23 +1022,23 @@ copies or substantial portions of the Software.
 
 ---
 
-## 🚀 Kom igång idag!
+## 🚀 Get Started Today!
 
 ```bash
-# Klona och starta utveckling
+# Clone and start development
 git clone https://github.com/Chas-Grupp-3/frontend.git
 cd frontend
 npm install
 npm run dev
 
-# Öppna i webbläsaren
+# Open in browser
 # Mobile: http://localhost:5173
 # Web: http://localhost:5174
 ```
 
-**ThermoTruck Frontend Monorepo** - Komplett leveranshantering för temperaturkänsliga varor med moderna webbteknologier.
+**ThermoTruck Frontend Monorepo** - Complete delivery management for temperature-sensitive goods with modern web technologies.
 
-_Utvecklat med ❤️ av Chas Grupp 3_
+_Developed with ❤️ by Chas Group 3_
 
 [![Mobile App](https://img.shields.io/badge/📱-Mobile_PWA-blue)](http://localhost:5173)
 [![Web App](https://img.shields.io/badge/💻-Web_Application-green)](http://localhost:5174)
