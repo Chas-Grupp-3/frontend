@@ -14,17 +14,37 @@ const Camera: React.FC<CameraProps> = ({
   cameraStarted,
 }) => {
   return (
-    <CameraContainer>
-      <VideoContainer>
-        <StyledVideo ref={videoRef} autoPlay playsInline muted />
-        {!cameraStarted && <BlankScreen />}
-        <CornerTopLeft />
-        <CornerTopRight />
-        <CornerBottomLeft />
-        <CornerBottomRight />
+    <CameraContainer
+      role="region"
+      aria-label="Camera interface for QR code scanning"
+    >
+      <VideoContainer role="group" aria-label="Camera viewfinder">
+        <StyledVideo
+          ref={videoRef}
+          autoPlay
+          playsInline
+          muted
+          aria-label={
+            cameraStarted
+              ? "Live camera feed for QR scanning"
+              : "Camera is starting up"
+          }
+          aria-live="polite"
+        />
+        {!cameraStarted && (
+          <BlankScreen aria-label="Camera loading screen" role="status" />
+        )}
+        <CornerTopLeft aria-hidden="true" role="presentation" />
+        <CornerTopRight aria-hidden="true" role="presentation" />
+        <CornerBottomLeft aria-hidden="true" role="presentation" />
+        <CornerBottomRight aria-hidden="true" role="presentation" />
       </VideoContainer>
 
-      <StyledCanvas ref={canvasRef} />
+      <StyledCanvas
+        ref={canvasRef}
+        aria-label="Hidden canvas for image processing"
+        aria-hidden="true"
+      />
     </CameraContainer>
   );
 };

@@ -30,23 +30,53 @@ const Scan = ({ mode = "search", packageId }: ScanProps) => {
 
   if (error) {
     return (
-      <Container className="page">
-        <Text variant="body-lg" color="accent">
+      <Container
+        className="page"
+        role="alert"
+        aria-label="Scanner error screen"
+      >
+        <Text
+          variant="body-lg"
+          color="accent"
+          aria-label={`Error message: ${error}`}
+        >
           {error}
         </Text>
-        <Button onClick={handleGoBack}>Close</Button>
+        <Button
+          onClick={handleGoBack}
+          aria-label="Close scanner and return to previous screen"
+        >
+          Close
+        </Button>
       </Container>
     );
   }
 
   return (
-    <Container className="page">
-      <TextContainer>
-        <Text variant="body-lg" color="accent">
+    <Container
+      className="page"
+      role="main"
+      aria-label={`QR code scanner in ${mode} mode`}
+    >
+      <TextContainer
+        role="status"
+        aria-live="polite"
+        aria-label="Scanner status information"
+      >
+        <Text
+          variant="body-lg"
+          color="accent"
+          aria-label={`Scanner instruction: ${displayText}`}
+        >
           {displayText}
         </Text>
         {isActivelyScanning && (
-          <Text variant="body-sm" color="secondary">
+          <Text
+            variant="body-sm"
+            color="secondary"
+            aria-label="Scanning in progress"
+            aria-live="assertive"
+          >
             Scanning...
           </Text>
         )}
@@ -56,10 +86,16 @@ const Scan = ({ mode = "search", packageId }: ScanProps) => {
         videoRef={videoRef}
         canvasRef={canvasRef}
         cameraStarted={cameraStarted}
+        aria-label="QR code scanner camera interface"
       />
 
-      <ButtonContainer>
-        <Button onClick={handleGoBack}>Close</Button>
+      <ButtonContainer role="group" aria-label="Scanner controls">
+        <Button
+          onClick={handleGoBack}
+          aria-label="Close scanner and return to previous screen"
+        >
+          Close
+        </Button>
       </ButtonContainer>
 
       <ScanModal
@@ -72,6 +108,7 @@ const Scan = ({ mode = "search", packageId }: ScanProps) => {
         handleGoBack={handleGoBack}
         handleNext={handleNext}
         isDelivering={isDelivering}
+        aria-label="Scanner result modal"
       />
     </Container>
   );

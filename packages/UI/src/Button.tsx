@@ -62,6 +62,9 @@ export const Button = ({
       onClick={disabled ? undefined : onClick}
       $buttonVariant={disabled ? "disabled" : buttonVariant}
       disabled={disabled || buttonVariant === "disabled"}
+      role="button"
+      aria-disabled={disabled || buttonVariant === "disabled"}
+      aria-pressed="false"
     >
       <Text variant="button" color={textColor}>
         {children}

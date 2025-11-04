@@ -4,13 +4,26 @@ import { colors } from "@chas/ui";
 
 const DashboardLogo = () => {
   return (
-    <Logo>
-      <Icon name="whiteTemp" size="lg" alt="ThermoTrack Logo" />
-      <LogoText>
-        <Text color="whiteBackground" variant="h3">
+    <Logo role="banner" aria-label="ThermoTrack application logo">
+      <Icon
+        name="whiteTemp"
+        size="lg"
+        alt="ThermoTrack Logo"
+        aria-label="Temperature monitoring logo icon"
+      />
+      <LogoText role="group" aria-label="Company name and tagline">
+        <Text
+          color="whiteBackground"
+          variant="h3"
+          aria-label="Company name: ThermoTrack"
+        >
           ThermoTrack
         </Text>
-        <Text color="whiteBackground" variant="body-sm">
+        <Text
+          color="whiteBackground"
+          variant="body-sm"
+          aria-label="Company tagline: Climate-Controlled Transport"
+        >
           Climate-Controlled Transport
         </Text>
       </LogoText>

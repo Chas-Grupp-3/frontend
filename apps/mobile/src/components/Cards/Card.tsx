@@ -12,7 +12,12 @@ interface CardProps {
   deliveryStatus: "delivered" | "late" | "on time";
   ETA?: string;
   id: string;
-  threshold: number;
+  thresholds: {
+    minTemp: number;
+    maxTemp: number;
+    minHumidity: number;
+    maxHumidity: number;
+  };
   onClick: () => void;
 }
 
@@ -20,20 +25,34 @@ const Card = ({
   variant = "large",
   title,
   temperature,
-  humidity,
+  humidity = 0,
   deliveryStatus,
   ETA,
   id,
-  threshold,
+  thresholds,
   onClick,
 }: CardProps) => {
   const { backgroundColor, textColor } = getCardColor(
     deliveryStatus,
     temperature,
-    threshold
+    humidity,
+    thresholds.minTemp,
+    thresholds.maxTemp,
+    thresholds.minHumidity,
+    thresholds.maxHumidity
   );
 
-  const statusText = getStatusText(deliveryStatus, temperature, threshold);
+  const statusText = getStatusText(
+    deliveryStatus,
+    temperature,
+    humidity,
+    thresholds.minTemp,
+    thresholds.maxTemp,
+    thresholds.minHumidity,
+    thresholds.maxHumidity
+  );
+
+  const ariaLabel = `Package ${title}, temperature ${temperature} degrees${humidity ? `, humidity ${humidity} procent` : ""}, status ${statusText}${ETA ? `, arrival ${ETA}` : ""}`;
 
   return variant === "large" ? (
     <LargeCard
@@ -46,6 +65,8 @@ const Card = ({
       textColor={textColor}
       statusText={statusText}
       onClick={onClick}
+      aria-label={ariaLabel}
+      aria-describedby={`card-details-${id}`}
     />
   ) : (
     <SmallCard
@@ -56,6 +77,8 @@ const Card = ({
       textColor={textColor}
       statusText={statusText}
       onClick={onClick}
+      aria-label={ariaLabel}
+      aria-describedby={`card-details-${id}`}
     />
   );
 };

@@ -41,7 +41,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
     };
 
     return (
-      <InputWrapper>
+      <InputWrapper role="group">
         <InputContainer>
           <StyledInput
             id={inputId}
@@ -52,6 +52,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
             onBlur={() => setFocused(false)}
             onChange={handleChange}
             aria-invalid={!!error}
+            role="textbox"
+            aria-required={rest.required}
             {...rest}
           />
           {label && (
@@ -59,13 +61,14 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
               htmlFor={inputId}
               $focused={focused || hasValue}
               $error={!!error}
+              aria-label={`Label for ${label}`}
             >
               {label}
             </FloatingLabel>
           )}
         </InputContainer>
 
-        <HintWrapper>
+        <HintWrapper role="status">
           {error && <Text color="critical">{error}</Text>}
           {!error && hint && (
             <Text color="greyText" variant="body">

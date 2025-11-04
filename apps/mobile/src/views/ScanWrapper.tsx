@@ -7,7 +7,11 @@ const ScanWrapper = () => {
     id?: string;
   }>();
   if (!mode || !["search", "add", "deliver"].includes(mode)) {
-    return <div>Invalid scan mode</div>;
+    return (
+      <div role="alert" aria-live="assertive">
+        Invalid scan mode
+      </div>
+    );
   }
 
   return <Scan mode={mode} packageId={id} />;

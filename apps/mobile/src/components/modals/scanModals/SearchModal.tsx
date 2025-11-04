@@ -12,19 +12,34 @@ const SearchModal = ({
   closeModal,
 }: SearchModalProps) => {
   return (
-    <>
-      <Text variant="h1">
+    <div
+      role="dialog"
+      aria-labelledby="search-modal-title"
+      aria-describedby="package-id-result"
+    >
+      <Text variant="h1" aria-label={`Package found with ID ${qrCodeResult}`}>
         Package with id:
-        <Text variant="body" color="secondary">
+        <Text
+          variant="body"
+          color="secondary"
+          aria-label={`Package ID: ${qrCodeResult}`}
+        >
           {qrCodeResult}
         </Text>
         found
       </Text>
-      <ButtonGroup>
-        <Button onClick={closeModal}>Cancel</Button>
-        <Button onClick={handleNext}>Go to package</Button>
+      <ButtonGroup role="group" aria-label="Modal actions">
+        <Button onClick={closeModal} aria-label="Cancel and close modal">
+          Cancel
+        </Button>
+        <Button
+          onClick={handleNext}
+          aria-label="Navigate to package details page"
+        >
+          Go to package
+        </Button>
       </ButtonGroup>
-    </>
+    </div>
   );
 };
 

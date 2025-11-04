@@ -13,7 +13,12 @@ export const filterOptions: FilterOption[] = [
 
 export const getFilterCounts = (cards: CardInfo[]) => {
   const tempIssuesCount = cards.filter(
-    (card) => card.temperature > card.threshold
+    (card) =>
+      card.temperature < card.thresholds.minTemp ||
+      card.temperature > card.thresholds.maxTemp ||
+      (card.humidity !== undefined &&
+        (card.humidity < card.thresholds.minHumidity ||
+          card.humidity > card.thresholds.maxHumidity))
   ).length;
 
   return filterOptions.reduce(
@@ -46,7 +51,14 @@ export const getFilteredCards = (
     selectedFilter === "all"
       ? cards
       : selectedFilter === "Temp issues"
-        ? cards.filter((card) => card.temperature > card.threshold)
+        ? cards.filter(
+            (card) =>
+              card.temperature < card.thresholds.minTemp ||
+              card.temperature > card.thresholds.maxTemp ||
+              (card.humidity !== undefined &&
+                (card.humidity < card.thresholds.minHumidity ||
+                  card.humidity > card.thresholds.maxHumidity))
+          )
         : cards.filter((card) => card.deliveryStatus === selectedFilter);
 
   if (searchTerm.trim() !== "") {
@@ -59,60 +71,3 @@ export const getFilteredCards = (
 
   return filtered;
 };
-
-export const mockCards: CardInfo[] = [
-  {
-    id: 0,
-    title: "Game of Cones",
-    temperature: 8,
-    deliveryStatus: "delivered",
-    ETA: "19 Dec kl. 10.15",
-    packageId: "Y67X093A3",
-    threshold: 14,
-  },
-  {
-    id: 1,
-    title: "The Codfather",
-    temperature: 8,
-    deliveryStatus: "on time",
-    ETA: "19 Dec kl. 10.45",
-    packageId: "Y67X093A4",
-    threshold: 14,
-  },
-  {
-    id: 2,
-    title: "Frost and Found",
-    temperature: 18,
-    deliveryStatus: "delivered",
-    ETA: "19 Dec kl. 11.10",
-    packageId: "Y67X093A5",
-    threshold: 14,
-  },
-  {
-    id: 3,
-    title: "License to Chill",
-    temperature: 8,
-    deliveryStatus: "late",
-    ETA: "19 Dec kl. 11.30",
-    packageId: "Y67X093A6",
-    threshold: 14,
-  },
-  {
-    id: 4,
-    title: "S´no Problem",
-    temperature: 18,
-    deliveryStatus: "on time",
-    ETA: "19 Dec kl. 11.50",
-    packageId: "Y67X093A3",
-    threshold: 14,
-  },
-  {
-    id: 5,
-    title: "The Big Chillski",
-    temperature: 8,
-    deliveryStatus: "on time",
-    ETA: "19 Dec kl. 12.10",
-    packageId: "Y67X093A3",
-    threshold: 14,
-  },
-];

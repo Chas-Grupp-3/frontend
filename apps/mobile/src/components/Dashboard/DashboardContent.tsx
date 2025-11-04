@@ -40,9 +40,17 @@ const DashboardContent = ({
 
   return (
     <>
-      <DashboardHeader searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <DashboardHeader
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        aria-label="Dashboard header with search"
+      />
 
-      <Centered role="region" aria-label="Filter packages">
+      <Centered
+        role="region"
+        aria-label="Filter packages"
+        aria-describedby="filter-help"
+      >
         <Toggle
           name="filters"
           options={toggleOptions}
@@ -50,12 +58,26 @@ const DashboardContent = ({
           onChange={(v) => setSelectedFilter(v as typeof selectedFilter)}
           iconSize="sm"
           aria-label={`Filter: ${selectedFilter}`}
+          aria-describedby="filter-help"
         />
       </Centered>
-      <CardListContainer role="region" aria-label="List of packages">
+      <CardListContainer
+        role="region"
+        aria-label="List of packages"
+        aria-live="polite"
+        aria-busy={loading}
+      >
         {loading ? (
-          <Centered role="status" aria-label="Loading packages">
-            <ClipLoader size={64} color={colors.primary} />
+          <Centered
+            role="status"
+            aria-label="Loading packages"
+            aria-live="assertive"
+          >
+            <ClipLoader
+              size={64}
+              color={colors.primary}
+              aria-label="Loading indicator"
+            />
           </Centered>
         ) : (
           <>
@@ -76,17 +98,22 @@ const DashboardContent = ({
                 });
               }}
               aria-label={`${filteredPackages.length} packages`}
+              aria-describedby="package-info"
             />
           </>
         )}
         {isRefreshing ? (
-          <RefreshIndicator>
+          <RefreshIndicator
+            role="status"
+            aria-label="Updating packages"
+            aria-live="polite"
+          >
             <Text variant="body-sm" color="secondary">
               Updating...
             </Text>
           </RefreshIndicator>
         ) : (
-          <RefreshIndicator>&nbsp;</RefreshIndicator>
+          <RefreshIndicator aria-hidden="true">&nbsp;</RefreshIndicator>
         )}
       </CardListContainer>
     </>
