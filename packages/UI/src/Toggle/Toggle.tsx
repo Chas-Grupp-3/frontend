@@ -24,7 +24,12 @@ export const Toggle = ({
   iconSize = "md",
 }: ToggleProps) => {
   return (
-    <ToggleContainer className={className} role="radiogroup">
+    <ToggleContainer
+      className={className}
+      role="radiogroup"
+      aria-label={`${name} selection`}
+      aria-disabled={disabled}
+    >
       {options.map((option, index) => (
         <Fragment key={option.value}>
           <ToggleItem

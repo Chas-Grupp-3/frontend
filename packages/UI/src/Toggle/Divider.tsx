@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../styles";
 
-const ToggleDivider = () => <Divider />;
+const ToggleDivider = () => <Divider role="separator" />;
 
 const Divider = styled.div`
   width: 2px;
