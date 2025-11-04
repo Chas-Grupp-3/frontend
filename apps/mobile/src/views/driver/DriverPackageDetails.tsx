@@ -55,10 +55,24 @@ const DriverPackageDetails = () => {
 
   if (loading) {
     return (
-      <Container className="page">
-        <LoadingContainer>
-          <ClipLoader size={64} color={colors.primary} />
-          <Text>Loading package details...</Text>
+      <Container
+        className="page"
+        role="main"
+        aria-label="Loading package details"
+      >
+        <LoadingContainer
+          role="status"
+          aria-live="polite"
+          aria-label="Loading package information"
+        >
+          <ClipLoader
+            size={64}
+            color={colors.primary}
+            aria-label="Loading spinner"
+          />
+          <Text aria-label="Loading message: Loading package details">
+            Loading package details...
+          </Text>
         </LoadingContainer>
       </Container>
     );
@@ -66,8 +80,17 @@ const DriverPackageDetails = () => {
 
   if (error || !packageData) {
     return (
-      <Container className="page">
-        <Text variant="h2">{error || "No package data available."}</Text>
+      <Container
+        className="page"
+        role="main"
+        aria-label="Package details error"
+      >
+        <Text
+          variant="h2"
+          aria-label={`Error: ${error || "No package data available"}`}
+        >
+          {error || "No package data available."}
+        </Text>
       </Container>
     );
   }
@@ -105,10 +128,18 @@ const DriverPackageDetails = () => {
   });
 
   return (
-    <Container className="page">
-      <PackageDetailsHeader sender={sender} packageId={packageId} />
-      <StatusSection>
-        <LeftColumn>
+    <Container
+      className="page"
+      role="main"
+      aria-label={`Package details for package ${packageId}`}
+    >
+      <PackageDetailsHeader
+        sender={sender}
+        packageId={packageId}
+        aria-label="Package header information"
+      />
+      <StatusSection role="region" aria-label="Package status indicators">
+        <LeftColumn role="group" aria-label="Main package status">
           <StatusCard
             IconName={statusIcon}
             IconSize={100}
@@ -116,9 +147,13 @@ const DriverPackageDetails = () => {
             Type="indicator"
             label={statusLabel}
             backgroundColor={colors.accent}
+            aria-label={`Package status: ${statusLabel}, ${statusStatus}`}
           />
         </LeftColumn>
-        <RightColumn>
+        <RightColumn
+          role="group"
+          aria-label="Temperature and humidity readings"
+        >
           <StatusCard
             IconName="solidWhiteTemp"
             IconSize="sm"
@@ -126,6 +161,7 @@ const DriverPackageDetails = () => {
             labelColor="accent"
             Type="temperature"
             backgroundColor={colors.blueLines}
+            aria-label={`Current temperature: ${formattedTemp}`}
           />
           <StatusCard
             IconName="humidity"
@@ -133,23 +169,35 @@ const DriverPackageDetails = () => {
             label={`${humidityValue}%`}
             Type="humidity"
             backgroundColor={colors.secondary}
+            aria-label={`Current humidity: ${humidityValue} percent`}
           />
         </RightColumn>
       </StatusSection>
-      <DetailsSection>
+      <DetailsSection role="region" aria-label="Package details and actions">
         <PackageDetails
           address={destination.address}
           minTemp={minTemp}
           maxTemp={maxTemp}
           minHumidity={minHumidity}
           maxHumidity={maxHumidity}
+          aria-label="Package delivery and threshold information"
         />
-        <Text> Deliver by: {formattedArrivalDate || "Unknown date"}</Text>
+        <Text
+          aria-label={`Delivery deadline: ${formattedArrivalDate || "Unknown date"}`}
+        >
+          Deliver by: {formattedArrivalDate || "Unknown date"}
+        </Text>
         <Button
           disabled={delivered}
           onClick={() => {
             setShowModal(true);
           }}
+          aria-label={
+            delivered
+              ? "Package already delivered"
+              : "Show QR code for package verification"
+          }
+          aria-describedby="qr-button-description"
         >
           {delivered ? "Package Delivered" : "Show QR Code"}
         </Button>
@@ -158,6 +206,7 @@ const DriverPackageDetails = () => {
         showModal={showModal}
         closeModal={closeModal}
         qrCodeData={packageId}
+        aria-label="QR code display modal"
       />
     </Container>
   );
