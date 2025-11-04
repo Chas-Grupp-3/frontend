@@ -19,9 +19,20 @@ const QRModal = ({ showModal, closeModal, qrCodeData }: QRModalProps) => {
   }
 
   return (
-    <Modal isOpen={showModal} onClose={closeModal}>
+    <Modal
+      isOpen={showModal}
+      onClose={closeModal}
+      aria-label={
+        qrCodeData
+          ? `QR code modal for package ${qrCodeData}`
+          : "QR code modal - no code available"
+      }
+    >
       {qrCodeData ? (
-        <QR>
+        <QR
+          role="img"
+          aria-label={`QR code container for package ${qrCodeData}`}
+        >
           {qrSVG ? (
             <img
               width={255}
@@ -31,12 +42,15 @@ const QRModal = ({ showModal, closeModal, qrCodeData }: QRModalProps) => {
                   ? qrSVG
                   : `data:image/svg+xml;utf8,${encodeURIComponent(qrSVG)}`
               }
-              alt={`QR for ${qrCodeData}`}
+              alt={`QR code for package ${qrCodeData}`}
+              aria-label={`Scannable QR code containing package ID ${qrCodeData}`}
             />
           ) : null}
         </QR>
       ) : (
-        <Text>No QR Code available</Text>
+        <Text aria-live="polite" aria-label="QR code unavailable message">
+          No QR Code available
+        </Text>
       )}
     </Modal>
   );

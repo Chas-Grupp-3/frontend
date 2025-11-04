@@ -15,29 +15,42 @@ const DeliverModal = ({
   handleNext,
 }: DeliverModalProps) => {
   return (
-    <>
+    <div
+      role="dialog"
+      aria-labelledby="delivery-modal-title"
+      aria-live="polite"
+    >
       {isDelivering && (
-        <>
-          <ClipLoader />
+        <div role="status" aria-label="Delivery in progress">
+          <ClipLoader aria-label="Loading delivery process" />
           <Text variant="body-sm">Delivering...</Text>
-        </>
+        </div>
       )}
       {status === "success" && (
-        <>
-          <Text variant="h1">Package Delivered</Text>
-          <Text>The package has been successfully delivered.</Text>
-        </>
+        <div role="alert" aria-live="assertive">
+          <Text>Package Delivered</Text>
+          <Text aria-label="Success message: The package has been successfully delivered">
+            The package has been successfully delivered.
+          </Text>
+        </div>
       )}
       {status === "error" && (
-        <>
-          <Text variant="h1">Delivery Failed</Text>
-          <Text>Could not mark package as delivered, try again.</Text>
-        </>
+        <div role="alert" aria-live="assertive">
+          <Text>Delivery Failed</Text>
+          <Text aria-label="Error message: Could not mark package as delivered, try again">
+            Could not mark package as delivered, try again.
+          </Text>
+        </div>
       )}
-      <ButtonGroup>
-        <Button onClick={handleNext}>Go to package</Button>
+      <ButtonGroup role="group" aria-label="Modal actions">
+        <Button
+          onClick={handleNext}
+          aria-label="Navigate to package details page"
+        >
+          Go to package
+        </Button>
       </ButtonGroup>
-    </>
+    </div>
   );
 };
 
