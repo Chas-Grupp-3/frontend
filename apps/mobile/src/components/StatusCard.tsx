@@ -23,10 +23,31 @@ const StatusCard = ({
   labelColor = "blueText",
 }: StatusCardProps) => {
   return (
-    <Card $backgroundColor={backgroundColor}>
-      <Icon name={IconName} size={IconSize} />
-      <Text color={labelColor}>{label}</Text>
-      {Type === "indicator" && <Text>{Status}</Text>}
+    <Card
+      $backgroundColor={backgroundColor}
+      role="region"
+      aria-label={`Status card for ${Type || "information"}: ${label || "No label"}`}
+      aria-describedby={
+        Type === "indicator" && Status ? "status-text" : undefined
+      }
+    >
+      <Icon
+        name={IconName}
+        size={IconSize}
+        aria-label={`${Type || "Status"} icon`}
+        alt={`Icon representing ${Type || "status information"}`}
+      />
+      <Text
+        color={labelColor}
+        aria-label={`Label: ${label || "No label provided"}`}
+      >
+        {label}
+      </Text>
+      {Type === "indicator" && (
+        <Text aria-label={`Status value: ${Status || "No status"}`}>
+          {Status}
+        </Text>
+      )}
     </Card>
   );
 };
