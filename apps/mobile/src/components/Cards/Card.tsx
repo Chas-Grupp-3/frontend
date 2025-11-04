@@ -52,6 +52,8 @@ const Card = ({
     thresholds.maxHumidity
   );
 
+  const ariaLabel = `Package ${title}, temperature ${temperature} degrees${humidity ? `, humidity ${humidity} procent` : ""}, status ${statusText}${ETA ? `, arrival ${ETA}` : ""}`;
+
   return variant === "large" ? (
     <LargeCard
       title={title}
@@ -63,6 +65,8 @@ const Card = ({
       textColor={textColor}
       statusText={statusText}
       onClick={onClick}
+      aria-label={ariaLabel}
+      aria-describedby={`card-details-${id}`}
     />
   ) : (
     <SmallCard
@@ -73,6 +77,8 @@ const Card = ({
       textColor={textColor}
       statusText={statusText}
       onClick={onClick}
+      aria-label={ariaLabel}
+      aria-describedby={`card-details-${id}`}
     />
   );
 };

@@ -26,10 +26,19 @@ const listVariantsConfig = {
 
 const CardList = ({ cards, onCardClick, variant = "small" }: CardListProps) => {
   return (
-    <StyledCardListContainer>
-      <StyledCardList>
+    <StyledCardListContainer
+      role="region"
+      aria-label={`List of ${cards.length} packages`}
+      aria-live="polite"
+    >
+      <StyledCardList role="list" aria-label="Package list">
         {cards.map((card) => (
-          <StyledLi key={card.id} $variant={variant}>
+          <StyledLi
+            key={card.id}
+            $variant={variant}
+            role="listitem"
+            aria-label={`Package ${card.title}`}
+          >
             <Card
               variant={variant}
               title={card.title}
