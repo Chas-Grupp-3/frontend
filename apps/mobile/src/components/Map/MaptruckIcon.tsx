@@ -3,7 +3,12 @@ import ReactDOMServer from "react-dom/server";
 import { Icon } from "@chas/ui";
 
 const iconHtml = ReactDOMServer.renderToStaticMarkup(
-  <Icon name="truckLeft" size="md" />
+  <Icon
+    name="truckLeft"
+    size="md"
+    aria-label="Delivery truck icon"
+    alt="Truck icon pointing left"
+  />
 );
 
 export const truckIcon = L.divIcon({
