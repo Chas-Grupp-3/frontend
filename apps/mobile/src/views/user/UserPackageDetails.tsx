@@ -55,20 +55,36 @@ const UserPackageDetails = () => {
   }, [id]);
 
   if (!isGeolocationAvailable) {
-    return <div>Your browser does not support Geolocation</div>;
+    return (
+      <div role="alert" aria-live="polite">
+        Your browser does not support Geolocation
+      </div>
+    );
   }
   if (!isGeolocationEnabled) {
-    return <div>Geolocation is not enabled</div>;
+    return (
+      <div role="alert" aria-live="polite">
+        Geolocation is not enabled
+      </div>
+    );
   }
   if (!coords) {
-    return <div>Getting the location data&hellip; </div>;
+    return (
+      <div role="status" aria-live="polite">
+        Getting the location data&hellip;{" "}
+      </div>
+    );
   }
 
   if (loading) {
     return (
-      <Container className="page">
-        <LoadingContainer>
-          <ClipLoader size={64} color={colors.primary} />
+      <Container className="page" role="main" aria-label="Package Details Page">
+        <LoadingContainer
+          role="status"
+          aria-live="polite"
+          aria-label="Loading package information"
+        >
+          <ClipLoader size={64} color={colors.primary} aria-hidden="true" />
           <Text>Loading package details...</Text>
         </LoadingContainer>
       </Container>
@@ -77,8 +93,8 @@ const UserPackageDetails = () => {
 
   if (error || !packageData) {
     return (
-      <Container className="page">
-        <ErrorContainer>
+      <Container className="page" role="main" aria-label="Package Details Page">
+        <ErrorContainer role="alert" aria-live="assertive">
           <Text variant="h2">{error || "No package data available."}</Text>
         </ErrorContainer>
       </Container>
@@ -106,11 +122,11 @@ const UserPackageDetails = () => {
   };
 
   return (
-    <Container className="page">
+    <Container className="page" role="main" aria-label="Package Details Page">
       <PackageDetailsHeader sender={sender} packageId={packageId} />
-      <MapSection>
+      <MapSection role="region" aria-label="Package Location">
         {delivered ? (
-          <TextSection>
+          <TextSection role="status" aria-label="Delivery Status">
             <Text>Package has been delivered</Text>
           </TextSection>
         ) : (
@@ -125,8 +141,8 @@ const UserPackageDetails = () => {
           />
         )}
       </MapSection>
-      <DetailsSection>
-        <StatusCardRow>
+      <DetailsSection role="region" aria-label="Package Information">
+        <StatusCardRow role="group" aria-label="Environmental Conditions">
           <StatusCard
             IconName="solidWhiteTemp"
             IconSize="sm"
@@ -150,8 +166,21 @@ const UserPackageDetails = () => {
           minHumidity={Number(thresholds.minHumidity)}
           maxHumidity={Number(thresholds.maxHumidity)}
         />
-        <Text> Latest arrival: {formattedArrivalDate || "Unknown date"}</Text>
-        <Button disabled={delivered} onClick={handleClick}>
+        <Text
+          aria-label={`Latest arrival date: ${formattedArrivalDate || "Unknown date"}`}
+        >
+          {" "}
+          Latest arrival: {formattedArrivalDate || "Unknown date"}
+        </Text>
+        <Button
+          disabled={delivered}
+          onClick={handleClick}
+          aria-label={
+            delivered
+              ? "Package already delivered"
+              : "Open QR scanner to mark package as delivered"
+          }
+        >
           {delivered
             ? "Package Delivered"
             : "Open QR scanner to mark as delivered"}
