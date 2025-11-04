@@ -15,22 +15,32 @@ const PackageDetailsHeader = ({
   const navigate = useNavigate();
 
   return (
-    <Header>
-      <ArrowRow>
+    <Header role="banner" aria-label="Package details header">
+      <ArrowRow role="navigation" aria-label="Header navigation">
         <FaArrowLeft
           size={24}
           color={colors.accent}
           style={{ cursor: "pointer", position: "absolute", left: "1rem" }}
           onClick={() => navigate(-1)}
           aria-label="Go back to dashboard"
+          role="button"
+          tabIndex={0}
         />
       </ArrowRow>
-      <Title>
-        <Text variant="h1" color="accent">
+      <Title role="group" aria-label="Package information">
+        <Text
+          variant="h1"
+          color="accent"
+          aria-label={`Package sender: ${sender || "Unknown Sender"}`}
+        >
           {sender || "Unknown Sender"}
         </Text>
 
-        <Text color="accent" variant="body-sm">
+        <Text
+          color="accent"
+          variant="body-sm"
+          aria-label={`Package identification number: ${packageId}`}
+        >
           Package ID: {packageId}
         </Text>
       </Title>
